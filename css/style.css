@@ -45,7 +45,7 @@ nav a {
 }
 
 h1 {
-  font-size: clamp(4rem, 8vw, 7.5rem);
+  font-size: clamp(3.5rem, 7vw, 6rem);
   line-height: .92;
   margin-bottom: 30px;
 }
