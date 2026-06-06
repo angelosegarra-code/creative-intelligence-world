@@ -544,3 +544,33 @@ footer {
     padding: 30px 7%;
   }
 }
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.hero-image-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image-block img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 900px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-image-block {
+        order: -1;
+    }
+}
