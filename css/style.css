@@ -558,8 +558,8 @@ footer {
 }
 
 .hero-image-block img {
-    width: 100%;
-    max-width: 650px;
+    width: 130%;
+    max-width: none;
     height: auto;
     display: block;
 }
@@ -573,4 +573,8 @@ footer {
     .hero-image-block {
         order: -1;
     }
+}
+.hero-image-block {
+    justify-content: flex-end;
+    overflow: visible;
 }
