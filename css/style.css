@@ -578,3 +578,53 @@ footer {
     justify-content: flex-end;
     overflow: visible;
 }
+/* ==========================================
+   HOME PAGE - THE QUESTION
+========================================== */
+
+.home-question {
+    padding: 140px 8%;
+    background: #f3eee6;
+    border-top: 1px solid rgba(80,70,60,0.12);
+    border-bottom: 1px solid rgba(80,70,60,0.12);
+}
+
+.home-question-inner {
+    max-width: 960px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+.home-question .section-label {
+    display: block;
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 0.2em;
+}
+
+.home-question h2 {
+    max-width: 900px;
+    margin: 0 auto 36px auto;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.1;
+    color: #5d5d62;
+    text-align: center;
+}
+
+.home-question p {
+    max-width: 720px !important;
+    margin: 0 auto 48px auto !important;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #555;
+    text-align: center;
+}
+
+.home-question .btn {
+    display: inline-block;
+    margin-top: 0;
+}
+
+.home-question .buttons {
+    text-align: center;
+}
