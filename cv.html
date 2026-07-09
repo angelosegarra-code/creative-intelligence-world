@@ -118,12 +118,65 @@
     }
 
     @media print {
-      body { background: white; }
-      .page { padding: 0; }
-      .cv { box-shadow: none; border-radius: 0; }
-      .button-row { display: none; }
-    }
+  @page {
+    size: A4;
+    margin: 0.35in;
+  }
 
+  body {
+    background: white;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .page {
+    padding: 0;
+  }
+
+  .cv {
+    box-shadow: none;
+    border-radius: 0;
+    grid-template-columns: 30% 70%;
+  }
+
+  .sidebar {
+    padding: 22px 18px;
+  }
+
+  .main {
+    padding: 24px 28px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  h3 {
+    font-size: 13px;
+  }
+
+  p, li {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .quote {
+    font-size: 13px;
+    padding: 10px;
+    margin-top: 14px;
+  }
+
+  img {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  .butto
     @media (max-width: 800px) {
       .cv {
         grid-template-columns: 1fr;
