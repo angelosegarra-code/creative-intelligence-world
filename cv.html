@@ -3,10 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Angelo Segarra | Author • Educator • Creative Intelligence</title>
-  <meta name="description" content="Author, educator, artist, and whole systems designer exploring creativity, consciousness, artificial intelligence, and human potential.">
-  
+
+  <title>Angelo Segarra | Author • Facilitator • Creative Intelligence</title>
+
+  <meta
+    name="description"
+    content="Angelo Segarra is an author, educator, facilitator, artist, and whole systems designer exploring creativity, change, human-centered AI, and collective intelligence."
+  />
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
@@ -24,14 +33,14 @@
     .cv {
       background: #ffffff;
       border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
       overflow: hidden;
       display: grid;
       grid-template-columns: 32% 68%;
     }
 
-    .sidebar{
-      background:linear-gradient(180deg,#23476d 0%,#315c86 100%);
+    .sidebar {
+      background: linear-gradient(180deg, #23476d 0%, #315c86 100%);
       color: white;
       padding: 36px 28px;
     }
@@ -50,7 +59,14 @@
     .subtitle {
       font-size: 18px;
       color: #5b6470;
-      margin-bottom: 28px;
+      margin-bottom: 18px;
+    }
+
+    .role-line {
+      margin-top: 10px;
+      margin-bottom: 26px;
+      color: #666;
+      font-size: 16px;
     }
 
     h2 {
@@ -63,7 +79,7 @@
 
     .sidebar h2 {
       color: white;
-      border-bottom: 1px solid rgba(255,255,255,0.35);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
       margin-top: 28px;
     }
 
@@ -71,11 +87,6 @@
       margin-bottom: 4px;
       color: #173a63;
       font-size: 16px;
-    }
-
-    .sidebar p, .sidebar li, .sidebar a {
-      color: #eef4fb;
-      font-size: 14px;
     }
 
     p {
@@ -94,8 +105,43 @@
       word-break: break-word;
     }
 
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .sidebar p,
+    .sidebar li,
+    .sidebar a {
+      color: #eef4fb;
+      font-size: 14px;
+    }
+
+    .profile-photo {
+      width: 170px;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .sidebar-name {
+      margin-top: 18px;
+      color: white;
+      border: none;
+      text-align: center;
+    }
+
+    .sidebar-role {
+      font-size: 15px;
+      opacity: 0.9;
+      margin-top: -8px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
     .quote {
-      margin-top: 30px;
+      margin-top: 20px;
       padding: 18px;
       background: #f0f4f8;
       border-left: 4px solid #173a63;
@@ -103,8 +149,36 @@
       color: #173a63;
     }
 
+    .featured-work {
+      background: #f7f5ef;
+      border: 1px solid #e1ddd4;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    .featured-work h3 {
+      margin-top: 0;
+      font-size: 19px;
+    }
+
+    .availability {
+      background: #f0f4f8;
+      border-radius: 14px;
+      padding: 22px;
+      margin-top: 12px;
+    }
+
+    .availability ul {
+      columns: 2;
+      column-gap: 32px;
+    }
+
     .button-row {
-      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
     }
 
     .button {
@@ -117,75 +191,25 @@
       text-decoration: none;
     }
 
-    @media print {
-  @page {
-    size: A4;
-    margin: 0.35in;
-  }
-.button-row {
-  display: none !important;
-}
+    .button.secondary {
+      background: transparent;
+      color: #173a63;
+      border: 1px solid #173a63;
+    }
 
-.button {
-  display: none !important;
-}
-  body {
-    background: white;
-    font-size: 11px;
-    line-height: 1.35;
-  }
+    .button:hover {
+      text-decoration: none;
+      opacity: 0.9;
+    }
 
-  .page {
-    padding: 0;
-  }
-
-  .cv {
-    box-shadow: none;
-    border-radius: 0;
-    grid-template-columns: 30% 70%;
-  }
-
-  .sidebar {
-    padding: 22px 18px;
-  }
-
-  .main {
-    padding: 24px 28px;
-  }
-
-  h1 {
-    font-size: 30px;
-  }
-
-  h2 {
-    font-size: 14px;
-    margin-top: 16px;
-  }
-
-  h3 {
-    font-size: 13px;
-  }
-
-  p, li {
-    font-size: 10.5px;
-    line-height: 1.35;
-  }
-
-  .quote {
-    font-size: 13px;
-    padding: 10px;
-    margin-top: 14px;
-  }
-
-  img {
-    width: 110px !important;
-    height: 110px !important;
-  }
-
-  .butto
     @media (max-width: 800px) {
+      .page {
+        padding: 20px 12px;
+      }
+
       .cv {
         grid-template-columns: 1fr;
+        border-radius: 14px;
       }
 
       h1 {
@@ -194,6 +218,84 @@
 
       .main {
         padding: 32px 26px;
+      }
+
+      .sidebar {
+        padding: 32px 24px;
+      }
+
+      .availability ul {
+        columns: 1;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 0.35in;
+      }
+
+      body {
+        background: white;
+        font-size: 11px;
+        line-height: 1.35;
+      }
+
+      .page {
+        padding: 0;
+      }
+
+      .cv {
+        box-shadow: none;
+        border-radius: 0;
+        grid-template-columns: 30% 70%;
+      }
+
+      .sidebar {
+        padding: 22px 18px;
+      }
+
+      .main {
+        padding: 24px 28px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 14px;
+        margin-top: 16px;
+      }
+
+      h3 {
+        font-size: 13px;
+      }
+
+      p,
+      li {
+        font-size: 10.5px;
+        line-height: 1.35;
+      }
+
+      .profile-photo {
+        width: 110px !important;
+        height: 110px !important;
+      }
+
+      .quote {
+        font-size: 13px;
+        padding: 10px;
+        margin-top: 14px;
+      }
+
+      .featured-work,
+      .availability {
+        padding: 12px;
+      }
+
+      .button-row {
+        display: none !important;
       }
     }
   </style>
@@ -204,147 +306,371 @@
     <section class="cv">
 
       <aside class="sidebar">
-        <div style="text-align:center;margin-bottom:30px;">
 
-<img
-src="images/angelo-segarra.jpg"
-alt="Angelo Segarra"
-style="
-width:170px;
-height:170px;
-object-fit:cover;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.35);
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <img
+            src="images/angelo-segarra.jpg"
+            alt="Portrait of Angelo Segarra"
+            class="profile-photo"
+          />
 
-<h2 style="margin-top:18px;color:white;border:none;">
-Angelo Segarra
-</h2>
+          <h2 class="sidebar-name">Angelo Segarra</h2>
 
-<p style="
-font-size:15px;
-opacity:.9;
-margin-top:-8px;
-margin-bottom:0;
-">
-Author • Educator • Whole Systems Designer
-</p>
+          <p class="sidebar-role">
+            Author • Facilitator • Educator<br />
+            Whole Systems Designer
+          </p>
+        </div>
 
-</div>
         <h2>Contact</h2>
-        <p><strong>Website</strong><br>
-          <a href="https://creativeintelligence.world">creativeintelligence.world</a>
+
+        <p>
+          <strong>Website</strong><br />
+          <a href="https://creativeintelligence.world">
+            creativeintelligence.world
+          </a>
         </p>
-        <p><strong>Retreats</strong><br>
-          <a href="https://archetyperetreats.com">archetyperetreats.com</a>
+
+        <p>
+          <strong>Books</strong><br />
+          <a href="https://creativeintelligence.world/books.html">
+            creativeintelligence.world/books
+          </a>
         </p>
-        <p><strong>GitHub</strong><br>
-          <a href="https://github.com/angelosegarra-code">github.com/angelosegarra-code</a>
+
+        <p>
+          <strong>Retreats</strong><br />
+          <a href="https://archetyperetreats.com">
+            archetyperetreats.com
+          </a>
         </p>
-        <p><strong>LinkedIn</strong><br>
-          <a href="https://www.linkedin.com/in/angelo-manuel-segarra">linkedin.com/in/angelo-manuel-segarra</a>
+
+        <p>
+          <strong>LinkedIn</strong><br />
+          <a href="https://www.linkedin.com/in/angelo-manuel-segarra">
+            linkedin.com/in/angelo-manuel-segarra
+          </a>
         </p>
-        <p><strong>Email</strong><br>
-          <a href="mailto:intinno@icloud.com">intinno@icloud.com</a>
+
+        <p>
+          <strong>GitHub</strong><br />
+          <a href="https://github.com/angelosegarra-code">
+            github.com/angelosegarra-code
+          </a>
         </p>
-        <p><strong>Location</strong><br>Bali / Indonesia</p>
+
+        <p>
+          <strong>Email</strong><br />
+          <a href="mailto:intinno@icloud.com">
+            intinno@icloud.com
+          </a>
+        </p>
+
+        <p>
+          <strong>Location</strong><br />
+          Bali, Indonesia
+        </p>
 
         <h2>Education</h2>
-        <p><strong>M.A. Whole Systems Design</strong><br>
-        Antioch University, Seattle</p>
-        <p><strong>B.A. Comparative Religion & Sculpture</strong><br>
-        University of Vermont</p>
 
-        <h2>Research Interests</h2>
+        <p>
+          <strong>M.A. Whole Systems Design</strong><br />
+          Antioch University, Seattle
+        </p>
+
+        <p>
+          <strong>B.A. Comparative Religion & Sculpture</strong><br />
+          University of Vermont
+        </p>
+
+        <h2>Areas of Practice</h2>
+
         <ul>
-          <li>AI in Education</li>
-          <li>Human-AI Collaboration</li>
-          <li>Creativity Research</li>
+          <li>Group Facilitation</li>
+          <li>Creative Intelligence</li>
           <li>Systems Thinking</li>
-          <li>Learning Experience Design</li>
-          <li>Human Flourishing</li>
+          <li>Human-Centered AI</li>
+          <li>Transformational Learning</li>
+          <li>Reflective Practice</li>
           <li>Narrative Intelligence</li>
+          <li>Retreat Design</li>
         </ul>
 
-        <h2>Technical Skills</h2>
+        <h2>Formats</h2>
+
         <ul>
-          <li>Git & GitHub</li>
-          <li>Render deployment</li>
-          <li>HTML / CSS</li>
-          <li>Static website development</li>
-          <li>AI-assisted development</li>
+          <li>Workshops</li>
+          <li>Retreats</li>
+          <li>Keynotes</li>
+          <li>University Lectures</li>
+          <li>Professional Development</li>
+          <li>Small-Group Dialogue</li>
+          <li>Creative Programs</li>
+          <li>Educational Consulting</li>
+        </ul>
+
+        <h2>Digital Skills</h2>
+
+        <ul>
+          <li>Git and GitHub</li>
+          <li>Render Deployment</li>
+          <li>HTML and CSS</li>
+          <li>Static Website Development</li>
+          <li>AI-Assisted Development</li>
+          <li>Digital Learning Design</li>
         </ul>
 
         <h2>Recognition</h2>
-        <p>Honorary Research Recognition, Heilongjiang Contemporary Art Institute, China.</p>
-        <p>Permanent artwork in museums in Harbin and Sanya, China.</p>
+
+        <p>
+          Honorary Research Recognition, Heilongjiang Contemporary Art
+          Institute, China.
+        </p>
+
+        <p>
+          Permanent artwork in museums in Harbin and Sanya, China.
+        </p>
+
       </aside>
 
       <main class="main">
-       <h1>Angelo Segarra, M.A.</h1>
-       <div class="subtitle">
-       Author, educator, and whole systems designer exploring creativity, consciousness, and the future of human intelligence.
-       </div>
 
-        <p style="margin-top:10px;color:#666;font-size:16px;">
-        Whole Systems Designer • Learning Experience Designer • Human-Centered AI
+        <h1>Angelo Segarra, M.A.</h1>
+
+        <div class="subtitle">
+          Author, facilitator, educator, and whole systems designer exploring
+          creativity, transformation, consciousness, and the future of human
+          intelligence.
+        </div>
+
+        <p class="role-line">
+          Creative Intelligence • Group Facilitation • Human-Centered AI •
+          Transformational Learning
         </p>
+
         <h2>Professional Profile</h2>
+
         <p>
-        Whole Systems Designer with more than fourteen years of international teaching experience, exploring how artificial intelligence can expand human creativity, reflective practice, and collective intelligence.
+          I am an author, educator, artist, facilitator, and whole systems
+          designer with more than fourteen years of international teaching
+          experience. My work explores how creativity, reflection, systems
+          thinking, and human-centered artificial intelligence can help people
+          and organizations respond to complexity with greater imagination,
+          awareness, and purpose.
         </p>
+
         <p>
-          I design educational experiences that combine systems thinking, creativity, narrative, reflection, and emerging AI tools. My work spans curriculum design, immersive learning environments, public educational platforms, books, and cinematic storytelling.
+          I design and facilitate participatory learning experiences that bring
+          people into meaningful dialogue with one another. These experiences
+          combine reflective inquiry, creative practice, storytelling, group
+          conversation, systems awareness, and emerging AI tools.
         </p>
+
+        <p>
+          My work spans books, retreats, university education, workshops,
+          public essays, creative frameworks, curriculum design, and cinematic
+          storytelling.
+        </p>
+
+        <h2>Facilitation & Collaboration</h2>
+
+        <div class="availability">
+          <p>
+            I am available to facilitate groups, workshops, retreats, learning
+            programs, and conversations for universities, schools,
+            organizations, creative teams, and communities.
+          </p>
+
+          <p>
+            My facilitation focuses on creating environments where participants
+            can slow down, examine the patterns shaping their decisions, engage
+            uncertainty constructively, and discover new possibilities together.
+          </p>
+
+          <ul>
+            <li>Creative Intelligence workshops</li>
+            <li>Human-centered AI conversations</li>
+            <li>Systems thinking programs</li>
+            <li>Leadership and change workshops</li>
+            <li>Creative reflection sessions</li>
+            <li>University lectures</li>
+            <li>Professional development</li>
+            <li>Retreat facilitation</li>
+          </ul>
+        </div>
+
+        <h2>Featured Work</h2>
+
+        <div class="featured-work">
+          <h3>The Last Human Creator</h3>
+
+          <p><em>Journey Into the Unknown</em></p>
+
+          <p>
+            A philosophical novel exploring creativity, consciousness,
+            artificial intelligence, and humanity’s participation in an
+            unfinished universe.
+          </p>
+
+          <p>
+            The story follows David and Felysia across Renaissance Florence,
+            intelligent-machine civilizations, living archives, dreaming
+            planets, ocean worlds, and realities where the boundary between
+            creator and creation begins to disappear.
+          </p>
+
+          <p>
+            <a
+              href="https://www.amazon.com/Last-Human-Creator-Journey-Unknown/dp/B0H82F3HDD"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong>View on Amazon →</strong>
+            </a>
+          </p>
+        </div>
 
         <h2>Selected Initiatives</h2>
 
         <h3>Creative Intelligence World</h3>
+
         <p>
-          Developed an educational research platform exploring creativity, systems thinking, human-centered AI, and organizational learning through original essays, frameworks, and public resources.
+          Founded an educational and professional platform exploring
+          creativity, systems thinking, human-centered AI, organizational
+          learning, and the human capacity to participate intelligently in
+          change.
+        </p>
+
+        <p>
+          The platform brings together original essays, books, educational
+          frameworks, workshops, speaking, and public resources.
         </p>
 
         <h3>Archetype Retreats</h3>
+
         <p>
-          Designed immersive learning environments where participants investigate creativity, reflective practice, dialogue, journaling, and systems thinking as methods for personal transformation and adaptation to complexity.
+          Designed immersive group-learning environments in Bali where
+          participants explore creativity, reflection, dialogue, journaling,
+          nature, and systems thinking as pathways to personal and collective
+          transformation.
         </p>
 
-        <h3>The Last Human Creator</h3>
+        <h3>The Last Human Creator Cinematic Project</h3>
+
         <p>
-          Created a philosophical novel and cinematic short-film series using speculative storytelling as a learning medium for exploring creativity, ethics, artificial intelligence, consciousness, and human identity.
+          Created a philosophical novel and cinematic short-film series using
+          speculative storytelling to explore creativity, ethics, artificial
+          intelligence, consciousness, identity, and humanity’s relationship
+          with the unknown.
         </p>
 
-        <h3>The Alchemy of Change / Painting to Poetry</h3>
+        <h3>The Alchemy of Change</h3>
+
         <p>
-          Authored books exploring second-order change, transformational learning, AI-assisted creativity, symbolism, interpretation, and the relationship between human perception and intelligent systems.
+          Authored a book examining why lasting transformation requires more
+          than solving visible problems. The work explores second-order change,
+          group systems, interpretation, identity, and the structures that
+          generate recurring patterns.
+        </p>
+
+        <h3>Painting to Poetry</h3>
+
+        <p>
+          Authored an exploration of AI-assisted creativity, human perception,
+          interpretation, and the movement from generated imagery toward
+          distinctly human expression.
         </p>
 
         <h2>Professional Experience</h2>
 
-        <h3>Founder & Facilitator — Archetype Retreats</h3>
-        <p><em>2024–Present</em></p>
+        <h3>Founder & Facilitator — Creative Intelligence World</h3>
+
+        <p><em>2026–Present</em></p>
+
         <p>
-          Designed and facilitated experiential learning programs in Bali integrating creativity, reflective inquiry, group dialogue, systems thinking, and transformational learning.
+          Develops workshops, educational resources, essays, books, and
+          facilitated experiences that help individuals and organizations
+          explore creativity, systems awareness, human-centered AI, and
+          transformative learning.
+        </p>
+
+        <h3>Founder & Facilitator — Archetype Retreats</h3>
+
+        <p><em>2024–Present</em></p>
+
+        <p>
+          Designs and facilitates experiential group programs in Bali
+          integrating creativity, reflective inquiry, archetypal exploration,
+          dialogue, systems thinking, nature, journaling, and transformational
+          learning.
         </p>
 
         <h3>University Educator & Curriculum Designer — China</h3>
+
         <p><em>2010–2024</em></p>
+
         <p>
-          Designed and taught university-level courses in English communication, academic writing, cross-cultural communication, and creative thinking across multiple institutions in China.
+          Designed and taught university-level courses in English
+          communication, academic writing, cross-cultural communication,
+          creativity, and reflective learning across multiple institutions in
+          China.
         </p>
 
-        <h2>Learning Philosophy</h2>
-        <div class="quote">
-          “AI should cultivate deeper questions, not merely provide faster answers.”
-        </div>
         <p>
-          Effective learning environments encourage curiosity, dialogue, experimentation, reflection, and systems awareness so learners develop judgment, creativity, and confidence while working alongside intelligent technologies.
+          Created participatory learning environments that encouraged students
+          to develop confidence, intellectual curiosity, independent thought,
+          and greater awareness of their own learning processes.
+        </p>
+
+        <h2>Learning & Facilitation Philosophy</h2>
+
+        <div class="quote">
+          “AI should cultivate deeper questions, not merely provide faster
+          answers.”
+        </div>
+
+        <p>
+          Effective learning environments do more than transfer information.
+          They create the conditions for curiosity, participation, reflection,
+          experimentation, and dialogue.
+        </p>
+
+        <p>
+          My role as a facilitator is not to impose conclusions, but to help a
+          group notice the assumptions, relationships, and patterns shaping its
+          experience. When these structures become visible, new forms of
+          intelligence and collaboration can emerge.
+        </p>
+
+        <h2>Invitation</h2>
+
+        <p>
+          I welcome conversations with universities, schools, foundations,
+          organizations, cultural institutions, retreat centers, and creative
+          teams interested in workshops, group facilitation, speaking,
+          educational design, and collaborative projects.
         </p>
 
         <div class="button-row">
-          <a class="button" href="javascript:window.print()">Download / Print as PDF</a>
+
+          <a class="button" href="/contact.html">
+            Discuss a Workshop
+          </a>
+
+          <a class="button secondary" href="/books.html">
+            View Books
+          </a>
+
+          <a class="button secondary" href="/speaking.html">
+            Speaking
+          </a>
+
+          <a class="button secondary" href="javascript:window.print()">
+            Print / Save as PDF
+          </a>
+
         </div>
+
       </main>
 
     </section>
