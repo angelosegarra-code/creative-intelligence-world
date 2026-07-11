@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Angelo Segarra | Author • Facilitator • Creative Intelligence</title>
+  <title>Angelo Segarra | Author • Facilitator • Human-Centered AI</title>
 
   <meta
     name="description"
-    content="Angelo Segarra is an author, facilitator, educator, artist, and whole systems designer exploring creativity, transformation, human-centered AI, and collective intelligence."
+    content="Angelo Segarra is an author, educator, facilitator, artist, and whole systems designer exploring creativity, human-centered AI, learning, transformation, and collective intelligence."
   />
 
   <style>
@@ -64,18 +64,15 @@
       box-shadow: 0 24px 70px rgba(19, 53, 58, 0.14);
     }
 
-    /* SIDEBAR */
-
     .sidebar {
       padding: 38px 34px;
       color: white;
-      background:
-        linear-gradient(
-          180deg,
-          var(--teal-dark) 0%,
-          var(--teal) 55%,
-          #0f3940 100%
-        );
+      background: linear-gradient(
+        180deg,
+        var(--teal-dark) 0%,
+        var(--teal) 55%,
+        #0f3940 100%
+      );
     }
 
     .portrait-wrap {
@@ -89,7 +86,7 @@
       height: 190px;
       margin: 0 auto;
       object-fit: cover;
-      object-position: center 38%;
+      object-position: center 34%;
       border-radius: 50%;
       border: 2px solid var(--gold-light);
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
@@ -134,22 +131,12 @@
     }
 
     .sidebar-heading {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       margin: 0 0 12px;
       color: var(--gold-light);
       font-size: 17px;
       font-weight: normal;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-    }
-
-    .sidebar-heading .icon {
-      width: 25px;
-      flex: 0 0 25px;
-      text-align: center;
-      font-size: 18px;
     }
 
     .sidebar p,
@@ -161,41 +148,22 @@
 
     .sidebar ul {
       margin: 0;
-      padding-left: 39px;
+      padding-left: 20px;
     }
 
     .sidebar li {
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
-    .contact-item {
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 9px;
-      align-items: start;
-      margin-bottom: 10px;
-    }
-
-    .contact-icon {
-      color: var(--gold-light);
-      text-align: center;
-    }
-
-    .credential {
+    .contact-item,
+    .credential,
+    .highlight {
       margin-bottom: 14px;
-      padding-left: 39px;
     }
 
     .credential strong {
       color: white;
     }
-
-    .highlight {
-      padding-left: 39px;
-      margin-bottom: 14px;
-    }
-
-    /* MAIN */
 
     .main {
       padding: 46px 52px 52px;
@@ -242,21 +210,12 @@
     }
 
     .section-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
       margin: 0 0 18px;
       color: var(--gold);
       font-size: 20px;
       font-weight: normal;
       letter-spacing: 0.035em;
       text-transform: uppercase;
-    }
-
-    .section-title .icon {
-      min-width: 28px;
-      font-size: 22px;
-      text-align: center;
     }
 
     .role-block {
@@ -291,15 +250,6 @@
       color: var(--gold);
       font-size: 16px;
       font-style: italic;
-    }
-
-    .book-list {
-      margin: 6px 0 0;
-      padding-left: 24px;
-    }
-
-    .book-list li {
-      margin-bottom: 8px;
     }
 
     .facilitation-box {
@@ -346,7 +296,6 @@
       border: 1px solid var(--teal-dark);
       border-radius: 999px;
       font-size: 14px;
-      transition: 0.2s ease;
     }
 
     .button.secondary {
@@ -357,10 +306,7 @@
     .button:hover {
       opacity: 0.88;
       text-decoration: none;
-      transform: translateY(-1px);
     }
-
-    /* MOBILE */
 
     @media (max-width: 820px) {
       .page {
@@ -398,8 +344,6 @@
         columns: 1;
       }
     }
-
-    /* PRINT */
 
     @media print {
       @page {
@@ -446,7 +390,6 @@
       }
 
       .sidebar-heading {
-        margin-bottom: 7px;
         font-size: 11px;
       }
 
@@ -454,11 +397,6 @@
       .sidebar li,
       .sidebar a {
         font-size: 8.7px;
-      }
-
-      .credential,
-      .highlight {
-        padding-left: 24px;
       }
 
       h1 {
@@ -530,28 +468,23 @@
         <div class="gold-divider"></div>
 
         <section class="sidebar-section">
-          <h2 class="sidebar-heading">
-            <span class="icon">◉</span>
-            Focus Areas
-          </h2>
+          <h2 class="sidebar-heading">Focus Areas</h2>
 
           <ul>
             <li>Creative Intelligence</li>
+            <li>Human-Centered AI</li>
             <li>Transformation and Change</li>
             <li>Group Facilitation</li>
-            <li>Education and Learning</li>
-            <li>Human-Centered AI</li>
             <li>Systems Thinking</li>
+            <li>Learning Experience Design</li>
+            <li>Narrative Intelligence</li>
           </ul>
         </section>
 
         <div class="gold-divider"></div>
 
         <section class="sidebar-section">
-          <h2 class="sidebar-heading">
-            <span class="icon">◆</span>
-            Education
-          </h2>
+          <h2 class="sidebar-heading">Education</h2>
 
           <div class="credential">
             <strong>M.A. Whole Systems Design</strong><br />
@@ -569,52 +502,70 @@
         <div class="gold-divider"></div>
 
         <section class="sidebar-section">
-          <h2 class="sidebar-heading">
-            <span class="icon">◎</span>
-            Connect
-          </h2>
+          <h2 class="sidebar-heading">Technical Practice</h2>
 
-          <div class="contact-item">
-            <span class="contact-icon">◉</span>
-            <a href="https://creativeintelligence.world">
-              creativeintelligence.world
-            </a>
-          </div>
-
-          <div class="contact-item">
-            <span class="contact-icon">▣</span>
-            <a href="https://creativeintelligence.world/books.html">
-              Books
-            </a>
-          </div>
-
-          <div class="contact-item">
-            <span class="contact-icon">✉</span>
-            <a href="mailto:intinno@icloud.com">
-              intinno@icloud.com
-            </a>
-          </div>
-
-          <div class="contact-item">
-            <span class="contact-icon">◌</span>
-            <a href="https://www.linkedin.com/in/angelo-manuel-segarra">
-              LinkedIn
-            </a>
-          </div>
-
-          <div class="contact-item">
-            <span class="contact-icon">⌖</span>
-            <span>Bali, Indonesia</span>
-          </div>
+          <ul>
+            <li>AI-assisted development</li>
+            <li>Prompt design and iterative prototyping</li>
+            <li>Git and GitHub</li>
+            <li>HTML and CSS</li>
+            <li>Static website development</li>
+            <li>Render deployment</li>
+            <li>Digital learning systems</li>
+            <li>Publishing workflows</li>
+          </ul>
         </section>
 
         <div class="gold-divider"></div>
 
         <section class="sidebar-section">
-          <h2 class="sidebar-heading">
-            <span class="icon">★</span>
-            Highlights
-          </h2>
+          <h2 class="sidebar-heading">Connect</h2>
+
+          <p class="contact-item">
+            <strong>Website</strong><br />
+            <a href="https://creativeintelligence.world">
+              creativeintelligence.world
+            </a>
+          </p>
+
+          <p class="contact-item">
+            <strong>Books</strong><br />
+            <a href="https://creativeintelligence.world/books.html">
+              creativeintelligence.world/books
+            </a>
+          </p>
+
+          <p class="contact-item">
+            <strong>LinkedIn</strong><br />
+            <a href="https://www.linkedin.com/in/angelo-manuel-segarra">
+              linkedin.com/in/angelo-manuel-segarra
+            </a>
+          </p>
+
+          <p class="contact-item">
+            <strong>GitHub Projects</strong><br />
+            <a href="https://github.com/angelosegarra-code">
+              github.com/angelosegarra-code
+            </a>
+          </p>
+
+          <p class="contact-item">
+            <strong>Email</strong><br />
+            <a href="mailto:intinno@icloud.com">
+              intinno@icloud.com
+            </a>
+          </p>
+
+          <p class="contact-item">
+            <strong>Location</strong><br />
+            Bali, Indonesia
+          </p>
+        </section>
+
+        <div class="gold-divider"></div>
+
+        <section class="sidebar-section">
+          <h2 class="sidebar-heading">Highlights</h2>
 
           <p class="highlight">
             Author of books on creativity, change, human expression,
@@ -622,12 +573,12 @@
           </p>
 
           <p class="highlight">
-            Facilitator of retreats, workshops, group dialogue, and
-            experiential learning programs.
+            More than fourteen years of international teaching experience.
           </p>
 
           <p class="highlight">
-            More than fourteen years of international teaching experience.
+            Built and deployed public websites and educational projects using
+            AI-assisted development, GitHub, HTML, CSS, and Render.
           </p>
 
           <p class="highlight">
@@ -636,260 +587,374 @@
         </section>
 
       </aside>
-
       <main class="main">
 
-        <p class="eyebrow">Professional Profile</p>
+  <p class="eyebrow">Professional Profile</p>
 
-        <h1>Angelo Segarra</h1>
+  <h1>Angelo Segarra</h1>
 
-        <div class="title-rule"></div>
+  <div class="title-rule"></div>
 
-        <p class="intro">
-          Angelo Segarra is an author, educator, artist, facilitator, and whole
-          systems designer exploring the intersection of creativity,
-          consciousness, transformation, and human-centered artificial
-          intelligence.
-        </p>
+  <p class="intro">
+    Angelo Segarra is an author, educator, facilitator, artist, and whole
+    systems designer exploring how artificial intelligence can support
+    creativity, reflection, learning, and human flourishing without replacing
+    human judgment.
+  </p>
 
-        <p class="intro">
-          His work brings together systems thinking, reflective practice,
-          storytelling, philosophy, the creative arts, and participatory
-          learning to help individuals and groups navigate change with greater
-          imagination, awareness, and purpose.
-        </p>
+  <p class="intro">
+    His work integrates systems thinking, reflective practice, storytelling,
+    philosophy, the creative arts, participatory learning, and AI-assisted
+    development to help individuals and organizations navigate complexity with
+    greater imagination, awareness, and purpose.
+  </p>
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">●</span>
-            Experience
-          </h2>
+  <section class="section">
 
-          <div class="role-block">
-            <h3>Author</h3>
-            <p>
-              Writes fiction and nonfiction exploring creativity,
-              transformation, perception, artificial intelligence, human
-              expression, and participation in an unfinished world.
-            </p>
-          </div>
+    <h2 class="section-title">
+      Professional Experience
+    </h2>
 
-          <div class="role-block">
-            <h3>Facilitator &amp; Workshop Leader</h3>
-            <p>
-              Designs and leads retreats, workshops, dialogue sessions, and
-              experiential learning programs for groups in Bali and
-              internationally.
-            </p>
-          </div>
+    <div class="role-block">
+      <h3>Author</h3>
 
-          <div class="role-block">
-            <h3>Educator</h3>
-            <p>
-              More than fourteen years of experience teaching communication,
-              academic writing, creativity, reflection, and cross-cultural
-              learning in China.
-            </p>
-          </div>
+      <p>
+        Author of books exploring creativity, transformation, consciousness,
+        human-centered artificial intelligence, and humanity's relationship
+        with the unknown.
+      </p>
+    </div>
 
-          <div class="role-block">
-            <h3>Whole Systems Designer</h3>
-            <p>
-              Applies systems thinking and second-order change principles to
-              education, leadership, creativity, group process, and personal
-              transformation.
-            </p>
-          </div>
-        </section>
+    <div class="role-block">
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">◆</span>
-            Featured Work
-          </h2>
+      <h3>AI-Assisted Builder & Digital Project Developer</h3>
 
-          <div class="featured-book">
-            <h3>The Last Human Creator</h3>
+      <p>
+        Designs and builds educational websites, publishing workflows,
+        interactive learning experiences, and public resources using
+        generative AI, GitHub, HTML, CSS, and cloud deployment platforms.
+      </p>
 
-            <p class="book-subtitle">Journey Into the Unknown</p>
+    </div>
 
-            <p>
-              A philosophical novel exploring creativity, consciousness,
-              artificial intelligence, and humanity’s participation in an
-              unfinished universe.
-            </p>
+    <div class="role-block">
 
-            <p>
-              The story moves from Renaissance Florence into intelligent
-              machine civilizations, living archives, dreaming planets, ocean
-              worlds, and realities where the boundary between creator and
-              creation begins to disappear.
-            </p>
+      <h3>Facilitator & Workshop Leader</h3>
 
-            <p>
-              <a
-                href="https://www.amazon.com/Last-Human-Creator-Journey-Unknown/dp/B0H82F3HDD"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <strong>View on Amazon →</strong>
-              </a>
-            </p>
-          </div>
-        </section>
+      <p>
+        Designs and facilitates immersive workshops, retreats, dialogue,
+        and experiential learning programs exploring creativity,
+        systems thinking, reflective practice, and human development.
+      </p>
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">▣</span>
-            Selected Books
-          </h2>
+    </div>
 
-          <ul class="book-list">
-            <li>
-              <em>The Last Human Creator: Journey Into the Unknown</em>
-            </li>
-            <li>
-              <em>The Alchemy of Change</em>
-            </li>
-            <li>
-              <em>Painting to Poetry: From AI to Human Expression</em>
-            </li>
-            <li>
-              <em>Your Story Is You: Why Not Create a Great One?</em>
-            </li>
-            <li>
-              The Dreamer, Observer, Alchemist, and Visionary journals
-            </li>
-          </ul>
-        </section>
+    <div class="role-block">
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">◎</span>
-            Facilitation &amp; Collaboration
-          </h2>
+      <h3>University Educator & Curriculum Designer</h3>
 
-          <div class="facilitation-box">
-            <p>
-              Angelo is available to facilitate workshops, retreats,
-              professional learning programs, university conversations, and
-              small-group experiences for organizations, schools, creative
-              teams, communities, and cultural institutions.
-            </p>
+      <p>
+        More than fourteen years of university teaching experience in
+        China, designing courses in communication, academic writing,
+        creativity, reflection, and cross-cultural learning.
+      </p>
 
-            <p>
-              His facilitation creates space for participants to slow down,
-              examine the patterns shaping their choices, engage uncertainty
-              constructively, and discover new possibilities together.
-            </p>
+    </div>
 
-            <ul class="facilitation-list">
-              <li>Creative Intelligence workshops</li>
-              <li>Human-centered AI conversations</li>
-              <li>Systems thinking programs</li>
-              <li>Leadership and change workshops</li>
-              <li>Reflective group dialogue</li>
-              <li>University lectures</li>
-              <li>Professional development</li>
-              <li>Retreat facilitation</li>
-            </ul>
-          </div>
-        </section>
+    <div class="role-block">
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">◇</span>
-            Selected Initiatives
-          </h2>
+      <h3>Whole Systems Designer</h3>
 
-          <div class="role-block">
-            <h3>Creative Intelligence World</h3>
-            <p>
-              A public platform bringing together original essays, books,
-              educational frameworks, speaking, facilitation, and resources
-              exploring creativity, human-centered AI, systems thinking, and
-              transformational learning.
-            </p>
-          </div>
+      <p>
+        Applies second-order change, systems thinking, and participatory
+        design to education, organizations, leadership, and
+        human-AI collaboration.
+      </p>
 
-          <div class="role-block">
-            <h3>Archetype Retreats</h3>
-            <p>
-              Immersive learning environments in Bali integrating creativity,
-              reflection, dialogue, journaling, nature, archetypal exploration,
-              and systems thinking.
-            </p>
-          </div>
+    </div>
 
-          <div class="role-block">
-            <h3>The Last Human Creator Cinematic Project</h3>
-            <p>
-              A cinematic short-film series extending the novel into visual
-              storytelling about creativity, consciousness, artificial
-              intelligence, wonder, and humanity’s journey into the unknown.
-            </p>
-          </div>
-        </section>
+  </section>
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">●</span>
-            Approach
-          </h2>
+  <section class="section">
 
-          <div class="quote">
-            “AI should cultivate deeper questions, not merely provide faster
-            answers.”
-          </div>
+    <h2 class="section-title">
+      Featured Work
+    </h2>
 
-          <p>
-            Angelo’s approach is participatory, experiential, and
-            systems-oriented. He does not begin by imposing solutions. He helps
-            individuals and groups notice the assumptions, relationships, and
-            recurring patterns shaping their experience.
-          </p>
+    <div class="featured-book">
 
-          <p>
-            When those patterns become visible, creativity and collective
-            intelligence can emerge in new ways.
-          </p>
-        </section>
+      <h3>The Last Human Creator</h3>
 
-        <section class="section">
-          <h2 class="section-title">
-            <span class="icon">✦</span>
-            Invitation
-          </h2>
+      <p class="book-subtitle">
+        Journey Into the Unknown
+      </p>
 
-          <p>
-            Angelo welcomes conversations with universities, schools,
-            organizations, foundations, cultural institutions, retreat
-            centers, and creative teams interested in workshops, facilitation,
-            speaking, educational design, and collaborative projects.
-          </p>
+      <p>
 
-          <div class="button-row">
-            <a class="button" href="/contact.html">
-              Discuss a Workshop
-            </a>
+        A philosophical novel exploring creativity, consciousness,
+        artificial intelligence, and humanity's participation in
+        an unfinished universe.
 
-            <a class="button secondary" href="/books.html">
-              View Books
-            </a>
+      </p>
 
-            <a class="button secondary" href="/speaking.html">
-              Speaking
-            </a>
+      <p>
 
-            <a class="button secondary" href="javascript:window.print()">
-              Print / Save as PDF
-            </a>
-          </div>
-        </section>
+        Moving from Renaissance Florence into intelligent-machine
+        civilizations, living archives, dreaming planets,
+        and ocean worlds, the story asks one question:
 
-      </main>
+      </p>
 
-    </section>
-  </div>
+      <p>
+
+        <strong>
+        What cannot be replicated?
+        </strong>
+
+      </p>
+
+      <p>
+
+        <a
+        href="https://www.amazon.com/Last-Human-Creator-Journey-Unknown/dp/B0H82F3HDD"
+        target="_blank">
+
+        <strong>Available on Amazon →</strong>
+
+        </a>
+
+      </p>
+
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2 class="section-title">
+      Selected Books
+    </h2>
+
+    <ul>
+
+      <li>
+        <em>The Last Human Creator: Journey Into the Unknown</em>
+      </li>
+
+      <li>
+        <em>The Alchemy of Change</em>
+      </li>
+
+      <li>
+        <em>Painting to Poetry: From AI to Human Expression</em>
+      </li>
+
+      <li>
+        <em>Your Story Is You</em>
+      </li>
+
+      <li>
+        The Dreamer, Observer, Alchemist and Visionary Journals
+      </li>
+
+    </ul>
+
+  </section>
+   <section class="section">
+
+    <h2 class="section-title">
+      Facilitation & Collaboration
+    </h2>
+
+    <div class="facilitation-box">
+
+      <p>
+
+        I facilitate workshops, retreats, professional development,
+        university seminars, and learning experiences that help people
+        think more creatively, navigate complexity, and work more
+        effectively alongside artificial intelligence.
+
+      </p>
+
+      <p>
+
+        Rather than simply presenting information, I design environments
+        where participants can explore questions together, examine the
+        assumptions shaping their thinking, and discover new possibilities
+        through dialogue, reflection, and creative practice.
+
+      </p>
+
+      <ul class="facilitation-list">
+
+        <li>Creative Intelligence Workshops</li>
+
+        <li>Human-Centered AI</li>
+
+        <li>Systems Thinking</li>
+
+        <li>Leadership & Change</li>
+
+        <li>University Lectures</li>
+
+        <li>Professional Development</li>
+
+        <li>Retreat Facilitation</li>
+
+        <li>Educational Consulting</li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2 class="section-title">
+      Creative Intelligence World
+    </h2>
+
+    <div class="role-block">
+
+      <h3>Founder</h3>
+
+      <p>
+
+        Creative Intelligence World is an educational platform exploring
+        creativity, human-centered artificial intelligence, systems
+        thinking, learning, and the future of human development.
+
+      </p>
+
+      <p>
+
+        The project integrates books, essays, educational resources,
+        speaking, workshops, cinematic storytelling, and interactive
+        learning experiences into one evolving body of work.
+
+      </p>
+
+    </div>
+
+    <div class="role-block">
+
+      <h3>Archetype Retreats</h3>
+
+      <p>
+
+        Designed immersive learning retreats in Bali combining creativity,
+        journaling, dialogue, nature, systems thinking, and reflective
+        practice to help participants reconnect with purpose and
+        possibility.
+
+      </p>
+
+    </div>
+
+    <div class="role-block">
+
+      <h3>The Last Human Creator Cinematic Project</h3>
+
+      <p>
+
+        Developing a series of cinematic short films extending
+        <em>The Last Human Creator</em> into a visual exploration of
+        creativity, consciousness, wonder, and humanity's journey into
+        the unknown.
+
+      </p>
+
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2 class="section-title">
+      Human-Centered AI
+    </h2>
+
+    <div class="quote">
+
+      “AI should cultivate deeper questions,
+      not merely provide faster answers.”
+
+    </div>
+
+    <p>
+
+      My work explores how AI can expand human creativity rather than
+      replace it. I am particularly interested in designing systems that
+      preserve curiosity, reflection, imagination, and human judgment.
+
+    </p>
+
+    <p>
+
+      Through books, educational experiences, and digital projects, I
+      investigate how people and intelligent systems can participate
+      together in solving meaningful problems while strengthening,
+      rather than diminishing, human agency.
+
+    </p>
+
+  </section>
+
+  <section class="section">
+
+    <h2 class="section-title">
+      Invitation
+    </h2>
+
+    <p>
+
+      I welcome opportunities to collaborate with AI organizations,
+      universities, schools, foundations, cultural institutions,
+      retreat centers, and creative teams interested in creativity,
+      learning, facilitation, human-centered AI, and transformational
+      education.
+
+    </p>
+
+    <div class="button-row">
+
+      <a class="button"
+         href="/contact.html">
+         Discuss a Project
+      </a>
+
+      <a class="button secondary"
+         href="/books.html">
+         View Books
+      </a>
+
+      <a class="button secondary"
+         href="/speaking.html">
+         Speaking
+      </a>
+
+      <a class="button secondary"
+         href="https://github.com/angelosegarra-code">
+         GitHub
+      </a>
+
+      <a class="button secondary"
+         href="javascript:window.print()">
+         Print / Save as PDF
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+</section>
+
+</div>
+
 </body>
+
 </html>
