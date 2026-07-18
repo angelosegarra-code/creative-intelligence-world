@@ -1555,46 +1555,4 @@ button:focus-visible {
     font-size: 0.8rem;
   }
 }
-/* EMERGENCY HOMEPAGE RESET */
 
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.navbar,
-.hero,
-main,
-section,
-footer {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-.hero {
-  display: block !important;
-  min-height: auto !important;
-  padding: 150px 7% 90px !important;
-}
-
-.hero-content {
-  display: block !important;
-  position: relative !important;
-  width: 100% !important;
-  max-width: 760px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-  transform: none !important;
-}
-
-.hero-visual {
-  display: none !important;
-}
