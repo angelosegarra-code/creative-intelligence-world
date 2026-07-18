@@ -1315,19 +1315,17 @@ button.innerHTML="Preparing Your Journey...";
 button.style.background="#c8a96a";
 
 });
-  window.addEventListener("mousemove",(e)=>{
+
+window.addEventListener("mousemove",(e)=>{
 
 const x=e.clientX/window.innerWidth;
-
 const y=e.clientY/window.innerHeight;
 
 spiral.style.left=`calc(50% + ${(x-.5)*20}px)`;
-
 spiral.style.top=`calc(50% + ${(y-.5)*20}px)`;
 
 });
 
 </script>
-
 </body>
 </html>
