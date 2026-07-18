@@ -322,3 +322,37 @@ document.addEventListener("DOMContentLoaded", function () {
     passive: true
   });
 });
+/* Creative Intelligence Hero 2.0 interaction */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const visual = document.querySelector(".ci2-visual");
+  const archetypes = document.querySelectorAll(".ci2-archetype");
+
+  if (!visual || archetypes.length === 0) {
+    return;
+  }
+
+  archetypes.forEach((archetype) => {
+    const name = archetype.dataset.archetype;
+
+    archetype.addEventListener("mouseenter", () => {
+      visual.dataset.active = name;
+      archetype.classList.add("is-active");
+    });
+
+    archetype.addEventListener("mouseleave", () => {
+      delete visual.dataset.active;
+      archetype.classList.remove("is-active");
+    });
+
+    archetype.addEventListener("focus", () => {
+      visual.dataset.active = name;
+      archetype.classList.add("is-active");
+    });
+
+    archetype.addEventListener("blur", () => {
+      delete visual.dataset.active;
+      archetype.classList.remove("is-active");
+    });
+  });
+});
