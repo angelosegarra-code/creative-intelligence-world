@@ -1339,3 +1339,17 @@ button:focus-visible {
     transform: none;
   }
 }
+.spiral-svg{
+    width:130px;
+    height:130px;
+    animation:spiralSpin 18s linear infinite;
+}
+
+@keyframes spiralSpin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
