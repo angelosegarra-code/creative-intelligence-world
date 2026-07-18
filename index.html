@@ -70,18 +70,35 @@ Founding Members
 
           <svg viewBox="0 0 600 600" aria-hidden="true">
 
-            <path
-              d="M300 300
-              C300 235 365 200 420 235
-              C485 277 476 377 408 423
-              C321 482 195 445 144 345
-              C85 229 151 91 281 58
-              C426 22 565 127 577 275"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="9"
-              stroke-linecap="round"
-            />
+<path
+    id="creativeSpiralPath"
+    d="M300 300
+    ...
+/>
+
+<circle
+    cx="300"
+    cy="300"
+    r="13"
+    fill="currentColor"
+/>
+
+<circle class="spiral-particle"
+        r="11"
+        fill="#d5af62">
+
+    <animateMotion
+        dur="9s"
+        repeatCount="indefinite"
+        rotate="auto">
+
+        <mpath href="#creativeSpiralPath"></mpath>
+
+    </animateMotion>
+
+</circle>
+
+</svg>
 
             <circle
               cx="300"
