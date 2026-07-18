@@ -1555,4 +1555,102 @@ button:focus-visible {
     font-size: 0.8rem;
   }
 }
+.cube-hero-visual {
+  position: relative !important;
+  width: 520px !important;
+  height: 520px !important;
+  min-width: 520px !important;
+  min-height: 520px !important;
+  margin: 0 auto !important;
+  perspective: 1000px !important;
+}
 
+.cube-scene {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 250px !important;
+  height: 250px !important;
+  transform: translate(-50%, -50%) !important;
+  transform-style: preserve-3d !important;
+}
+
+.cube-object {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform-style: preserve-3d !important;
+  animation: innerCubeRotation 24s linear infinite !important;
+}
+
+.cube-face {
+  position: absolute !important;
+  top: 25px !important;
+  left: 25px !important;
+  width: 200px !important;
+  height: 200px !important;
+  border: 2px solid #c8a96a !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+
+.cube-front {
+  transform: translateZ(100px) !important;
+}
+
+.cube-back {
+  transform: rotateY(180deg) translateZ(100px) !important;
+}
+
+.cube-right {
+  transform: rotateY(90deg) translateZ(100px) !important;
+}
+
+.cube-left {
+  transform: rotateY(-90deg) translateZ(100px) !important;
+}
+
+.cube-top {
+  transform: rotateX(90deg) translateZ(100px) !important;
+}
+
+.cube-bottom {
+  transform: rotateX(-90deg) translateZ(100px) !important;
+}
+
+.cube-label {
+  position: absolute !important;
+}
+
+.label-dreamer {
+  top: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.label-observer {
+  top: 50% !important;
+  left: 5px !important;
+  transform: translateY(-50%) !important;
+}
+
+.label-alchemist {
+  bottom: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.label-visionary {
+  top: 50% !important;
+  right: 5px !important;
+  transform: translateY(-50%) !important;
+}
+
+@keyframes innerCubeRotation {
+  from {
+    transform: rotateX(-16deg) rotateY(0deg);
+  }
+
+  to {
+    transform: rotateX(-16deg) rotateY(360deg);
+  }
+}
