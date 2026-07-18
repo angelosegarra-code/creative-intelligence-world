@@ -1,523 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Creative Intelligence Platform | Personalized Learning for the Age of AI</title>
 
 <meta name="description"
-content="Discover how AI can personalize learning through the Creative Intelligence Platform and the InnerCube Framework.">
+content="Personalized learning powered by the InnerCube Framework and Artificial Intelligence.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-
-:root{
-
---bg:#f8f6f2;
---card:#ffffff;
---text:#1f2937;
---muted:#6b7280;
---gold:#c8a96a;
---teal:#0f766e;
---line:#ece7df;
-
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-
-font-family:'Inter',sans-serif;
-
-background:var(--bg);
-
-color:var(--text);
-
-overflow-x:hidden;
-
-line-height:1.6;
-
-}
-
-section{
-
-padding:120px 8%;
-
-position:relative;
-
-}
-
-.container{
-
-max-width:1300px;
-
-margin:auto;
-
-}
-
-h1{
-
-font-size:clamp(3.4rem,8vw,6.6rem);
-
-font-weight:800;
-
-line-height:1.02;
-
-letter-spacing:-2px;
-
-}
-
-h2{
-
-font-size:clamp(2.4rem,5vw,4rem);
-
-font-weight:700;
-
-margin-bottom:25px;
-
-letter-spacing:-1px;
-
-}
-
-h3{
-
-font-size:1.5rem;
-
-font-weight:700;
-
-margin-bottom:15px;
-
-}
-
-p{
-
-font-size:1.12rem;
-
-color:var(--muted);
-
-max-width:760px;
-
-}
-
-a{
-
-text-decoration:none;
-
-color:inherit;
-
-}
-  nav{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-right:0;
-
-z-index:9999;
-
-background:rgba(248,246,242,.82);
-
-backdrop-filter:blur(18px);
-
-border-bottom:1px solid rgba(0,0,0,.04);
-
-}
-
-.nav-inner{
-
-max-width:1400px;
-
-margin:auto;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:18px 40px;
-
-}
-
-.logo{
-
-font-size:1.3rem;
-
-font-weight:700;
-
-letter-spacing:-.5px;
-
-}
-
-.logo span{
-
-color:var(--gold);
-
-}
-
-.menu{
-
-display:flex;
-
-gap:36px;
-
-font-weight:500;
-
-}
-
-.menu a{
-
-transition:.35s;
-
-}
-
-.menu a:hover{
-
-color:var(--teal);
-
-}
-
-.hero{
-
-height:100vh;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-overflow:hidden;
-
-position:relative;
-
-}
-
-.hero-content{
-
-position:relative;
-
-z-index:5;
-
-max-width:900px;
-
-}
-
-.hero p{
-
-margin:30px auto;
-
-font-size:1.3rem;
-
-}
-
-.button{
-
-display:inline-block;
-
-padding:18px 38px;
-
-background:var(--teal);
-
-color:white;
-
-border-radius:999px;
-
-font-weight:600;
-
-transition:.35s;
-
-box-shadow:0 15px 40px rgba(15,118,110,.18);
-
-}
-
-.button:hover{
-
-transform:translateY(-4px);
-
-box-shadow:0 25px 55px rgba(15,118,110,.30);
-
-}
-  .spiral{
-
-position:absolute;
-
-width:520px;
-
-height:520px;
-
-left:50%;
-
-top:50%;
-
-transform:translate(-50%,-50%);
-
-opacity:.12;
-
-pointer-events:none;
-
-}
-
-.fade{
-
-opacity:0;
-
-transform:translateY(50px);
-
-transition:all 1s ease;
-
-}
-
-.fade.show{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-.cards{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-
-gap:40px;
-
-margin-top:70px;
-
-}
-
-.card{
-
-background:white;
-
-padding:45px;
-
-border-radius:24px;
-
-border:1px solid var(--line);
-
-transition:.4s;
-
-}
-
-.card:hover{
-
-transform:translateY(-10px);
-
-box-shadow:0 25px 60px rgba(0,0,0,.08);
-
-}
-
-.center{
-
-text-align:center;
-
-margin:auto;
-
-}
-
-.gold{
-
-color:var(--gold);
-
-}
-
-.teal{
-
-color:var(--teal);
-
-}
-  /* ------------------------------
-   CINEMATIC MOTION
------------------------------- */
-
-/* ------------------------------
-   CINEMATIC MOTION
------------------------------- */
-
-body.journey-active {
-  overflow: hidden;
-}
-
-nav {
-  transition:
-    transform .5s ease,
-    opacity .5s ease,
-    background .5s ease;
-}
-
-nav.nav-hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-.hero {
-  isolation: isolate;
-}
-
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: .28;
-  pointer-events: none;
-}
-
-.hero::before {
-  width: 460px;
-  height: 460px;
-  top: 5%;
-  left: -120px;
-  background: rgba(15, 118, 110, .18);
-  animation: ambientFloatOne 14s ease-in-out infinite;
-}
-
-.hero::after {
-  width: 520px;
-  height: 520px;
-  right: -160px;
-  bottom: -100px;
-  background: rgba(200, 169, 106, .22);
-  animation: ambientFloatTwo 17s ease-in-out infinite;
-}
-
-@keyframes ambientFloatOne {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(80px, 50px, 0);
-  }
-}
-
-@keyframes ambientFloatTwo {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(-80px, -40px, 0);
-  }
-}
-
-.spiral {
-  animation: spiralFloat 9s ease-in-out infinite;
-  transition:
-    transform 1.4s cubic-bezier(.22, 1, .36, 1),
-    opacity 1s ease,
-    width 1.4s ease,
-    height 1.4s ease;
-}
-
-.spiral svg {
-  animation: spiralRotate 32s linear infinite;
-}
-
-@keyframes spiralRotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spiralFloat {
-  0%, 100% {
-    margin-top: 0;
-  }
-
-  50% {
-    margin-top: -18px;
-  }
-}
-
-.hero-title-line {
-  display: block;
-  overflow: hidden;
-}
-
-.hero-title-line span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(110%);
-  animation: titleReveal 1.15s cubic-bezier(.22, 1, .36, 1) forwards;
-}
-
-.hero-title-line:nth-child(2) span {
-  animation-delay: .
-  50
-  @media(max-width:900px){
-
-.menu{
-
-display:none;
-
-}
-
-section{
-
-padding:90px 8%;
-
-}
-
-h1{
-
-font-size:3rem;
-
-}
-
-.hero{
-
-padding:120px 20px;
-
-}
-
-}
-
-</style>
+<link rel="stylesheet" href="styles.css">
 
 </head>
 
-  <nav>
+<body>
 
-<div class="nav-inner">
+<nav class="navbar">
 
-<div class="logo">
+<div class="nav-container">
 
+<a href="#" class="logo">
 Creative <span>Intelligence</span>
+</a>
 
-</div>
-
-<div class="menu">
+<div class="nav-links">
 
 <a href="#platform">Platform</a>
 
@@ -527,7 +38,11 @@ Creative <span>Intelligence</span>
 
 <a href="#founder">Founder</a>
 
-<a href="#join">Founding Members</a>
+<a class="nav-button" href="#join">
+
+Founding Members
+
+</a>
 
 </div>
 
@@ -539,27 +54,48 @@ Creative <span>Intelligence</span>
 
 <div class="spiral">
 
-<!-- We'll animate a gold spiral in Part 4 -->
+<svg viewBox="0 0 600 600">
 
-<svg viewBox="0 0 500 500" width="100%" height="100%">
-<circle cx="250" cy="250" r="210"
-stroke="#C8A96A"
-stroke-width="2"
+<path
+
+d="M300 300
+C300 235 365 200 420 235
+C485 277 476 377 408 423
+C321 482 195 445 144 345
+C85 229 151 91 281 58
+C426 22 565 127 577 275"
+
 fill="none"
-opacity=".4"/>
+
+stroke="#C8A96A"
+
+stroke-width="5"
+
+stroke-linecap="round"/>
+
+<circle
+cx="300"
+cy="300"
+r="10"
+fill="#C8A96A"/>
+
 </svg>
 
 </div>
 
 <div class="hero-content">
 
+<p class="eyebrow">
+
+Creative Intelligence Platform
+
+</p>
+
 <h1>
 
 Personalized Learning
 
-<br>
-
-<span class="gold">
+<span>
 
 For the Age of AI
 
@@ -567,13 +103,15 @@ For the Age of AI
 
 </h1>
 
-<p>
+<p class="hero-text">
 
 Every learner thinks differently.
 
-Artificial Intelligence now makes it possible to create learning experiences designed specifically for the individual instead of the average.
+Artificial Intelligence now makes it possible to design learning around the individual instead of the average.
 
 </p>
+
+<div class="hero-buttons">
 
 <a href="#story" class="button">
 
@@ -581,198 +119,101 @@ Begin Your Journey
 
 </a>
 
-</div>
+<a href="#platform"
 
-</header>
-<nav>
+class="button secondary">
 
-<div class="nav-inner">
-
-<div class="logo">
-
-Creative <span>Intelligence</span>
-
-</div>
-
-<div class="menu">
-
-<a href="#platform">Platform</a>
-
-<a href="#framework">Framework</a>
-
-<a href="#research">Research</a>
-
-<a href="#founder">Founder</a>
-
-<a href="#join">Founding Members</a>
-
-</div>
-
-</div>
-
-</nav>
-
-<header class="hero">
-
-<div class="spiral">
-
-<!-- We'll animate a gold spiral in Part 4 -->
-
-<svg viewBox="0 0 500 500" width="100%" height="100%">
-<circle cx="250" cy="250" r="210"
-stroke="#C8A96A"
-stroke-width="2"
-fill="none"
-opacity=".4"/>
-</svg>
-
-</div>
-
-<div class="hero-content fade">
-
-<h1>
-
-Personalized Learning
-
-<br>
-
-<span class="gold">
-
-For the Age of AI
-
-</span>
-
-</h1>
-
-<p>
-
-Every learner thinks differently.
-
-Artificial Intelligence now makes it possible to create learning experiences designed specifically for the individual instead of the average.
-
-</p>
-
-<a href="#story" class="button">
-
-Begin Your Journey
+See How It Works
 
 </a>
 
 </div>
 
+</div>
+
 </header>
 
-  <section id="framework">
+  <main>
 
-<div class="container">
+<!-- STORY -->
 
-<div class="center fade">
+<section class="statement" id="story">
+
+<div class="container center">
+
+<p class="eyebrow">
+The Opportunity
+</p>
 
 <h2>
 
-The InnerCube Framework
+Every learner thinks differently.
 
 </h2>
 
-<p>
+<p class="lead">
 
-Four complementary ways of participating in creativity.
+Yet education has traditionally been designed for the average learner.
 
-Every learner possesses each of these capacities, but develops them in unique ways.
+Artificial Intelligence now makes it possible to create learning that adapts to each individual instead of expecting every individual to adapt to the system.
 
 </p>
 
 </div>
 
+</section>
+
+<!-- PROBLEM -->
+
+<section class="problem">
+
+<div class="container">
 
 <div class="cards">
 
-<div class="card fade">
+<div class="card">
 
-<h3 class="gold">
+<div class="number">01</div>
 
-Dreamer
-
-</h3>
+<h3>One Curriculum</h3>
 
 <p>
 
-Imagination.
-
-Possibility.
-
-Curiosity.
-
-The capacity to generate ideas that do not yet exist.
+Different learners are expected to follow the same educational path regardless of how they naturally think.
 
 </p>
 
 </div>
 
+<div class="card">
 
-<div class="card fade">
+<div class="number">02</div>
 
-<h3 class="teal">
-
-Observer
-
-</h3>
+<h3>One Pace</h3>
 
 <p>
 
-Attention.
+Some learners become bored.
 
-Reflection.
+Others become discouraged.
 
-Awareness.
-
-Learning begins by noticing what others overlook.
+Many assume they simply are not intelligent.
 
 </p>
 
 </div>
 
+<div class="card">
 
-<div class="card fade">
+<div class="number">03</div>
 
-<h3 class="gold">
-
-Alchemist
-
-</h3>
+<h3>One Definition</h3>
 
 <p>
 
-Transformation.
+When education measures only one kind of intelligence,
 
-Experimentation.
-
-Growth.
-
-Ideas become meaningful through experience.
-
-</p>
-
-</div>
-
-
-<div class="card fade">
-
-<h3 class="teal">
-
-Visionary
-
-</h3>
-
-<p>
-
-Purpose.
-
-Direction.
-
-Future thinking.
-
-Creativity becomes contribution.
+many forms of creativity remain invisible.
 
 </p>
 
@@ -783,34 +224,68 @@ Creativity becomes contribution.
 </div>
 
 </section>
+
+<!-- TRANSITION -->
+
+<section class="statement">
+
+<div class="container center">
+
+<h2>
+
+What if education adapted to the learner...
+
+instead of asking the learner to adapt to education?
+
+</h2>
+
+</div>
+
+</section>
+
+<!-- FRAMEWORK -->
+
 <section id="framework">
 
 <div class="container">
 
-<div class="center fade">
+<div class="center">
 
-<h2>
+<p class="eyebrow">
 
 The InnerCube Framework
 
+</p>
+
+<h2>
+
+Four capacities.
+
+One evolving intelligence.
+
 </h2>
 
-<p>
+<p class="lead">
 
-Four complementary ways of participating in creativity.
+Every learner possesses all four capacities,
 
-Every learner possesses each of these capacities, but develops them in unique ways.
+but each person develops them in a unique way.
 
 </p>
 
 </div>
 
+<div class="framework-grid">
 
-<div class="cards">
+<div class="framework-card">
 
-<div class="card fade">
+<div class="framework-icon">
 
-<h3 class="gold">
+✦
+
+</div>
+
+<h3>
 
 Dreamer
 
@@ -820,20 +295,25 @@ Dreamer
 
 Imagination.
 
-Possibility.
-
 Curiosity.
 
-The capacity to generate ideas that do not yet exist.
+Possibility.
+
+The ability to see what does not yet exist.
 
 </p>
 
 </div>
 
+<div class="framework-card">
 
-<div class="card fade">
+<div class="framework-icon">
 
-<h3 class="teal">
+◉
+
+</div>
+
+<h3>
 
 Observer
 
@@ -847,16 +327,21 @@ Reflection.
 
 Awareness.
 
-Learning begins by noticing what others overlook.
+The capacity to understand deeply.
 
 </p>
 
 </div>
 
+<div class="framework-card">
 
-<div class="card fade">
+<div class="framework-icon">
 
-<h3 class="gold">
+◇
+
+</div>
+
+<h3>
 
 Alchemist
 
@@ -864,22 +349,25 @@ Alchemist
 
 <p>
 
-Transformation.
-
 Experimentation.
 
-Growth.
+Transformation.
 
-Ideas become meaningful through experience.
+Learning through experience.
 
 </p>
 
 </div>
 
+<div class="framework-card">
 
-<div class="card fade">
+<div class="framework-icon">
 
-<h3 class="teal">
+↗
+
+</div>
+
+<h3>
 
 Visionary
 
@@ -891,9 +379,7 @@ Purpose.
 
 Direction.
 
-Future thinking.
-
-Creativity becomes contribution.
+Creating a better future.
 
 </p>
 
@@ -905,247 +391,362 @@ Creativity becomes contribution.
 
 </section>
 
-  <!-- PRODUCT -->
+    <!-- PLATFORM -->
 
-<section id="demo">
-
-<div class="container">
-
-<div class="center fade">
-
-<h2>
-
-See Personalized Learning in Action
-
-</h2>
-
-<p>
-
-Every learning journey begins with reflection. From there, AI helps identify patterns, strengths, opportunities, and personalized next steps.
-
-</p>
-
-</div>
-
-<div class="cards">
-
-<div class="card fade">
-
-<h3>1. Reflection</h3>
-
-<p>
-
-Learners respond to thoughtful questions about how they approach learning, creativity, and problem solving.
-
-</p>
-
-</div>
-
-<div class="card fade">
-
-<h3>2. AI Analysis</h3>
-
-<p>
-
-The platform analyzes relationships across responses rather than simply assigning a score.
-
-</p>
-
-</div>
-
-<div class="card fade">
-
-<h3>3. Personalized Journey</h3>
-
-<p>
-
-Instead of a label, learners receive a customized learning pathway designed specifically for them.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-  <section>
+<section id="platform">
 
 <div class="container">
 
-<div class="center fade">
+<div class="center">
+
+<p class="eyebrow">
+
+The Platform
+
+</p>
 
 <h2>
 
-Your Creative Intelligence Dashboard
+AI becomes a guide,
+not a replacement.
 
 </h2>
 
+<p class="lead">
+
+Reflection becomes understanding.
+
+Understanding becomes a personalized journey.
+
+</p>
+
 </div>
 
-<div class="card fade" style="margin-top:60px;padding:60px;">
+<div class="platform-window">
 
-<div style="display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;">
+<div class="sidebar">
+
+<h4>
+
+Creative Intelligence
+
+</h4>
+
+<div class="menu-item active">
+
+Overview
+
+</div>
+
+<div class="menu-item">
+
+Profile
+
+</div>
+
+<div class="menu-item">
+
+Journey
+
+</div>
+
+<div class="menu-item">
+
+Reflections
+
+</div>
+
+<div class="menu-item">
+
+Growth
+
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<div class="dashboard-header">
 
 <div>
 
-<h3>Creative Intelligence Profile</h3>
+<p class="small">
 
-<p>
-
-✓ Dominant learning tendencies
-
-<br><br>
-
-✓ Reflection insights
-
-<br><br>
-
-✓ Growth opportunities
-
-<br><br>
-
-✓ AI coaching recommendations
-
-<br><br>
-
-✓ Personalized learning journey
+Welcome Back
 
 </p>
 
+<h3>
+
+Your Creative Intelligence Profile
+
+</h3>
+
 </div>
 
-<div>
+<div class="status">
 
-<div style="height:280px;
-border-radius:18px;
-background:linear-gradient(135deg,#ffffff,#f1f5f9);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:1.3rem;
-color:#6b7280;">
-
-Interactive Dashboard Preview
+Analyzing Reflections...
 
 </div>
 
 </div>
 
-</div>
+<div class="dashboard-grid">
 
-</div>
+<div class="panel">
 
-</div>
+<h3>
 
-</section>
+Creative Intelligence Pattern
 
-  <section>
-
-<div class="container">
-
-<div class="center fade">
-
-<h2>
-
-Every learner follows a different path.
-
-</h2>
-
-</div>
-
-<div class="cards">
-
-<div class="card fade">
-
-<h3>Discover</h3>
+</h3>
 
 <p>
 
-Understand how you naturally approach learning.
+Your profile indicates strong imaginative and reflective capacities with emerging transformational strengths.
 
 </p>
 
-</div>
+<div class="progress">
 
-<div class="card fade">
+<label>
 
-<h3>Reflect</h3>
+Dreamer
 
-<p>
+<span>
 
-Receive AI-supported questions that deepen awareness.
-
-</p>
-
-</div>
-
-<div class="card fade">
-
-<h3>Practice</h3>
-
-<p>
-
-Complete activities tailored to your learning style.
-
-</p>
-
-</div>
-
-<div class="card fade">
-
-<h3>Grow</h3>
-
-<p>
-
-Track how your thinking evolves over time.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-  <section id="founder">
-
-<div class="container">
-
-<div class="center fade">
-
-<h2>
-
-Built by
-
-<br>
-
-<span class="gold">
-
-Angelo Segarra
+86%
 
 </span>
 
+</label>
+
+<div class="bar">
+
+<div class="fill dreamer"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Observer
+
+<span>
+
+78%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill observer"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Alchemist
+
+<span>
+
+64%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill alchemist"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Visionary
+
+<span>
+
+59%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill visionary"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h3>
+
+Recommended Journey
+
+</h3>
+
+<div class="journey">
+
+<div>
+
+✓ Notice recurring ideas
+
+</div>
+
+<div>
+
+✓ Reflect without judgment
+
+</div>
+
+<div>
+
+✓ Experiment with new habits
+
+</div>
+
+<div>
+
+✓ Create a personal vision
+
+</div>
+
+<div>
+
+✓ Review progress weekly
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- RESEARCH -->
+
+<section id="research">
+
+<div class="container">
+
+<div class="center">
+
+<p class="eyebrow">
+
+Research Foundation
+
+</p>
+
+<h2>
+
+Built at the intersection of
+
+Learning,
+
+Systems,
+
+and Artificial Intelligence.
+
 </h2>
 
-<p style="max-width:850px;margin:auto;">
+</div>
 
-Artist.
+<div class="cards">
 
-Educator.
+<div class="card">
 
-Author.
+<div class="number">
 
-Whole Systems Designer.
+A
 
-After more than four decades exploring creativity, education, systems thinking, and artificial intelligence, I created the Creative Intelligence Platform to help every learner discover their own path.
+</div>
+
+<h3>
+
+Whole Systems Design
+
+</h3>
+
+<p>
+
+Learning is a living system.
+
+Growth emerges through relationships, reflection, feedback, and participation.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number">
+
+B
+
+</div>
+
+<h3>
+
+Learning Sciences
+
+</h3>
+
+<p>
+
+The platform reflects how people actually learn rather than how traditional education assumes they learn.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number">
+
+C
+
+</div>
+
+<h3>
+
+Artificial Intelligence
+
+</h3>
+
+<p>
+
+AI discovers meaningful patterns while keeping the learner—not the technology—at the center.
 
 </p>
 
@@ -1153,38 +754,454 @@ After more than four decades exploring creativity, education, systems thinking, 
 
 </div>
 
+</div>
+
 </section>
+
+
+
+<!-- FOUNDER -->
+
 <section id="founder">
 
-<div class="container">
+<div class="container founder-grid">
 
-<div class="center fade">
+<div class="portrait-placeholder">
+
+<h3>
+
+Your Photograph
+
+</h3>
+
+<p>
+
+Replace this placeholder with Angelo's portrait.
+
+</p>
+
+</div>
+
+<div>
+
+<p class="eyebrow">
+
+Founder
+
+</p>
 
 <h2>
 
-Built by
-
-<br>
-
-<span class="gold">
-
-Angelo Segarra
-
-</span>
+Built by Angelo Segarra
 
 </h2>
 
-<p style="max-width:850px;margin:auto;">
+<p class="lead">
 
-Artist.
+After more than four decades exploring creativity,
 
-Educator.
+education,
 
-Author.
+art,
 
-Whole Systems Designer.
+whole systems,
 
-After more than four decades exploring creativity, education, systems thinking, and artificial intelligence, I created the Creative Intelligence Platform to help every learner discover their own path.
+and human development,
+
+Angelo created the Creative Intelligence Platform to help every learner discover how they are creative.
+
+</p>
+
+<div class="tag-list">
+
+<span>
+
+Artist
+
+</span>
+
+<span>
+
+Educator
+
+</span>
+
+<span>
+
+Author
+
+</span>
+
+<span>
+
+Whole Systems Designer
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+    <!-- PLATFORM -->
+
+<section id="platform">
+
+<div class="container">
+
+<div class="center">
+
+<p class="eyebrow">
+
+The Platform
+
+</p>
+
+<h2>
+
+AI becomes a guide,
+not a replacement.
+
+</h2>
+
+<p class="lead">
+
+Reflection becomes understanding.
+
+Understanding becomes a personalized journey.
+
+</p>
+
+</div>
+
+<div class="platform-window">
+
+<div class="sidebar">
+
+<h4>
+
+Creative Intelligence
+
+</h4>
+
+<div class="menu-item active">
+
+Overview
+
+</div>
+
+<div class="menu-item">
+
+Profile
+
+</div>
+
+<div class="menu-item">
+
+Journey
+
+</div>
+
+<div class="menu-item">
+
+Reflections
+
+</div>
+
+<div class="menu-item">
+
+Growth
+
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<div class="dashboard-header">
+
+<div>
+
+<p class="small">
+
+Welcome Back
+
+</p>
+
+<h3>
+
+Your Creative Intelligence Profile
+
+</h3>
+
+</div>
+
+<div class="status">
+
+Analyzing Reflections...
+
+</div>
+
+</div>
+
+<div class="dashboard-grid">
+
+<div class="panel">
+
+<h3>
+
+Creative Intelligence Pattern
+
+</h3>
+
+<p>
+
+Your profile indicates strong imaginative and reflective capacities with emerging transformational strengths.
+
+</p>
+
+<div class="progress">
+
+<label>
+
+Dreamer
+
+<span>
+
+86%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill dreamer"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Observer
+
+<span>
+
+78%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill observer"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Alchemist
+
+<span>
+
+64%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill alchemist"></div>
+
+</div>
+
+</div>
+
+<div class="progress">
+
+<label>
+
+Visionary
+
+<span>
+
+59%
+
+</span>
+
+</label>
+
+<div class="bar">
+
+<div class="fill visionary"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h3>
+
+Recommended Journey
+
+</h3>
+
+<div class="journey">
+
+<div>
+
+✓ Notice recurring ideas
+
+</div>
+
+<div>
+
+✓ Reflect without judgment
+
+</div>
+
+<div>
+
+✓ Experiment with new habits
+
+</div>
+
+<div>
+
+✓ Create a personal vision
+
+</div>
+
+<div>
+
+✓ Review progress weekly
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- RESEARCH -->
+
+<section id="research">
+
+<div class="container">
+
+<div class="center">
+
+<p class="eyebrow">
+
+Research Foundation
+
+</p>
+
+<h2>
+
+Built at the intersection of
+
+Learning,
+
+Systems,
+
+and Artificial Intelligence.
+
+</h2>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="number">
+
+A
+
+</div>
+
+<h3>
+
+Whole Systems Design
+
+</h3>
+
+<p>
+
+Learning is a living system.
+
+Growth emerges through relationships, reflection, feedback, and participation.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number">
+
+B
+
+</div>
+
+<h3>
+
+Learning Sciences
+
+</h3>
+
+<p>
+
+The platform reflects how people actually learn rather than how traditional education assumes they learn.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number">
+
+C
+
+</div>
+
+<h3>
+
+Artificial Intelligence
+
+</h3>
+
+<p>
+
+AI discovers meaningful patterns while keeping the learner—not the technology—at the center.
 
 </p>
 
@@ -1192,26 +1209,126 @@ After more than four decades exploring creativity, education, systems thinking, 
 
 </div>
 
-</section>
-<section id="join">
+</div>
 
-<div class="container center fade">
+</section>
+
+
+
+<!-- FOUNDER -->
+
+<section id="founder">
+
+<div class="container founder-grid">
+
+<div class="portrait-placeholder">
+
+<h3>
+
+Your Photograph
+
+</h3>
+
+<p>
+
+Replace this placeholder with Angelo's portrait.
+
+</p>
+
+</div>
+
+<div>
+
+<p class="eyebrow">
+
+Founder
+
+</p>
+
+<h2>
+
+Built by Angelo Segarra
+
+</h2>
+
+<p class="lead">
+
+After more than four decades exploring creativity,
+
+education,
+
+art,
+
+whole systems,
+
+and human development,
+
+Angelo created the Creative Intelligence Platform to help every learner discover how they are creative.
+
+</p>
+
+<div class="tag-list">
+
+<span>
+
+Artist
+
+</span>
+
+<span>
+
+Educator
+
+</span>
+
+<span>
+
+Author
+
+</span>
+
+<span>
+
+Whole Systems Designer
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- FINAL CALL TO ACTION -->
+
+<section class="final-section" id="join">
+
+<div class="background-stars"></div>
+
+<div class="container center">
+
+<p class="eyebrow">
+
+Founding Members
+
+</p>
 
 <h2>
 
 Every learner deserves
-
 their own path.
 
 </h2>
 
-<p>
+<p class="lead">
 
-Become one of the first people to experience the Creative Intelligence Platform and help shape the future of personalized learning.
+Become one of the first people to experience the Creative Intelligence Platform
+and help shape the future of personalized learning.
 
 </p>
 
-<br><br>
+<div class="hero-buttons">
 
 <a href="#" class="button">
 
@@ -1221,106 +1338,138 @@ Become a Founding Member
 
 </div>
 
+</div>
+
 </section>
 
 
-document.addEventListener("DOMContentLoaded",()=>{
 
-const fades=document.querySelectorAll(".fade");
+<footer>
 
-const observer=new IntersectionObserver((entries)=>{
+<div class="container footer-container">
 
-entries.forEach(entry=>{
+<div>
 
-if(entry.isIntersecting){
+<h3>
 
-entry.target.classList.add("show");
+Creative Intelligence World
 
-}
+</h3>
 
-});
+<p>
 
-},{threshold:.18});
+Personalized learning for the age of Artificial Intelligence.
 
-fades.forEach(el=>observer.observe(el));
-const spiral=document.querySelector(".spiral");
+</p>
 
-window.addEventListener("scroll",()=>{
+</div>
 
-const y=window.scrollY;
+<div class="footer-links">
 
-spiral.style.transform=
-`translate(-50%,-50%) rotate(${y*.06}deg)`;
+<a href="#platform">
 
-spiral.style.opacity=.08+(y*.00008);
+Platform
 
-const cards=document.querySelectorAll(".card");
+</a>
 
-cards.forEach(card=>{
+<a href="#framework">
 
-card.addEventListener("mouseenter",()=>{
+Framework
 
-card.style.transform="translateY(-12px) scale(1.02)";
+</a>
 
-});
+<a href="#research">
 
-card.addEventListener("mouseleave",()=>{
+Research
 
-card.style.transform="translateY(0px) scale(1)";
+</a>
 
-});
-const hero=document.querySelector(".hero-content");
+<a href="#founder">
 
-window.addEventListener("load",()=>{
+Founder
 
-hero.animate([
+</a>
 
-{
+</div>
 
-opacity:0,
+</div>
 
-transform:"translateY(40px)"
+</footer>
 
-},
 
-{
 
-opacity:1,
+<!-- BEGIN JOURNEY MODAL -->
 
-transform:"translateY(0px)"
+<div class="journey-modal"
 
-}
+id="journeyModal">
 
-],{
+<div class="journey-box">
 
-duration:1200,
+<button class="close-modal"
 
-fill:"forwards",
+id="closeModal">
 
-easing:"ease-out"
+×
 
-});
+</button>
 
-const button=document.querySelector(".button");
+<p class="eyebrow">
 
-button.addEventListener("click",(e)=>{
+Begin Your Journey
 
-button.innerHTML="Preparing Your Journey...";
+</p>
 
-button.style.background="#c8a96a";
+<h2>
 
-});
+What brings you here today?
 
-window.addEventListener("mousemove",(e)=>{
+</h2>
 
-const x=e.clientX/window.innerWidth;
-const y=e.clientY/window.innerHeight;
+<p>
 
-spiral.style.left=`calc(50% + ${(x-.5)*20}px)`;
-spiral.style.top=`calc(50% + ${(y-.5)*20}px)`;
+Choose the path that best describes your interest.
 
-});
+This will eventually connect to different AI learning journeys.
 
-</script>
+</p>
+
+<div class="journey-buttons">
+
+<button>
+
+I want to learn
+
+</button>
+
+<button>
+
+I want to teach
+
+</button>
+
+<button>
+
+I want to create
+
+</button>
+
+<button>
+
+I want to lead
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script src="app.js"></script>
+
 </body>
+
 </html>
