@@ -2708,3 +2708,46 @@ button:focus-visible {
     animation: none !important;
   }
 }
+/* FINAL VISUAL BALANCE */
+
+.ci2-orbit-one {
+  inset: 9% !important;
+}
+
+.ci2-orbit-two {
+  inset: 18% !important;
+}
+
+.ci2-face {
+  border-color: rgba(168, 122, 48, 0.58) !important;
+}
+
+.ci2-face-front {
+  border-color: rgba(164, 116, 37, 0.95) !important;
+  box-shadow:
+    inset 0 0 30px rgba(190, 145, 66, 0.08),
+    0 0 24px rgba(185, 137, 51, 0.22) !important;
+}
+
+.ci2-face-back,
+.ci2-face-left,
+.ci2-face-bottom {
+  border-color: rgba(168, 122, 48, 0.32) !important;
+}
+
+.ci2-spiral {
+  width: 92px !important;
+  height: 92px !important;
+  color: #8f642f !important;
+  filter:
+    drop-shadow(0 0 6px rgba(183, 132, 55, 0.6))
+    drop-shadow(0 0 16px rgba(183, 132, 55, 0.28)) !important;
+}
+
+.ci2-core-light {
+  background: rgba(214, 170, 86, 0.32) !important;
+}
+
+.ci2-connector {
+  opacity: 0.75;
+}
