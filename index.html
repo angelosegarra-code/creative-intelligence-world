@@ -1,1241 +1,1634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Creative Intelligence Platform | Personalized Learning for the Age of AI</title>
+  <title>Creative Intelligence World | AI-Powered Personalized Learning</title>
 
-<meta name="description"
-content="Personalized learning powered by the InnerCube Framework and Artificial Intelligence.">
+  <meta
+    name="description"
+    content="Creative Intelligence World combines guided reflection, the InnerCube Framework, and AI to create personalized learning experiences."
+  />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    :root {
+      --cream: #f5f1e8;
+      --cream-dark: #ebe5d8;
+      --white: #ffffff;
+      --ink: #17272b;
+      --muted: #617076;
+      --teal: #1d6267;
+      --teal-dark: #15494d;
+      --teal-soft: #dcebea;
+      --gold: #bd9144;
+      --border: rgba(29, 98, 103, 0.16);
+      --shadow: 0 20px 55px rgba(21, 55, 59, 0.12);
+      --radius: 24px;
+      --max-width: 1180px;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<link rel="stylesheet" href="css/styles.css">
+    html {
+      scroll-behavior: smooth;
+    }
 
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-white {
+      background: var(--white);
+    }
+
+    .section-soft {
+      background: var(--cream-dark);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+    }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(3rem, 7vw, 6.2rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+
+    .lead {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    .section-heading {
+      max-width: 790px;
+      margin-bottom: 48px;
+    }
+
+    .section-heading.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 20px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      background: var(--teal);
+      color: var(--white);
+      box-shadow: 0 12px 28px rgba(29, 98, 103, 0.2);
+    }
+
+    .button-primary:hover {
+      background: var(--teal-dark);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--teal-dark);
+      border-color: var(--border);
+    }
+
+    .button-secondary:hover {
+      background: var(--white);
+    }
+
+    .button-light {
+      background: var(--white);
+      color: var(--teal-dark);
+    }
+
+    .button-outline-light {
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .button-outline-light:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Header */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(245, 241, 232, 0.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #35484e;
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal);
+    }
+
+    .nav-links .contact-link {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    .menu-button {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      color: var(--teal-dark);
+      cursor: pointer;
+      font-size: 1.3rem;
+    }
+
+    /* Hero */
+
+    .hero {
+      position: relative;
+      min-height: 720px;
+      display: grid;
+      align-items: center;
+      padding: 100px 0;
+      background:
+        radial-gradient(circle at 80% 25%, rgba(29, 98, 103, 0.13), transparent 32%),
+        radial-gradient(circle at 12% 15%, rgba(189, 145, 68, 0.14), transparent 28%),
+        linear-gradient(135deg, #f8f5ee 0%, #edf3ef 100%);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin-bottom: 28px;
+    }
+
+    .hero h1 span {
+      color: var(--teal);
+    }
+
+    .hero .lead {
+      margin-bottom: 34px;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-note::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      flex: 0 0 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(189, 145, 68, 0.13);
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 470px;
+      display: grid;
+      place-items: center;
+      padding: 45px;
+      border: 1px solid var(--border);
+      border-radius: 36px;
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .cube {
+      position: relative;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      transform: rotate(4deg);
+      border: 1px solid rgba(189, 145, 68, 0.5);
+    }
+
+    .cube::before {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid rgba(29, 98, 103, 0.28);
+      transform: rotate(20deg);
+    }
+
+    .cube::after {
+      content: "";
+      position: absolute;
+      inset: 27%;
+      border: 1px solid rgba(189, 145, 68, 0.42);
+      border-radius: 50%;
+    }
+
+    .cube-center {
+      position: relative;
+      z-index: 3;
+      width: 130px;
+      height: 130px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: var(--white);
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.15;
+      box-shadow: 0 16px 35px rgba(29, 98, 103, 0.28);
+      transform: rotate(-4deg);
+    }
+
+    .cube-word {
+      position: absolute;
+      z-index: 4;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--teal-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(21, 55, 59, 0.09);
+      transform: rotate(-4deg);
+    }
+
+    .cube-word.dreamer {
+      top: 8px;
+      left: 8px;
+    }
+
+    .cube-word.observer {
+      top: 70px;
+      right: -15px;
+    }
+
+    .cube-word.alchemist {
+      bottom: 16px;
+      left: 4px;
+    }
+
+    .cube-word.visionary {
+      right: -4px;
+      bottom: 68px;
+    }
+
+    /* Video */
+
+    .video-shell {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--cream);
+      box-shadow: var(--shadow);
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #132629;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 10px 8px;
+    }
+
+    .video-bottom p {
+      color: var(--muted);
+    }
+
+    /* Statement */
+
+    .statement-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .statement-box {
+      padding: 46px;
+      border-radius: var(--radius);
+      background: var(--teal);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .statement-box p {
+      font-family: Georgia, serif;
+      font-size: clamp(1.8rem, 3.8vw, 3rem);
+      line-height: 1.23;
+    }
+
+    .statement-box span {
+      color: #eed598;
+    }
+
+    .statement-copy p {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    /* Cards */
+
+    .four-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      padding: 30px 26px;
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      background: var(--white);
+    }
+
+    .card-number {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 24px;
+      border-radius: 14px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: Georgia, serif;
+      font-size: 1.15rem;
+    }
+
+    .card h3 {
+      margin-bottom: 11px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Framework */
+
+    .framework {
+      background: var(--teal-dark);
+      color: var(--white);
+    }
+
+    .framework .eyebrow {
+      color: #eed598;
+    }
+
+    .framework .section-heading p {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .framework .card {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .framework .card p {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .framework-symbol {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      border-radius: 50%;
+      background: rgba(238, 213, 152, 0.14);
+      color: #eed598;
+      font-size: 1.1rem;
+    }
+
+    /* Pilot */
+
+    .pilot-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-top: 48px;
+      padding: 46px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .pilot-panel h3 {
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+
+    .pilot-panel p {
+      color: var(--muted);
+    }
+
+    .pilot-list {
+      display: grid;
+      gap: 13px;
+      list-style: none;
+    }
+
+    .pilot-list li {
+      position: relative;
+      padding-left: 29px;
+      color: #3f5157;
+    }
+
+    .pilot-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--teal);
+      font-weight: 900;
+    }
+
+    /* Partner section */
+
+    .partner-panel {
+      position: relative;
+      padding: 72px;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 88% 28%, rgba(238, 213, 152, 0.18), transparent 25%),
+        linear-gradient(135deg, var(--teal-dark), var(--teal));
+      color: var(--white);
+      overflow: hidden;
+      box-shadow: 0 24px 65px rgba(21, 73, 77, 0.25);
+    }
+
+    .partner-panel h2 {
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+
+    .partner-panel > p {
+      max-width: 720px;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.06rem;
+    }
+
+    .partner-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .partner-tags span {
+      padding: 8px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 0.86rem;
+    }
+
+    /* Vision */
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .vision-circle {
+      width: min(100%, 390px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      margin: auto;
+      border: 1px solid rgba(29, 98, 103, 0.22);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--teal) 0 19%, transparent 20%),
+        radial-gradient(circle, transparent 0 41%, rgba(189, 145, 68, 0.22) 42% 42.5%, transparent 43%),
+        radial-gradient(circle, transparent 0 68%, rgba(29, 98, 103, 0.17) 69% 69.5%, transparent 70%);
+    }
+
+    .vision-circle span {
+      width: 120px;
+      color: var(--white);
+      text-align: center;
+      font-family: Georgia, serif;
+      line-height: 1.18;
+    }
+
+    .vision-copy h2 {
+      margin-bottom: 24px;
+    }
+
+    .vision-copy p {
+      margin-bottom: 19px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .vision-quote {
+      margin-top: 28px;
+      padding-left: 22px;
+      border-left: 3px solid var(--gold);
+      color: var(--teal-dark);
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+    }
+
+    /* About */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 65px;
+      align-items: center;
+    }
+
+    .about-photo img {
+      width: 100%;
+      max-width: 390px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center top;
+      margin: auto;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      max-width: 390px;
+      aspect-ratio: 4 / 5;
+      display: grid;
+      place-items: center;
+      margin: auto;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-weight: 700;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .about-copy h2 {
+      margin-bottom: 22px;
+    }
+
+    .about-copy p {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      padding: 65px 0 30px;
+      background: #102b2e;
+      color: var(--white);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 0.7fr 0.7fr 0.8fr;
+      gap: 42px;
+      margin-bottom: 45px;
+    }
+
+    .footer-copy p {
+      max-width: 390px;
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.63);
+      font-size: 0.9rem;
+    }
+
+    .footer-title {
+      margin-bottom: 15px;
+      color: #eed598;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 23px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 0.82rem;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 1000px) {
+      .hero-grid,
+      .statement-grid,
+      .vision-grid,
+      .about-grid,
+      .pilot-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-copy .lead {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-copy .button-row,
+      .hero-note {
+        justify-content: center;
+      }
+
+      .four-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .three-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr;
+      }
+
+      .footer-grid > div:last-child {
+        grid-column: 2 / 4;
+      }
+
+      .about-copy {
+        text-align: center;
+      }
+
+      .about-copy .button-row {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .menu-button {
+        display: grid;
+        place-items: center;
+      }
+
+      .nav {
+        position: relative;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 15px 4%;
+        background: rgba(245, 241, 232, 0.99);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 14px 28px rgba(21, 55, 59, 0.1);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 12px 10px;
+      }
+
+      .nav-links .contact-link {
+        margin-top: 8px;
+        text-align: center;
+      }
+
+      .video-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .partner-panel {
+        padding: 52px 34px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 78px 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 75px 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.8rem, 14vw, 4.3rem);
+      }
+
+      .hero-card {
+        min-height: 370px;
+        padding: 25px;
+      }
+
+      .cube {
+        width: 285px;
+      }
+
+      .cube-center {
+        width: 105px;
+        height: 105px;
+        font-size: 0.9rem;
+      }
+
+      .cube-word {
+        font-size: 0.69rem;
+        padding: 7px 10px;
+      }
+
+      .four-grid,
+      .three-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .statement-box,
+      .pilot-panel,
+      .partner-panel {
+        padding: 32px 24px;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid > div:last-child {
+        grid-column: auto;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav class="navbar">
+  <header class="site-header">
+    <div class="container nav">
 
-<div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-mark">ϕ</div>
 
-<a href="#" class="logo">
-Creative <span>Intelligence</span>
-</a>
+        <div class="brand-copy">
+          <strong>Creative Intelligence World</strong>
+          <span>Personalized learning for the age of AI</span>
+        </div>
+      </a>
 
-<div class="nav-links">
+      <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
 
-<a href="#platform">Platform</a>
-
-<a href="#framework">Framework</a>
-
-<a href="#research">Research</a>
-
-<a href="#founder">Founder</a>
-
-<a class="nav-button" href="#join">
-
-Founding Members
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
- <!-- CREATIVE INTELLIGENCE HERO 2.0 -->
-
-<header class="ci2-hero">
-
-  <div class="ci2-hero-inner">
-
-    <!-- HERO TEXT -->
-
-    <div class="ci2-content">
-
-      <p class="ci2-eyebrow">
-        Creative Intelligence Platform
-      </p>
-
-      <h1 class="ci2-title">
-        Personalized Learning
-        <span>For the Age of AI</span>
-      </h1>
-
-      <p class="ci2-description">
-        Every learner thinks differently. Artificial Intelligence now makes it
-        possible to design learning around the individual instead of the average.
-      </p>
-
-      <div class="ci2-actions">
-
-        <a
-          href="https://buy.stripe.com/28EfZhcmg8jm4jJ1Tgd3i00"
-          class="button"
-        >
-          Start Your Creative Intelligence Profile
-        </a>
-
-        <a
-          href="https://tally.so/r/w2YBZ9"
-          class="button secondary"
-        >
-          Preview the Profile
-        </a>
-
-      </div>
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="/framework.html">Framework</a></li>
+          <li><a href="/education.html">Education</a></li>
+          <li><a href="/ideas">Ideas</a></li>
+          <li><a href="/books.html">Books</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li>
+            <a class="contact-link" href="/contact.html">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
+  </header>
 
-    <!-- LIVING INNERCUBE VISUAL -->
+  <main>
 
-    <div
-      class="ci2-visual"
-      aria-label="Creative Intelligence InnerCube"
-    >
+    <section class="hero">
+      <div class="container hero-grid">
 
-      <div class="ci2-ambient-glow"></div>
-      <div class="ci2-orbit ci2-orbit-one"></div>
-      <div class="ci2-orbit ci2-orbit-two"></div>
+        <div class="hero-copy">
+          <span class="eyebrow">AI-powered personalized learning</span>
 
-      <!-- CONNECTION LINES -->
+          <h1>
+            Every learner deserves a path as
+            <span>unique as they are.</span>
+          </h1>
 
-      <span class="ci2-connector ci2-connector-top"></span>
-      <span class="ci2-connector ci2-connector-left"></span>
-      <span class="ci2-connector ci2-connector-right"></span>
-      <span class="ci2-connector ci2-connector-bottom"></span>
+          <p class="lead">
+            Creative Intelligence World combines guided reflection,
+            the InnerCube Framework, and artificial intelligence to help
+            learners understand how they think, create, and grow.
+          </p>
 
-      <!-- ARCHETYPE LABELS -->
+          <div class="button-row">
+            <a class="button button-primary" href="#platform">
+              Watch the Demonstration
+            </a>
 
-      <button
-        class="ci2-archetype ci2-dreamer"
-        type="button"
-        data-archetype="dreamer"
-      >
-        <span class="ci2-archetype-dot"></span>
-        <strong>Dreamer</strong>
-        <small>Imagination</small>
-      </button>
-
-      <button
-        class="ci2-archetype ci2-observer"
-        type="button"
-        data-archetype="observer"
-      >
-        <span class="ci2-archetype-dot"></span>
-        <strong>Observer</strong>
-        <small>Awareness</small>
-      </button>
-
-      <button
-        class="ci2-archetype ci2-visionary"
-        type="button"
-        data-archetype="visionary"
-      >
-        <span class="ci2-archetype-dot"></span>
-        <strong>Visionary</strong>
-        <small>Direction</small>
-      </button>
-
-      <button
-        class="ci2-archetype ci2-alchemist"
-        type="button"
-        data-archetype="alchemist"
-      >
-        <span class="ci2-archetype-dot"></span>
-        <strong>Alchemist</strong>
-        <small>Transformation</small>
-      </button>
-
-      <!-- 3D CUBE -->
-
-      <div class="ci2-cube-scene">
-
-        <div class="ci2-cube">
-
-          <div class="ci2-face ci2-face-front"></div>
-          <div class="ci2-face ci2-face-back"></div>
-          <div class="ci2-face ci2-face-right"></div>
-          <div class="ci2-face ci2-face-left"></div>
-          <div class="ci2-face ci2-face-top"></div>
-          <div class="ci2-face ci2-face-bottom"></div>
-
-          <span class="ci2-corner ci2-corner-one"></span>
-          <span class="ci2-corner ci2-corner-two"></span>
-          <span class="ci2-corner ci2-corner-three"></span>
-          <span class="ci2-corner ci2-corner-four"></span>
-
-          <!-- LIVING CORE -->
-
-          <div class="ci2-core">
-
-            <div class="ci2-core-light"></div>
-
-            <svg
-              class="ci2-spiral"
-              viewBox="0 0 600 600"
-              aria-hidden="true"
-            >
-
-              <path
-                id="ci2SpiralPath"
-                d="M300 300
-                C300 235 365 200 420 235
-                C485 277 476 377 408 423
-                C321 482 195 445 144 345
-                C85 229 151 91 281 58
-                C426 22 565 127 577 275"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="9"
-                stroke-linecap="round"
-              />
-
-              <circle
-                cx="300"
-                cy="300"
-                r="13"
-                fill="currentColor"
-              />
-
-              <circle
-                class="ci2-particle"
-                r="10"
-                fill="#e3bd70"
-              >
-                <animateMotion
-                  dur="8s"
-                  repeatCount="indefinite"
-                >
-                  <mpath href="#ci2SpiralPath"></mpath>
-                </animateMotion>
-              </circle>
-
-            </svg>
-
+            <a class="button button-secondary" href="#partners">
+              Become a Founding Learning Partner
+            </a>
           </div>
 
+          <div class="hero-note">
+            Helping every learner discover how they learn best.
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="cube">
+            <span class="cube-word dreamer">Dreamer</span>
+            <span class="cube-word observer">Observer</span>
+            <span class="cube-word alchemist">Alchemist</span>
+            <span class="cube-word visionary">Visionary</span>
+
+            <div class="cube-center">
+              Creative Intelligence
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-white" id="platform">
+      <div class="container">
+
+        <div class="section-heading center">
+          <span class="eyebrow">See the platform in action</span>
+
+          <h2>
+            From reflection to personalized learning
+          </h2>
+
+          <p>
+            Watch how Creative Intelligence World uses the InnerCube Framework
+            and Gemini-powered interpretation to turn learner reflection into
+            personalized insight and practical direction.
+          </p>
+        </div>
+
+        <div class="video-shell">
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/hMrTwTN8TmE?rel=0"
+              title="Creative Intelligence World platform demonstration"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="video-bottom">
+            <div>
+              <h3>Creative Intelligence World</h3>
+              <p>
+                A working demonstration of AI-powered personalized learning.
+              </p>
+            </div>
+
+            <a
+              class="button button-primary"
+              href="https://youtu.be/hMrTwTN8TmE"
+              target="_blank"
+              rel="noopener"
+            >
+              Watch on YouTube
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container statement-grid">
+
+        <div class="statement-box">
+          <p>
+            Traditional education begins with the curriculum.
+            <span>We begin with the learner.</span>
+          </p>
+        </div>
+
+        <div class="statement-copy">
+          <span class="eyebrow">Why personalization matters</span>
+
+          <h2>
+            Learning should not ask everyone to follow the same path.
+          </h2>
+
+          <p>
+            Learners differ in how they imagine possibilities, observe
+            experience, respond to change, and turn ideas into action.
+          </p>
+
+          <p>
+            Creative Intelligence World helps make these differences visible.
+            AI then transforms reflection into guidance that learners and
+            educators can use.
+          </p>
+
+          <p>
+            The result is a more personal, reflective, and meaningful
+            learning experience.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-white" id="how">
+      <div class="container">
+
+        <div class="section-heading center">
+          <span class="eyebrow">How it works</span>
+
+          <h2>
+            A simple journey from reflection to action
+          </h2>
+
+          <p>
+            The Creative Intelligence Profile is the first application in a
+            broader personalized-learning ecosystem.
+          </p>
+        </div>
+
+        <div class="four-grid">
+
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3>Reflect</h3>
+            <p>
+              The learner responds to guided questions about creativity,
+              attention, possibility, change, and personal growth.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3>AI Interpretation</h3>
+            <p>
+              Gemini interprets the responses through the InnerCube Framework
+              while preserving the learner's own voice.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3>Personalized Report</h3>
+            <p>
+              The learner receives insights into how they imagine, observe,
+              transform, and move toward purposeful action.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">04</div>
+            <h3>Apply and Grow</h3>
+            <p>
+              The insights become the beginning of a personalized pathway for
+              learning, creativity, mentorship, or professional development.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section framework">
+      <div class="container">
+
+        <div class="section-heading center">
+          <span class="eyebrow">The InnerCube Framework</span>
+
+          <h2>
+            Four ways of participating in creativity
+          </h2>
+
+          <p>
+            The framework does not place people into fixed categories.
+            It helps learners recognize different capacities they can develop
+            and bring into relationship.
+          </p>
+        </div>
+
+        <div class="four-grid">
+
+          <article class="card">
+            <div class="framework-symbol">✦</div>
+            <h3>The Dreamer</h3>
+            <p>
+              Imagines alternatives, explores possibilities, and gives form
+              to what does not yet exist.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="framework-symbol">◉</div>
+            <h3>The Observer</h3>
+            <p>
+              Notices patterns, attends deeply, and creates the clarity from
+              which understanding can emerge.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="framework-symbol">△</div>
+            <h3>The Alchemist</h3>
+            <p>
+              Works with uncertainty, integrates experience, and turns
+              difficulty into transformation.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="framework-symbol">→</div>
+            <h3>The Visionary</h3>
+            <p>
+              Connects imagination with direction and helps possibility become
+              meaningful action.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-heading center">
+          <span class="eyebrow">For organizations</span>
+
+          <h2>
+            Explore the next generation of personalized learning
+          </h2>
+
+          <p>
+            Creative Intelligence World is designed for educational
+            institutions, professional-development programs, innovation
+            communities, and organizations exploring responsible uses of AI.
+          </p>
+        </div>
+
+        <div class="three-grid">
+
+          <article class="card">
+            <h3>Universities and Schools</h3>
+            <p>
+              Support learner self-awareness, creative development,
+              interdisciplinary learning, and personalized guidance.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Educator Development</h3>
+            <p>
+              Help educators understand different learner pathways and use AI
+              to deepen reflection rather than replace human judgment.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Leadership Programs</h3>
+            <p>
+              Give participants a framework for imagination, observation,
+              transformation, and purposeful decision-making.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Innovation Centers</h3>
+            <p>
+              Help founders and teams recognize how they approach uncertainty,
+              creativity, collaboration, and future possibilities.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Professional Learning</h3>
+            <p>
+              Create personalized development experiences that connect
+              individual insight with practical next steps.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Research Partnerships</h3>
+            <p>
+              Collaborate on reflective learning, creative intelligence,
+              personalized AI, and human-centered educational design.
+            </p>
+          </article>
+
+        </div>
+
+        <div class="pilot-panel">
+          <div>
+            <span class="eyebrow">A focused first step</span>
+            <h3>Begin with a small pilot</h3>
+
+            <p>
+              A founding pilot can be designed around a selected group of
+              learners, educators, founders, or professional-development
+              participants. The purpose is to gather feedback and practical
+              evidence before considering a larger implementation.
+            </p>
+          </div>
+
+          <ul class="pilot-list">
+            <li>Creative Intelligence Profiles for a selected cohort</li>
+            <li>AI-generated personalized reports</li>
+            <li>A guided group interpretation session</li>
+            <li>Implementation support</li>
+            <li>Participant feedback and learning insights</li>
+            <li>An organizational findings summary</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-white" id="partners">
+      <div class="container">
+
+        <div class="partner-panel">
+          <span class="eyebrow" style="color:#eed598;">
+            Founding Learning Partners
+          </span>
+
+          <h2>
+            Help shape the future of AI-powered personalized learning.
+          </h2>
+
+          <p>
+            We are inviting a limited number of educational institutions,
+            innovation organizations, and professional-learning communities
+            to become Founding Learning Partners.
+          </p>
+
+          <div class="partner-tags">
+            <span>Early platform access</span>
+            <span>Pilot design support</span>
+            <span>Direct collaboration</span>
+            <span>Founding recognition</span>
+            <span>Preferred future pricing</span>
+          </div>
+
+          <div class="button-row">
+            <a class="button button-light" href="/contact.html">
+              Schedule a Conversation
+            </a>
+
+            <a class="button button-outline-light" href="#platform">
+              Watch the Demonstration
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container vision-grid">
+
+        <div class="vision-circle">
+          <span>The learner at the center</span>
+        </div>
+
+        <div class="vision-copy">
+          <span class="eyebrow">The broader vision</span>
+
+          <h2>
+            The Creative Intelligence Profile is only the beginning.
+          </h2>
+
+          <p>
+            The long-term vision is an AI-powered learning ecosystem capable
+            of supporting personalized journeys across science, languages,
+            history, creativity, professional development, and lifelong
+            learning.
+          </p>
+
+          <p>
+            Instead of asking every learner to move through the same material
+            in the same way, future learning experiences can respond to how
+            each person asks questions, understands complexity, builds
+            meaning, and contributes.
+          </p>
+
+          <p>
+            AI should not make education less human. Used wisely, it can help
+            educators see learners more clearly and help learners participate
+            more consciously in their own development.
+          </p>
+
+          <div class="vision-quote">
+            Every learner deserves a learning journey as unique as they are.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section-white">
+      <div class="container about-grid">
+
+        <div class="about-photo">
+
+          <!-- Replace this placeholder with your actual image.
+
+          Example:
+
+          <img
+            src="/images/angelo-segarra.jpg"
+            alt="Angelo Segarra, founder of Creative Intelligence World"
+          />
+
+          -->
+
+          <div class="photo-placeholder">
+            Add Angelo's portrait here
+          </div>
+        </div>
+
+        <div class="about-copy">
+          <span class="eyebrow">Founder</span>
+
+          <h2>Angelo Segarra</h2>
+
+          <p>
+            Angelo Segarra is an author, educator, artist, and whole-systems
+            designer whose work explores creativity, personal transformation,
+            education, and humanity's evolving relationship with artificial
+            intelligence.
+          </p>
+
+          <p>
+            His experience includes more than a decade of teaching in China,
+            international education, sculpture and museum exhibitions,
+            creative facilitation, and the development of the InnerCube
+            Framework.
+          </p>
+
+          <p>
+            Creative Intelligence World brings these fields together around
+            one central question: how can AI help every learner recognize and
+            develop their unique way of participating in creativity?
+          </p>
+
+          <div class="button-row">
+            <a class="button button-primary" href="/about.html">
+              Read Angelo's Story
+            </a>
+
+            <a class="button button-secondary" href="/cv.html">
+              View Professional Profile
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-copy">
+          <div class="brand">
+            <div class="brand-mark">ϕ</div>
+
+            <div class="brand-copy">
+              <strong>Creative Intelligence World</strong>
+              <span>Personalized learning for the age of AI</span>
+            </div>
+          </div>
+
+          <p>
+            Helping learners discover how they imagine, understand,
+            transform, and contribute through human-centered AI.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-title">Platform</div>
+          <ul class="footer-links">
+            <li><a href="#platform">Demonstration</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="/profile.html">Creative Intelligence Profile</a></li>
+            <li><a href="#partners">Founding Partners</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-title">Explore</div>
+          <ul class="footer-links">
+            <li><a href="/framework.html">InnerCube Framework</a></li>
+            <li><a href="/ideas">Ideas</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/books.html">Books</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/speaking.html">Speaking</a></li>
+            <li><a href="/cv.html">Professional Profile</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+
+            <li>
+              <a
+                href="https://youtu.be/hMrTwTN8TmE"
+                target="_blank"
+                rel="noopener"
+              >
+                YouTube
+              </a>
+            </li>
+
+            <!-- Replace # with your LinkedIn profile -->
+            <li>
+              <a href="#" target="_blank" rel="noopener">
+                LinkedIn
+              </a>
+            </li>
+          </ul>
         </div>
 
       </div>
 
-      <!-- AMBIENT PARTICLES -->
-
-      <span class="ci2-dust ci2-dust-one"></span>
-      <span class="ci2-dust ci2-dust-two"></span>
-      <span class="ci2-dust ci2-dust-three"></span>
-      <span class="ci2-dust ci2-dust-four"></span>
-      <span class="ci2-dust ci2-dust-five"></span>
-
-    </div>
-
-  </div>
-
-</header>
-     
-  <main>
-
-<!-- STORY -->
-
-<section class="statement" id="story">
-
-<div class="container center">
-
-<p class="eyebrow">
-The Opportunity
-</p>
-
-<h2>
-
-Every learner thinks differently.
-
-</h2>
-
-<p class="lead">
-
-Yet education has traditionally been designed for the average learner.
-
-Artificial Intelligence now makes it possible to create learning that adapts to each individual instead of expecting every individual to adapt to the system.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- PROBLEM -->
-
-<section class="problem">
-
-<div class="container">
-
-<div class="cards">
-
-<div class="card">
-
-<div class="number">01</div>
-
-<h3>One Curriculum</h3>
-
-<p>
-
-Different learners are expected to follow the same educational path regardless of how they naturally think.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="number">02</div>
-
-<h3>One Pace</h3>
-
-<p>
-
-Some learners become bored.
-
-Others become discouraged.
-
-Many assume they simply are not intelligent.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="number">03</div>
-
-<h3>One Definition</h3>
-
-<p>
-
-When education measures only one kind of intelligence,
-
-many forms of creativity remain invisible.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TRANSITION -->
-
-<section class="statement">
-
-<div class="container center">
-
-<h2>
-
-What if education adapted to the learner...
-
-instead of asking the learner to adapt to education?
-
-</h2>
-
-</div>
-
-</section>
-
-<!-- FRAMEWORK -->
-
-<section id="framework">
-
-<div class="container">
-
-<div class="center">
-
-<p class="eyebrow">
-
-The InnerCube Framework
-
-</p>
-
-<h2>
-
-Four capacities.
-
-One evolving intelligence.
-
-</h2>
-
-<p class="lead">
-
-Every learner possesses all four capacities,
-
-but each person develops them in a unique way.
-
-</p>
-
-</div>
-
-<div class="framework-grid">
-
-<div class="framework-card">
-
-<div class="framework-icon">
-
-✦
-
-</div>
-
-<h3>
-
-Dreamer
-
-</h3>
-
-<p>
-
-Imagination.
-
-Curiosity.
-
-Possibility.
-
-The ability to see what does not yet exist.
-
-</p>
-
-</div>
-
-<div class="framework-card">
-
-<div class="framework-icon">
-
-◉
-
-</div>
-
-<h3>
-
-Observer
-
-</h3>
-
-<p>
-
-Attention.
-
-Reflection.
-
-Awareness.
-
-The capacity to understand deeply.
-
-</p>
-
-</div>
-
-<div class="framework-card">
-
-<div class="framework-icon">
-
-◇
-
-</div>
-
-<h3>
-
-Alchemist
-
-</h3>
-
-<p>
-
-Experimentation.
-
-Transformation.
-
-Learning through experience.
-
-</p>
-
-</div>
-
-<div class="framework-card">
-
-<div class="framework-icon">
-
-↗
-
-</div>
-
-<h3>
-
-Visionary
-
-</h3>
-
-<p>
-
-Purpose.
-
-Direction.
-
-Creating a better future.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-    <!-- PLATFORM -->
-
-<section id="platform">
-
-<div class="container">
-
-<div class="center">
-
-<p class="eyebrow">
-
-The Platform
-
-</p>
-
-<h2>
-
-AI becomes a guide,
-not a replacement.
-
-</h2>
-
-<p class="lead">
-
-Reflection becomes understanding.
-
-Understanding becomes a personalized journey.
-
-</p>
-
-</div>
-
-<div class="platform-window">
-
-<div class="sidebar">
-
-<h4>
-
-Creative Intelligence
-
-</h4>
-
-<div class="menu-item active">
-
-Overview
-
-</div>
-
-<div class="menu-item">
-
-Profile
-
-</div>
-
-<div class="menu-item">
-
-Journey
-
-</div>
-
-<div class="menu-item">
-
-Reflections
-
-</div>
-
-<div class="menu-item">
-
-Growth
-
-</div>
-
-</div>
-
-<div class="dashboard">
-
-<div class="dashboard-header">
-
-<div>
-
-<p class="small">
-
-Welcome Back
-
-</p>
-
-<h3>
-
-Your Creative Intelligence Profile
-
-</h3>
-
-</div>
-
-<div class="status">
-
-Analyzing Reflections...
-
-</div>
-
-</div>
-
-<div class="dashboard-grid">
-
-<div class="panel">
-
-<h3>
-
-Creative Intelligence Pattern
-
-</h3>
-
-<p>
-
-Your profile indicates strong imaginative and reflective capacities with emerging transformational strengths.
-
-</p>
-
-<div class="progress">
-
-<label>
-
-Dreamer
-
-<span>
-
-86%
-
-</span>
-
-</label>
-
-<div class="bar">
-
-<div class="fill dreamer"></div>
-
-</div>
-
-</div>
-
-<div class="progress">
-
-<label>
-
-Observer
-
-<span>
-
-78%
-
-</span>
-
-</label>
-
-<div class="bar">
-
-<div class="fill observer"></div>
-
-</div>
-
-</div>
-
-<div class="progress">
-
-<label>
-
-Alchemist
-
-<span>
-
-64%
-
-</span>
-
-</label>
-
-<div class="bar">
-
-<div class="fill alchemist"></div>
-
-</div>
-
-</div>
-
-<div class="progress">
-
-<label>
-
-Visionary
-
-<span>
-
-59%
-
-</span>
-
-</label>
-
-<div class="bar">
-
-<div class="fill visionary"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="panel">
-
-<h3>
-
-Recommended Journey
-
-</h3>
-
-<div class="journey">
-
-<div>
-
-✓ Notice recurring ideas
-
-</div>
-
-<div>
-
-✓ Reflect without judgment
-
-</div>
-
-<div>
-
-✓ Experiment with new habits
-
-</div>
-
-<div>
-
-✓ Create a personal vision
-
-</div>
-
-<div>
-
-✓ Review progress weekly
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- WHAT YOU WILL RECEIVE -->
-
-<section class="receive-section" id="what-you-receive">
-
-  <div class="container">
-
-    <div class="center">
-
-      <p class="eyebrow">
-        What You Will Receive
-      </p>
-
-      <h2>
-        A personalized map of how you learn, create, and grow.
-      </h2>
-
-      <p class="lead">
-        Your Creative Intelligence Profile transforms your reflections into clear,
-        practical insights you can begin using immediately.
-      </p>
-
-    </div>
-
-    <div class="receive-grid">
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          Personalized Creative Intelligence Profile
-        </h3>
-
-        <p>
-          A clear overview of your unique creative strengths, tendencies, and learning patterns.
-        </p>
-
-      </div>
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          AI-Generated Learning Insights
-        </h3>
-
-        <p>
-          Personalized observations created from your own responses rather than generic advice.
-        </p>
-
-      </div>
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          Your Dominant InnerCube Archetype
-        </h3>
-
-        <p>
-          Discover whether your strongest current pattern is Dreamer, Observer, Alchemist, or Visionary.
-        </p>
-
-      </div>
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          Customized Growth Pathway
-        </h3>
-
-        <p>
-          Receive practical guidance designed around the capacities you are ready to develop next.
-        </p>
-
-      </div>
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          Immediate Practical Exercises
-        </h3>
-
-        <p>
-          Begin with simple reflective and creative practices that connect insight with action.
-        </p>
-
-      </div>
-
-      <div class="receive-card">
-
-        <div class="receive-icon">✓</div>
-
-        <h3>
-          A Foundation for Ongoing Learning
-        </h3>
-
-        <p>
-          Use your profile as a starting point for future learning journeys, reflection, and development.
-        </p>
-
+      <div class="footer-bottom">
+        <span>
+          © <span id="year"></span> Creative Intelligence World.
+          All rights reserved.
+        </span>
+
+        <span>Founded by Angelo Segarra</span>
       </div>
 
     </div>
-
-    <div class="center receive-action">
-
-      <a
-        href="https://buy.stripe.com/28EfZhcmg8jm4jJ1Tgd3i00"
-        class="button"
-      >
-        Start Your Creative Intelligence Profile
-      </a>
-
-      <a
-        href="https://tally.so/r/w2YBZ9"
-        class="button secondary"
-      >
-        Preview the Profile
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- RESEARCH -->
-
-<section id="research">
-
-<div class="container">
-
-<div class="center">
-
-<p class="eyebrow">
-
-Research Foundation
-
-</p>
-
-<h2>
-
-Built at the intersection of
-
-Learning,
-
-Systems,
-
-and Artificial Intelligence.
-
-</h2>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-
-<div class="number">
-
-A
-
-</div>
-
-<h3>
-
-Whole Systems Design
-
-</h3>
-
-<p>
-
-Learning is a living system.
-
-Growth emerges through relationships, reflection, feedback, and participation.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="number">
-
-B
-
-</div>
-
-<h3>
-
-Learning Sciences
-
-</h3>
-
-<p>
-
-The platform reflects how people actually learn rather than how traditional education assumes they learn.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="number">
-
-C
-
-</div>
-
-<h3>
-
-Artificial Intelligence
-
-</h3>
-
-<p>
-
-AI discovers meaningful patterns while keeping the learner—not the technology—at the center.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOUNDER -->
-
-<section id="founder">
-
-  <div class="founder-photo-wrap">
-
-  <img
-    src="images/angelo-speaker.jpg"
-    alt="Angelo Segarra, founder of Creative Intelligence World"
-    class="founder-photo"
-  >
-
-</div>
-
-    <div>
-
-      <p class="eyebrow">
-
-        Founder
-
-      </p>
-
-      <h2>
-
-        Building the future of personalized learning.
-
-      </h2>
-
-      <p class="lead">
-
-        After more than forty years exploring creativity, education, sculpture,
-        whole systems design, and human development, I created the Creative
-        Intelligence Platform to help every learner discover how they are
-        creative.
-
-      </p>
-
-      <p>
-
-        Rather than replacing human intelligence, AI can become a partner in
-        helping people better understand themselves. The goal is not simply
-        better education—it is helping every learner discover their unique way
-        of participating in creativity.
-
-      </p>
-
-      <div class="tag-list">
-
-        <span>Author</span>
-
-        <span>Educator</span>
-
-        <span>Whole Systems Designer</span>
-
-        <span>Creative Intelligence Researcher</span>
-
-      </div>
-
-      <div style="margin-top:40px;">
-
-        <a href="about.html" class="button secondary">
-
-          Learn More About Angelo
-
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FINAL CALL TO ACTION -->
-
-<section class="final-section" id="join">
-
-<div class="background-stars"></div>
-
-<div class="container center">
-
-<p class="eyebrow">
-
-Founding Members
-
-</p>
-
-<h2>
-
-Every learner deserves
-their own path.
-
-</h2>
-
-<p class="lead">
-
-Become one of the first people to experience the Creative Intelligence Platform
-and help shape the future of personalized learning.
-
-</p>
-
-<a href="https://buy.stripe.com/28EfZhcmg8jm4jJ1Tgd3i00"
-   class="button">
-   Begin Your Personalized Learning Journey
-</a>
-  
-</div>
-
-</div>
-
-</section>
-
-
-
-<footer>
-
-<div class="container footer-container">
-
-<div>
-
-<h3>
-
-Creative Intelligence World
-
-</h3>
-
-<p>
-
-Personalized learning for the age of Artificial Intelligence.
-
-</p>
-
-</div>
-
-<div class="footer-links">
-
-<a href="#platform">
-
-Platform
-
-</a>
-
-<a href="#framework">
-
-Framework
-
-</a>
-
-<a href="#research">
-
-Research
-
-</a>
-
-<a href="#founder">
-
-Founder
-
-</a>
-
-</div>
-
-</div>
-
-</footer>
-
-
-
-<!-- BEGIN JOURNEY MODAL -->
-
-<div class="journey-modal"
-
-id="journeyModal">
-
-<div class="journey-box">
-
-<button class="close-modal"
-
-id="closeModal">
-
-×
-
-</button>
-
-<p class="eyebrow">
-
-Begin Your Journey
-
-</p>
-
-<h2>
-
-What brings you here today?
-
-</h2>
-
-<p>
-
-Choose the path that best describes your interest.
-
-This will eventually connect to different AI learning journeys.
-
-</p>
-
-<div class="journey-buttons">
-
-<button>
-
-I want to learn
-
-</button>
-
-<button>
-
-I want to teach
-
-</button>
-
-<button>
-
-I want to create
-
-</button>
-
-<button>
-
-I want to lead
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<script src="app.js"></script>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+
+    menuButton.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
+
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
 
 </body>
-
 </html>
