@@ -349,7 +349,20 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
+    .hero-logo-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 470px;
+        padding: 20px;
+    }
 
+    .hero-spiral-logo {
+        width: 420px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
     .cube {
       position: relative;
       width: min(100%, 360px);
@@ -1070,18 +1083,12 @@
           </div>
         </div>
 
-        <div class="hero-card">
-          <div class="cube">
-            <span class="cube-word dreamer">Dreamer</span>
-            <span class="cube-word observer">Observer</span>
-            <span class="cube-word alchemist">Alchemist</span>
-            <span class="cube-word visionary">Visionary</span>
-
-            <div class="cube-center">
-              Creative Intelligence
-            </div>
-          </div>
-        </div>
+       <div class="hero-card hero-logo-card">
+          <img
+             src="images/spiral-logo-pearl.png"
+             alt="Creative Intelligence golden spiral"
+             class="hero-spiral-logo"
+         </div>
 
       </div>
     </section>
