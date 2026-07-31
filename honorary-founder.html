@@ -1,462 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>The Founding Circle | Creative Intelligence</title>
-
-<meta name="description" content="A personal invitation to become one of the first members of the Creative Intelligence Founding Circle.">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-
-font-family:'Inter',sans-serif;
-background:#f8f6f1;
-color:#333;
-line-height:1.8;
-
-}
-
-.container{
-
-max-width:950px;
-margin:auto;
-padding:70px 30px;
-
-}
-
-.hero{
-
-text-align:center;
-padding:40px 0 70px 0;
-
-}
-.hero-logo{
-    width:140px;
-    max-width:35%;
-    display:block;
-    margin:0 auto 30px auto;
-}
-.invitation{
-
-letter-spacing:4px;
-text-transform:uppercase;
-color:#b8860b;
-font-size:14px;
-font-weight:700;
-margin-bottom:20px;
-
-}
-
-.hero h1{
-
-font-size:54px;
-color:#12343b;
-margin-bottom:15px;
-
-}
-
-.hero h2{
-
-font-weight:400;
-font-size:28px;
-color:#8b6c1b;
-margin-bottom:35px;
-
-}
-
-.hero p{
-
-max-width:760px;
-margin:auto;
-font-size:22px;
-color:#555;
-
-}
-
-.card{
-
-background:white;
-border-radius:18px;
-padding:45px;
-margin-bottom:40px;
-box-shadow:0 12px 30px rgba(0,0,0,.08);
-
-}
-
-.card h3{
-
-font-size:30px;
-margin-bottom:20px;
-color:#12343b;
-
-}
-
-.card p{
-
-margin-bottom:20px;
-
-}
-
-ul{
-
-padding-left:25px;
-
-}
-
-li{
-
-margin-bottom:16px;
-
-}
-
-blockquote{
-
-margin:70px 0;
-font-size:30px;
-font-style:italic;
-text-align:center;
-color:#8b6c1b;
-
-}
-
-.center{
-
-text-align:center;
-
-}
-
-.button{
-
-display:inline-block;
-margin-top:30px;
-background:#b8860b;
-color:white;
-padding:18px 42px;
-border-radius:40px;
-text-decoration:none;
-font-weight:600;
-transition:.3s;
-
-}
-
-.button:hover{
-
-background:#9a7407;
-
-}
-
-.footer{
-
-text-align:center;
-margin-top:70px;
-color:#666;
-
-}
-
-.footer p{
-
-margin-bottom:15px;
-
-}
-
-.small{
-
-font-size:15px;
-color:#999;
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Founding Circle | Creative Intelligence</title>
+
+  <meta
+    name="description"
+    content="A personal invitation from Angelo Segarra to join the Creative Intelligence Founding Circle."
+  />
+
+  <style>
+    :root {
+      --background: #f7f4ed;
+      --background-soft: #eee8dc;
+      --text: #25282c;
+      --text-soft: #555b60;
+      --gold: #ad7c36;
+      --gold-dark: #855b25;
+      --teal: #244f52;
+      --white: #ffffff;
+      --border: rgba(173, 124, 54, 0.25);
+      --shadow: 0 18px 48px rgba(42, 37, 29, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(255, 255, 255, 0.9),
+          rgba(247, 244, 237, 0.96) 42%,
+          #f3efe6 100%
+        );
+      color: var(--text);
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+      line-height: 1.7;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 52px 0 68px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 24px;
+      object-fit: contain;
+    }
+
+    .portrait-frame {
+      width: 176px;
+      height: 176px;
+      margin: 0 auto 24px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: var(--shadow);
+    }
+
+    .portrait {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold-dark);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      color: var(--teal);
+      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      color: var(--gold-dark);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .founder-name {
+      margin: 0 0 28px;
+      color: var(--text-soft);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-intro {
+      max-width: 790px;
+      margin: 0 auto;
+      color: var(--text);
+      font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+      line-height: 1.8;
+    }
+
+    .hero-intro strong {
+      color: var(--teal);
+    }
+
+    .hero-quote {
+      max-width: 760px;
+      margin: 34px auto 0;
+      padding: 26px 30px;
+      border-left: 3px solid var(--gold);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--teal);
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    /* CONTENT */
+
+    main {
+      padding-bottom: 80px;
+    }
+
+    .section {
+      max-width: 880px;
+      margin: 0 auto 32px;
+      padding: 48px 54px;
+      border: 1px solid rgba(173, 124, 54, 0.16);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: 0 12px 36px rgba(44, 42, 35, 0.07);
+    }
+
+    .section-label {
+      margin: 0 0 10px;
+      color: var(--gold-dark);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .section h2 {
+      margin-bottom: 24px;
+      color: var(--teal);
+      font-size: clamp(1.8rem, 4vw, 2.65rem);
+      font-weight: 500;
+    }
+
+    .section h3 {
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-size: 1.2rem;
+    }
+
+    .section p {
+      margin: 0 0 18px;
+      color: var(--text-soft);
+      font-size: 1.08rem;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .central-question {
+      margin: 30px 0;
+      padding: 26px 28px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      color: var(--teal);
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* BENEFITS */
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .benefit {
+      padding: 24px;
+      border: 1px solid rgba(173, 124, 54, 0.18);
+      border-radius: 16px;
+      background: rgba(247, 244, 237, 0.72);
+    }
+
+    .benefit p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    /* INVITATION */
+
+    .invitation {
+      text-align: center;
+    }
+
+    .invitation p {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .closing-line {
+      margin-top: 26px !important;
+      color: var(--teal) !important;
+      font-size: 1.22rem !important;
+      font-style: italic;
+    }
+
+    /* BUTTONS */
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 25px;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(74, 57, 30, 0.16);
+    }
+
+    .button-primary {
+      background: var(--gold);
+      color: var(--white);
+    }
+
+    .button-primary:hover {
+      background: var(--gold-dark);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--gold-dark);
+    }
+
+    .button-secondary:hover {
+      background: rgba(173, 124, 54, 0.08);
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 38px 20px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--text-soft);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    .footer-links {
+      margin-top: 14px;
+    }
+
+    .footer-links a {
+      margin: 0 9px;
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding-top: 36px;
+      }
+
+      .logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .portrait-frame {
+        width: 148px;
+        height: 148px;
+      }
+
+      .section {
+        padding: 36px 24px;
+        border-radius: 18px;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-quote {
+        padding: 22px;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="hero">
+    <div class="page-shell">
 
-<div class="container">
+      <!-- Replace with the exact filename of your spiral logo -->
+      <img
+        class="logo"
+        src="creative-intelligence-spiral.png"
+        alt="Creative Intelligence spiral"
+      />
 
-<div class="hero">
+      <!-- Replace angelo-speaker.jpg if your portrait has a different filename -->
+      <div class="portrait-frame">
+        <img
+          class="portrait"
+          src="angelo-speaker.jpg"
+          alt="Angelo Segarra, founder of Creative Intelligence"
+        />
+      </div>
 
-    <img src="images/spiral-logo-pearl.png"
-         alt="Creative Intelligence Logo"
-         class="hero-logo">
+      <p class="eyebrow">A Personal Invitation</p>
 
-    <div class="invitation">
-        A Personal Invitation
+      <h1>The Founding Circle</h1>
+
+      <p class="subtitle">Creative Intelligence</p>
+
+      <p class="founder-name">
+        Angelo Segarra · Author · Educator · Artist
+      </p>
+
+      <p class="hero-intro">
+        I’m inviting a small group of educators, creators, innovators,
+        and lifelong learners to help shape a new vision for education
+        in the age of artificial intelligence.
+        This is not about purchasing software.
+        It is about helping build a future where AI supports
+        <strong>creativity, reflection, discernment, and deeper human understanding.</strong>
+      </p>
+
+      <blockquote class="hero-quote">
+        “I did not begin this work because I believed I had all the answers.
+        I began with a question that followed me throughout my life:
+        Was I genuinely creative?”
+      </blockquote>
     </div>
-
-   
-I'm inviting a small group of educators, creators, innovators, and lifelong learners to help shape a new vision for education in the age of Artificial Intelligence.
-
-This isn't about purchasing software.
-
-It's about helping build a future where AI supports deeper understanding, creativity, and human potential.
-
-<h3>Why a Founding Circle?</h3>
-
-<p>
-
-For more than three decades my work has explored one central question:
-
-<strong>How can we help every individual discover their unique creative potential?</strong>
-
-</p>
-
-<p>
-
-As an educator, artist, and author, I have seen that every learner brings something unique into the world. Artificial intelligence gives us extraordinary new tools, but I believe its greatest contribution will come when it helps us understand people more deeply—not simply personalize information.
-   
-  <h3>Why a Founding Circle?</h3>
-
-   <p>
-    For more than three decades my work has explored one central question:
-</p>
-
-<p>
-
-Creative Intelligence is my attempt to bring together creativity, education, reflection, and AI into one evolving framework.
-
-</p>
-
-<p>
-
-I cannot build that future alone.
-
-</p>
-
-</div>
-<div class="card">
-
-<h3>Who I'm Looking For</h3>
-
-<p>
-
-I'm inviting only the first <strong>25 members</strong> to become part of the Creative Intelligence Founding Circle.
-
-</p>
-
-<p>
-
-I'm looking for people who are curious about the future of education, creativity, and artificial intelligence—people who believe learning should help individuals discover who they are, not simply what they know.
-
-</p>
-
-<p>
-
-You don't need to be an AI expert.
-
-You simply need to believe that education can become more personal, more creative, and more deeply human.
-
-</p>
-
-<p>
-
-Whether you're an educator, entrepreneur, researcher, coach, artist, student, or simply someone who enjoys exploring new ideas, your perspective is welcome.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>As a Founding Circle Member You Will Receive</h3>
-
-<ul>
-
-<li>Lifetime access to the Creative Intelligence Platform as it evolves.</li>
-
-<li>Early access to every new feature, assessment, and learning experience.</li>
-
-<li>The opportunity to influence future development through your ideas and feedback.</li>
-
-<li>Invitations to exclusive online demonstrations and discussions.</li>
-
-<li>Recognition (with your permission) as one of the original supporters who helped launch Creative Intelligence.</li>
-
-<li>A personalized digital Founding Circle Certificate.</li>
-
-<li>The satisfaction of helping shape a vision that puts people—not technology—at the center of learning.</li>
-
-</ul>
-
-</div>
-
-<div class="card">
-
-<h3>What I'm Asking</h3>
-
-<p>
-
-I'm not asking for an investment.
-
-I'm inviting you to become part of the beginning of something I believe has the potential to make a meaningful contribution to education and personal development.
-
-</p>
-
-<p>
-
-If this vision resonates with you, I would be grateful if you would consider helping in whatever way feels natural.
-
-Every conversation, introduction, idea, and piece of feedback helps move this project forward.
-
-</p>
-
-<ul>
-
-<li>Share your honest thoughts and suggestions.</li>
-
-<li>Introduce the platform to someone who may find it valuable.</li>
-
-<li>Become an early user and help shape future development.</li>
-
-<li>Join conversations about the future of AI, creativity, and education.</li>
-
-<li>Help build a community that believes technology should deepen our understanding of people—not replace it.</li>
-
-</ul>
-
-<p>
-
-In return, I would be honored to welcome you as one of the original members of the <strong>Creative Intelligence Founding Circle</strong>.
-
-</p>
-
-<p>
-
-My hope is that, years from now, you'll be able to say:
-
-<strong>"I was there at the very beginning."</strong>
-
-</p>
-
-</div>
-
-  <blockquote>
-
-"Every meaningful journey begins with a few people who believe the future can be different."
-
-</blockquote>
-
-<div class="card">
-
-<h3>This Is an Invitation</h3>
-
-<p>
-
-If you've read this far, thank you.
-
-Whether you choose to join the Founding Circle or simply continue following the journey, your encouragement means more than you know.
-
-</p>
-
-<p>
-
-Creative Intelligence is still in its early chapters.
-
-The platform will continue to grow, evolve, and improve through the ideas and experiences of the people who help shape it.
-
-I hope you'll become one of those people.
-
-</p>
-
-<p>
-
-Together, we can explore a future where artificial intelligence helps people become more creative, more reflective, and more deeply human.
-
-</p>
-
-<p>
-
-Every movement begins with a handful of people who believe that a better future is possible.
-
-Perhaps this is one of those moments.
-
-</p>
-
-</div>
-
-<div class="center">
-
-<a class="button"
-href="contact.html">
-
-Join the Founding Circle
-
-</a>
-
-<br><br>
-
-<a class="button"
-style="background:#12343b;margin-right:12px;"
-href="https://youtu.be/BcYfdskDIy0">
-
-Watch the 90-Second Demo
-
-</a>
-
-<a class="button"
-style="background:#ffffff;color:#12343b;border:2px solid #12343b;"
-href="https://creativeintelligence.world">
-
-Explore Creative Intelligence
-
-</a>
-
-</div>
-
-<div class="footer">
-
-<p>
-Thank you for considering this invitation.
-</p>
-
-<p>
-I look forward to building this future together.
-</p>
-
-<p>
-<strong>Angelo Segarra</strong><br>
-Founder, Creative Intelligence
-</p>
-
-<p style="margin-top:25px;">
-
-🌐 <a href="https://creativeintelligence.world">
-CreativeIntelligence.world
-</a>
-
-<br><br>
-
-🎬 <a href="https://youtu.be/BcYfdskDIy0">
-Watch the 90-Second Demo
-</a>
-
-<br><br>
-
-💼 <a href="https://www.linkedin.com/in/angelo-manuel-segarra-203bbaa/">
-Connect on LinkedIn
-</a>
-
-</p>
-
-<p class="small">
-Thank you for believing that every individual has a unique creative contribution to make.
-</p>
-
-</div>
-
-</div>
-
+  </header>
+
+  <main class="page-shell">
+
+    <section class="section">
+      <p class="section-label">The Beginning</p>
+
+      <h2>Why a Founding Circle?</h2>
+
+      <p>
+        For more than three decades, my work as a painter, educator,
+        and author has explored one central question:
+      </p>
+
+      <div class="central-question">
+        How can we help every individual discover their own creative path?
+      </div>
+
+      <p>
+        My journey began with painting. I wanted to create something beautiful,
+        but my deeper motivation was to discover whether I was genuinely creative.
+        I wanted to make something that felt truly my own.
+      </p>
+
+      <p>
+        Over time, I began to recognize different ways of thinking within
+        the creative process: imagination, observation, transformation,
+        and vision. These discoveries became the foundations of the
+        Creative Intelligence framework.
+      </p>
+
+      <p>
+        Artificial intelligence now gives us the opportunity to make this
+        journey more personal. Its greatest educational contribution may not
+        be simply delivering information more efficiently, but helping us
+        understand how different people learn, imagine, reflect, and develop.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">The Vision</p>
+
+      <h2>A More Personal Form of Learning</h2>
+
+      <p>
+        Traditional education often begins with what can be measured:
+        information remembered, skills demonstrated, and outcomes achieved.
+        These measures are valuable, but they do not reveal the whole person.
+      </p>
+
+      <p>
+        They may not tell us how someone imagines, where they find meaning,
+        what awakens their curiosity, or how they recognize that an idea
+        has become coherent and complete.
+      </p>
+
+      <p>
+        Creative Intelligence is an attempt to understand how creativity
+        develops—and how AI might support a learning journey that is reflective,
+        developmental, and responsive to the individual.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="section-label">Participation</p>
+
+      <h2>Who I Am Inviting</h2>
+
+      <p>
+        I am inviting a small circle of people who are interested in education,
+        creativity, personal development, artificial intelligence, and the
+        future of human learning.
+      </p>
+
+      <p>
+        You do not need to be an expert. I am looking for thoughtful people
+        who are curious about the idea and willing to offer honest reflections
+        as the platform continues to grow.
+      </p>
+
+      <div class="benefits-grid">
+        <article class="benefit">
+          <h3>Early Access</h3>
+          <p>
+            Explore new ideas, profiles, and learning experiences as they develop.
+          </p>
+        </article>
+
+        <article class="benefit">
+          <h3>A Voice in the Process</h3>
+          <p>
+            Share feedback and help shape the direction of Creative Intelligence.
+          </p>
+        </article>
+
+        <article class="benefit">
+          <h3>Ongoing Conversation</h3>
+          <p>
+            Participate in discussions about creativity, education, and AI.
+          </p>
+        </article>
+
+        <article class="benefit">
+          <h3>Founding Recognition</h3>
+          <p>
+            Be recognized, with your permission, as part of the original Founding Circle.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">What I Am Asking</p>
+
+      <h2>This Is Not an Investment Request</h2>
+
+      <p>
+        I am not asking you to purchase anything or make a financial investment.
+      </p>
+
+      <p>
+        I am asking for your interest, your perspective, and your willingness
+        to help me explore whether this idea can contribute something meaningful
+        to education and personal development.
+      </p>
+
+      <p>
+        Your participation might take the form of trying the Creative Intelligence
+        Profile, sharing your response, suggesting improvements, joining an
+        occasional conversation, or introducing the project to someone who may
+        find it valuable.
+      </p>
+    </section>
+
+    <section class="section invitation">
+      <p class="section-label">A Personal Invitation</p>
+
+      <h2>Become Part of the Beginning</h2>
+
+      <p>
+        Every meaningful idea begins with a small group of people willing to
+        see its possibilities before the path is completely clear.
+      </p>
+
+      <p>
+        If this vision resonates with you, I would be honored to welcome you
+        into the Creative Intelligence Founding Circle.
+      </p>
+
+      <p class="closing-line">
+        One day, I hope you will be able to say:
+        “I was there at the very beginning.”
+      </p>
+
+      <div class="button-row">
+        <a
+          class="button button-primary"
+          href="mailto:intinno@icloud.com?subject=Creative%20Intelligence%20Founding%20Circle"
+        >
+          Join the Founding Circle
+        </a>
+
+        <a
+          class="button button-secondary"
+          href="https://youtu.be/BcYfdskDIy0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Watch the 90-Second Demo
+        </a>
+
+        <a
+          class="button button-secondary"
+          href="https://creativeintelligence.world"
+        >
+          Explore Creative Intelligence
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Creative Intelligence World · Angelo Segarra
+    </p>
+
+    <p>
+      Creativity · Reflection · Discernment · Human Development
+    </p>
+
+    <div class="footer-links">
+      <a href="mailto:intinno@icloud.com">Contact</a>
+
+      <a
+        href="https://www.linkedin.com/in/angelo-manuel-segarra-203bbaa/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+
+      <a href="https://creativeintelligence.world">
+        Home
+      </a>
+    </div>
+  </footer>
 </body>
 </html>
