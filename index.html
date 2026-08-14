@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Creative Intelligence World | AI-Powered Personalized Learning</title>
+  <title>Creative Intelligence World | An Adaptive AI Companion</title>
 
   <meta
     name="description"
-    content="Creative Intelligence World combines guided reflection, the InnerCube Framework, and AI to create personalized learning experiences."
+    content="Creative Intelligence World is a Gemini-powered adaptive learning platform that understands the individual, supports real goals, learns from reflection, and adapts what comes next."
   />
 
   <style>
@@ -224,6 +224,7 @@
       height: 46px;
       display: grid;
       place-items: center;
+      overflow: hidden;
       border: 2px solid var(--gold);
       border-radius: 50%;
       background: var(--white);
@@ -231,6 +232,12 @@
       font-family: Georgia, serif;
       font-size: 1.35rem;
       font-weight: 700;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .brand-copy strong {
@@ -315,7 +322,11 @@
     }
 
     .hero .lead {
-      margin-bottom: 34px;
+      margin-bottom: 22px;
+    }
+
+    .hero .button-row {
+      margin-top: 34px;
     }
 
     .hero-note {
@@ -345,105 +356,28 @@
       padding: 45px;
       border: 1px solid var(--border);
       border-radius: 36px;
-     background: linear-gradient(
-    135deg,
-    rgba(255,255,255,.98),
-    rgba(248,246,242,.95)
-);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.98),
+        rgba(248, 246, 242, 0.95)
+      );
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
+
     .hero-logo-card {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 470px;
-        padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 470px;
+      padding: 20px;
     }
 
     .hero-spiral-logo {
-        width: 470px;
-        max-width: 100%;
-        height: auto;
-        display: block;
-    }
-    .cube {
-      position: relative;
-      width: min(100%, 360px);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      transform: rotate(4deg);
-      border: 1px solid rgba(189, 145, 68, 0.5);
-    }
-
-    .cube::before {
-      content: "";
-      position: absolute;
-      inset: 12%;
-      border: 1px solid rgba(29, 98, 103, 0.28);
-      transform: rotate(20deg);
-    }
-
-    .cube::after {
-      content: "";
-      position: absolute;
-      inset: 27%;
-      border: 1px solid rgba(189, 145, 68, 0.42);
-      border-radius: 50%;
-    }
-
-    .cube-center {
-      position: relative;
-      z-index: 3;
-      width: 130px;
-      height: 130px;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-      border-radius: 50%;
-      background: var(--teal);
-      color: var(--white);
-      text-align: center;
-      font-family: Georgia, serif;
-      font-size: 1.05rem;
-      line-height: 1.15;
-      box-shadow: 0 16px 35px rgba(29, 98, 103, 0.28);
-      transform: rotate(-4deg);
-    }
-
-    .cube-word {
-      position: absolute;
-      z-index: 4;
-      padding: 9px 14px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--white);
-      color: var(--teal-dark);
-      font-size: 0.8rem;
-      font-weight: 700;
-      box-shadow: 0 8px 22px rgba(21, 55, 59, 0.09);
-      transform: rotate(-4deg);
-    }
-
-    .cube-word.dreamer {
-      top: 8px;
-      left: 8px;
-    }
-
-    .cube-word.observer {
-      top: 70px;
-      right: -15px;
-    }
-
-    .cube-word.alchemist {
-      bottom: 16px;
-      left: 4px;
-    }
-
-    .cube-word.visionary {
-      right: -4px;
-      bottom: 68px;
+      width: 470px;
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* Video */
@@ -514,6 +448,10 @@
       color: #eed598;
     }
 
+    .statement-copy h2 {
+      margin-bottom: 24px;
+    }
+
     .statement-copy p {
       margin-bottom: 20px;
       color: var(--muted);
@@ -561,6 +499,20 @@
     .card p {
       color: var(--muted);
       font-size: 0.95rem;
+    }
+
+    .cycle-line {
+      max-width: 900px;
+      margin: 48px auto 0;
+      padding: 28px;
+      border-left: 4px solid var(--gold);
+      border-radius: 16px;
+      background: var(--cream);
+      color: var(--teal-dark);
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 1.28rem;
+      line-height: 1.5;
     }
 
     /* Framework */
@@ -643,7 +595,7 @@
       font-weight: 900;
     }
 
-    /* Partner section */
+    /* Companion CTA */
 
     .partner-panel {
       position: relative;
@@ -751,22 +703,6 @@
       object-position: center top;
       margin: auto;
       border-radius: 28px;
-      box-shadow: var(--shadow);
-    }
-
-    .photo-placeholder {
-      width: 100%;
-      max-width: 390px;
-      aspect-ratio: 4 / 5;
-      display: grid;
-      place-items: center;
-      margin: auto;
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      font-weight: 700;
-      text-align: center;
       box-shadow: var(--shadow);
     }
 
@@ -954,21 +890,6 @@
         padding: 25px;
       }
 
-      .cube {
-        width: 285px;
-      }
-
-      .cube-center {
-        width: 105px;
-        height: 105px;
-        font-size: 0.9rem;
-      }
-
-      .cube-word {
-        font-size: 0.69rem;
-        padding: 7px 10px;
-      }
-
       .four-grid,
       .three-grid {
         grid-template-columns: 1fr;
@@ -1013,14 +934,16 @@
     <div class="container nav">
 
       <a class="brand" href="/">
-       <div class="brand-mark">
-   <img src="/images/spiral-icon.png"
-     alt="Creative Intelligence World Logo">
-</div>
+        <div class="brand-mark">
+          <img
+            src="/images/spiral-icon.png"
+            alt="Creative Intelligence World Logo"
+          >
+        </div>
 
         <div class="brand-copy">
           <strong>Creative Intelligence World</strong>
-          <span>Personalized learning for the age of AI</span>
+          <span>Adaptive learning for the age of AI</span>
         </div>
       </a>
 
@@ -1055,196 +978,282 @@
 
   <main>
 
+    <!-- HERO -->
+
     <section class="hero">
       <div class="container hero-grid">
 
         <div class="hero-copy">
-          <span class="eyebrow">AI-powered personalized learning</span>
+
+          <span class="eyebrow">
+            Gemini-powered adaptive learning
+          </span>
 
           <h1>
-            Every learner deserves a path as
-            <span>unique as they are.</span>
+            AI that learns
+            <span>with you.</span>
           </h1>
 
           <p class="lead">
-            Creative Intelligence World combines guided reflection,
-            the InnerCube Framework, and artificial intelligence to help
-            learners understand how they think, create, and grow.
+            Most AI responds to the question you ask.
+            Creative Intelligence begins with another question:
+            <strong>Who is the individual asking it?</strong>
+          </p>
+
+          <p class="lead">
+            Meet the Creative Intelligence Companion — an adaptive AI
+            experience that discovers how you naturally create, helps you act
+            on a real goal, learns from what happens, and adapts what comes
+            next.
           </p>
 
           <div class="button-row">
-            <a class="button button-primary" href="#platform">
+
+            <a class="button button-primary" href="#partners">
+              Discover Your Creative Intelligence
+            </a>
+
+            <a class="button button-secondary" href="#platform">
               Watch the Demonstration
             </a>
 
-            <a class="button button-secondary" href="#partners">
-              Become a Founding Learning Partner
-            </a>
           </div>
 
           <div class="hero-note">
-            Helping every learner discover how they learn best.
+            Every person is creative. The question is how.
           </div>
+
         </div>
 
-       <div class="hero-card hero-logo-card">
+        <div class="hero-card hero-logo-card">
           <img
-             src="images/spiral-logo-pearl.png"
-             alt="Creative Intelligence golden spiral"
-             class="hero-spiral-logo"
-         </div>
+            src="/images/spiral-logo-pearl.png"
+            alt="Creative Intelligence golden spiral"
+            class="hero-spiral-logo"
+          >
+        </div>
 
       </div>
     </section>
+
+
+    <!-- DEMONSTRATION -->
 
     <section class="section section-white" id="platform">
       <div class="container">
 
         <div class="section-heading center">
-          <span class="eyebrow">See the platform in action</span>
+
+          <span class="eyebrow">
+            See the adaptive platform in action
+          </span>
 
           <h2>
-            From reflection to personalized learning
+            From understanding the individual to adapting what comes next
           </h2>
 
           <p>
-            Watch how Creative Intelligence World uses the InnerCube Framework
-            and Gemini-powered interpretation to turn learner reflection into
-            personalized insight and practical direction.
+            See how Creative Intelligence combines the InnerCube Framework,
+            Gemini, learner context, reflection, and automated follow-up to
+            create a continuing personalized learning relationship.
           </p>
+
         </div>
 
         <div class="video-shell">
+
           <div class="video-frame">
+
+            <!--
+              TEMPORARY VIDEO.
+              Replace BcYfdskDIy0 with the ID of the new Companion demo
+              when the new video is uploaded.
+            -->
+
             <iframe
-            src="https://www.youtube.com/embed/BcYfdskDIy0"
-            title="Creative Intelligence Founder Video"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
+              src="https://www.youtube.com/embed/BcYfdskDIy0"
+              title="Creative Intelligence Companion Demonstration"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
             </iframe>
+
           </div>
 
           <div class="video-bottom">
+
             <div>
-              <h3>Creative Intelligence World</h3>
+              <h3>The Creative Intelligence Companion</h3>
+
               <p>
-                A working demonstration of AI-powered personalized learning.
+                A working demonstration of personalized, recursive,
+                adaptive learning powered by Gemini.
               </p>
             </div>
 
-            <a class="button button-primary"
-               href="https://youtu.be/BcYfdskDIy0"
-               target="_blank"
-               rel="noopener">
-               Watch on YouTube
+            <a
+              class="button button-primary"
+              href="https://youtu.be/BcYfdskDIy0"
+              target="_blank"
+              rel="noopener">
+              Watch on YouTube
             </a>
+
           </div>
+
         </div>
 
       </div>
     </section>
+
+
+    <!-- WHY -->
 
     <section class="section">
       <div class="container statement-grid">
 
         <div class="statement-box">
+
           <p>
-            Traditional education begins with the curriculum.
-            <span>We begin with the learner.</span>
+            A profile is only the beginning.
+            <span>What matters is what happens next.</span>
           </p>
+
         </div>
 
         <div class="statement-copy">
-          <span class="eyebrow">Why personalization matters</span>
+
+          <span class="eyebrow">
+            From personalization to understanding
+          </span>
 
           <h2>
-            Learning should not ask everyone to follow the same path.
+            Learning changes because people change.
           </h2>
 
           <p>
-            Learners differ in how they imagine possibilities, observe
-            experience, respond to change, and turn ideas into action.
+            The Creative Intelligence Profile reveals how an individual
+            naturally imagines, observes, transforms, and moves toward
+            possibility.
           </p>
 
           <p>
-            Creative Intelligence World helps make these differences visible.
-            AI then transforms reflection into guidance that learners and
-            educators can use.
+            The Companion then connects that understanding with a real goal
+            and recommends a personalized action.
           </p>
 
           <p>
-            The result is a more personal, reflective, and meaningful
-            learning experience.
+            After the individual acts and reflects on what happened, Gemini
+            uses that new experience together with the existing profile to
+            determine what may be most useful next.
           </p>
+
         </div>
 
       </div>
     </section>
+
+
+    <!-- HOW IT WORKS -->
 
     <section class="section section-white" id="how">
       <div class="container">
 
         <div class="section-heading center">
-          <span class="eyebrow">How it works</span>
+
+          <span class="eyebrow">
+            How it works
+          </span>
 
           <h2>
-            A simple journey from reflection to action
+            Discover. Act. Reflect. Adapt.
           </h2>
 
           <p>
-            The Creative Intelligence Profile is the first application in a
-            broader personalized-learning ecosystem.
+            Creative Intelligence transforms personalization from a one-time
+            recommendation into a continuing learning cycle.
           </p>
+
         </div>
 
         <div class="four-grid">
 
           <article class="card">
+
             <div class="card-number">01</div>
-            <h3>Reflect</h3>
+
+            <h3>Discover</h3>
+
             <p>
-              The learner responds to guided questions about creativity,
-              attention, possibility, change, and personal growth.
+              Complete the InnerCube experience and discover your individual
+              Creative Intelligence pattern across Dreamer, Observer,
+              Alchemist, and Visionary.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="card-number">02</div>
-            <h3>AI Interpretation</h3>
+
+            <h3>Act</h3>
+
             <p>
-              Gemini interprets the responses through the InnerCube Framework
-              while preserving the learner's own voice.
+              Bring the Companion a real goal or challenge. Gemini considers
+              your profile and determines a practical next action designed
+              for what you need now.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="card-number">03</div>
-            <h3>Personalized Report</h3>
+
+            <h3>Reflect</h3>
+
             <p>
-              The learner receives insights into how they imagine, observe,
-              transform, and move toward purposeful action.
+              Return and tell the Companion what happened — what worked,
+              what surprised you, what became difficult, and what you
+              discovered.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="card-number">04</div>
-            <h3>Apply and Grow</h3>
+
+            <h3>Adapt</h3>
+
             <p>
-              The insights become the beginning of a personalized pathway for
-              learning, creativity, mentorship, or professional development.
+              Gemini combines your new experience with what it already knows
+              about you and determines what creative mode and action may be
+              most useful next.
             </p>
+
           </article>
 
         </div>
+
+        <div class="cycle-line">
+          Profile → Goal → Action → Experience → Reflection → Adaptation → Next Action
+        </div>
+
       </div>
     </section>
+
+
+    <!-- FRAMEWORK -->
 
     <section class="section framework">
       <div class="container">
 
         <div class="section-heading center">
-          <span class="eyebrow">The InnerCube Framework</span>
+
+          <span class="eyebrow">
+            The InnerCube Framework
+          </span>
 
           <h2>
             Four ways of participating in creativity
@@ -1252,16 +1261,19 @@
 
           <p>
             The framework does not place people into fixed categories.
-            It helps learners recognize different capacities they can develop
-            and bring into relationship.
+            It helps individuals recognize different capacities they can
+            develop and bring into relationship.
           </p>
+
         </div>
 
         <div class="four-grid">
 
           <article class="card">
             <div class="framework-symbol">✦</div>
+
             <h3>The Dreamer</h3>
+
             <p>
               Imagines alternatives, explores possibilities, and gives form
               to what does not yet exist.
@@ -1270,7 +1282,9 @@
 
           <article class="card">
             <div class="framework-symbol">◉</div>
+
             <h3>The Observer</h3>
+
             <p>
               Notices patterns, attends deeply, and creates the clarity from
               which understanding can emerge.
@@ -1279,7 +1293,9 @@
 
           <article class="card">
             <div class="framework-symbol">△</div>
+
             <h3>The Alchemist</h3>
+
             <p>
               Works with uncertainty, integrates experience, and turns
               difficulty into transformation.
@@ -1288,321 +1304,303 @@
 
           <article class="card">
             <div class="framework-symbol">→</div>
+
             <h3>The Visionary</h3>
+
             <p>
-              Connects imagination with direction and helps possibility become
-              meaningful action.
+              Connects imagination with direction and helps possibility
+              become meaningful action.
             </p>
           </article>
 
         </div>
+
       </div>
     </section>
+
+
+    <!-- APPLICATIONS -->
 
     <section class="section">
       <div class="container">
 
         <div class="section-heading center">
-          <span class="eyebrow">For organizations</span>
+
+          <span class="eyebrow">
+            Beyond a single use
+          </span>
 
           <h2>
-            Explore the next generation of personalized learning
+            One adaptive architecture. Many human possibilities.
           </h2>
 
           <p>
-            Creative Intelligence World is designed for educational
-            institutions, professional-development programs, innovation
-            communities, and organizations exploring responsible uses of AI.
+            The Companion begins with creativity, but the same architecture
+            can support any context in which understanding the individual
+            improves the guidance.
           </p>
+
         </div>
 
         <div class="three-grid">
 
           <article class="card">
-            <h3>Universities and Schools</h3>
+            <h3>Education</h3>
+
             <p>
-              Support learner self-awareness, creative development,
-              interdisciplinary learning, and personalized guidance.
+              Help learners understand how they approach possibility,
+              difficulty, reflection, and action while allowing guidance to
+              evolve with experience.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Career Exploration</h3>
+
+            <p>
+              Connect an individual's Creative Intelligence pattern with
+              career goals, experiments, discoveries, and changing
+              possibilities.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Personal Development</h3>
+
+            <p>
+              Turn reflection into practical action and allow subsequent
+              guidance to respond to what actually happens.
             </p>
           </article>
 
           <article class="card">
             <h3>Educator Development</h3>
+
             <p>
-              Help educators understand different learner pathways and use AI
-              to deepen reflection rather than replace human judgment.
+              Help educators recognize different learner pathways while
+              using AI to deepen rather than replace human judgment.
             </p>
           </article>
 
           <article class="card">
-            <h3>Leadership Programs</h3>
+            <h3>Teams & Leadership</h3>
+
             <p>
-              Give participants a framework for imagination, observation,
-              transformation, and purposeful decision-making.
+              Explore how individuals and teams imagine, observe,
+              transform, and move possibilities into action.
             </p>
           </article>
 
           <article class="card">
-            <h3>Innovation Centers</h3>
-            <p>
-              Help founders and teams recognize how they approach uncertainty,
-              creativity, collaboration, and future possibilities.
-            </p>
-          </article>
+            <h3>Lifelong Learning</h3>
 
-          <article class="card">
-            <h3>Professional Learning</h3>
             <p>
-              Create personalized development experiences that connect
-              individual insight with practical next steps.
-            </p>
-          </article>
-
-          <article class="card">
-            <h3>Research Partnerships</h3>
-            <p>
-              Collaborate on reflective learning, creative intelligence,
-              personalized AI, and human-centered educational design.
+              Create a continuing relationship in which guidance can evolve
+              as goals, circumstances, and the individual change.
             </p>
           </article>
 
         </div>
 
+
         <div class="pilot-panel">
+
           <div>
-            <span class="eyebrow">A focused first step</span>
-            <h3>Begin with a small pilot</h3>
+
+            <span class="eyebrow">
+              For organizations
+            </span>
+
+            <h3>
+              Begin with a focused pilot
+            </h3>
 
             <p>
-              A founding pilot can be designed around a selected group of
+              Creative Intelligence can be piloted with a selected group of
               learners, educators, founders, or professional-development
-              participants. The purpose is to gather feedback and practical
-              evidence before considering a larger implementation.
+              participants to explore how adaptive AI can support
+              individualized learning and development.
             </p>
+
           </div>
 
           <ul class="pilot-list">
             <li>Creative Intelligence Profiles for a selected cohort</li>
-            <li>AI-generated personalized reports</li>
-            <li>A guided group interpretation session</li>
+            <li>Gemini-powered personalized guidance</li>
+            <li>Adaptive Companion follow-up</li>
+            <li>Participant reflection and feedback</li>
             <li>Implementation support</li>
-            <li>Participant feedback and learning insights</li>
-            <li>An organizational findings summary</li>
+            <li>Organizational learning insights</li>
           </ul>
+
         </div>
 
       </div>
     </section>
 
-   <!-- ===========================
-FOUNDING MEMBERS
-============================ -->
 
-<section class="section section-white" id="partners">
+    <!-- FOUNDING MEMBERS -->
 
-  <div class="container">
+    <section class="section section-white" id="partners">
+      <div class="container">
 
-    <div class="partner-panel">
+        <div class="partner-panel">
 
-      <span class="eyebrow" style="color:#eed598;">
-        Limited Launch Offer
-      </span>
+          <span
+            class="eyebrow"
+            style="color:#eed598;">
+            Limited Launch Offer
+          </span>
 
-      <h2>
-       Get Your Creative Intelligence Profile
-      </h2>
-
-      <p style="font-size:1.15rem; max-width:700px;">
-        Includes your personalized AI report, Founding Member status,
-        and early access to future platform features.
-      </p>
-
-      <div class="partner-tags">
-
-       <span>✓ Personalized Creative Intelligence Profile</span>
-
-       <span>✓ AI-Powered Personal Report</span>
-
-       <span>✓ Founding Member Status</span>
-
-        <span>✓ Early Access to Future Platform Features</span>
-
-        <span>✓ Lifetime Founder Pricing</span>
-        
-      </div>
-
-      <h3 style="
-          margin:35px 0 10px;
-          font-size:3rem;
-          color:#fff;
-          font-family:Georgia,serif;">
-          $10.95
-      </h3>
-
-      <p style="
-          color:rgba(255,255,255,.85);
-          margin-bottom:35px;">
-          Launch Special • First 100 Members
-      </p>
-
-      <div class="button-row">
-
-   <a
-    class="button button-light"
-    href="https://buy.stripe.com/28E9ATbic1UY2bBdBYd3i01"
-    target="_blank"
-    rel="noopener">
-    Get My Creative Intelligence Profile
-</a>
-
-<p style="
-    margin-top:18px;
-    color:rgba(255,255,255,.85);
-    font-size:1rem;
-    text-align:center;">
-    Includes your personalized AI report,
-    <strong>Founding Member</strong> status,
-    and early access to future platform features.
-</p>
-
-
-    <a
-        class="button button-secondary"
-        href="#platform">
-
-        Watch the 2-Minute Demo
-
-    </a>
-
-</div>
-
-
-        </a>
-
-      </div>
-
-      <p style="
-          margin-top:30px;
-          color:rgba(255,255,255,.75);
-          font-size:.95rem;
-          max-width:700px;">
-
-       <p style="
-    margin-top:20px;
-    color:rgba(255,255,255,.85);
-    font-size:1rem;
-    text-align:center;">
-
-    Includes your personalized AI report,
-    <strong>Founding Member</strong> status,
-    and early access to future platform features.
-
-</p>
-
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-            Help shape the future of AI-powered personalized learning.
+          <h2>
+            Begin Your Creative Intelligence Journey
           </h2>
 
-          <p>
-            We are inviting a limited number of educational institutions,
-            innovation organizations, and professional-learning communities
-            to become Founding Learning Partners.
+          <p style="font-size:1.15rem; max-width:700px;">
+            Your Creative Intelligence Profile is the beginning.
+            Discover your individual creative pattern and enter an adaptive
+            learning experience designed to help you move toward a real goal.
           </p>
 
           <div class="partner-tags">
-            <span>Early platform access</span>
-            <span>Pilot design support</span>
-            <span>Direct collaboration</span>
-            <span>Founding recognition</span>
-            <span>Preferred future pricing</span>
+            <span>✓ Personalized Creative Intelligence Profile</span>
+            <span>✓ Gemini-Powered Interpretation</span>
+            <span>✓ Personalized Next Action</span>
+            <span>✓ Creative Intelligence Companion</span>
+            <span>✓ Founding Member Status</span>
           </div>
+
+          <h3
+            style="
+              margin:35px 0 10px;
+              font-size:3rem;
+              color:#fff;
+              font-family:Georgia,serif;">
+            $10.95
+          </h3>
+
+          <p
+            style="
+              color:rgba(255,255,255,.85);
+              margin-bottom:35px;">
+            Launch Special • First 100 Members
+          </p>
 
           <div class="button-row">
-            <a class="button button-light" href="/contact.html">
-              Schedule a Conversation
+
+            <a
+              class="button button-light"
+              href="https://buy.stripe.com/28E9ATbic1UY2bBdBYd3i01"
+              target="_blank"
+              rel="noopener">
+              Discover My Creative Intelligence
             </a>
 
-            <a class="button button-outline-light" href="#platform">
+            <a
+              class="button button-outline-light"
+              href="#platform">
               Watch the Demonstration
             </a>
+
           </div>
+
+          <p
+            style="
+              margin-top:25px;
+              color:rgba(255,255,255,.82);
+              font-size:.95rem;
+              max-width:720px;">
+            After purchase, you begin with your Creative Intelligence Profile.
+            Your Companion can then help transform that understanding into
+            action, reflection, and an evolving personalized learning journey.
+          </p>
+
         </div>
 
       </div>
     </section>
+
+
+    <!-- VISION -->
 
     <section class="section section-soft">
       <div class="container vision-grid">
 
         <div class="vision-circle">
-          <span>The learner at the center</span>
+          <span>The individual at the center</span>
         </div>
 
         <div class="vision-copy">
-          <span class="eyebrow">The broader vision</span>
+
+          <span class="eyebrow">
+            The broader vision
+          </span>
 
           <h2>
-            The Creative Intelligence Profile is only the beginning.
+            Understanding the individual is only the beginning.
           </h2>
 
           <p>
-            The long-term vision is an AI-powered learning ecosystem capable
-            of supporting personalized journeys across science, languages,
-            history, creativity, professional development, and lifelong
+            Creative Intelligence begins with creativity, but the underlying
+            architecture can extend to career exploration, science, language
+            learning, professional development, coaching, and lifelong
             learning.
           </p>
 
           <p>
-            Instead of asking every learner to move through the same material
-            in the same way, future learning experiences can respond to how
-            each person asks questions, understands complexity, builds
-            meaning, and contributes.
+            The same principle applies across domains: understand the
+            individual, understand their goal, observe what happens, and
+            adapt what comes next.
           </p>
 
           <p>
-            AI should not make education less human. Used wisely, it can help
-            educators see learners more clearly and help learners participate
-            more consciously in their own development.
+            AI should not make learning less human. Used thoughtfully, it can
+            help us understand ourselves more clearly and participate more
+            consciously in our own development.
           </p>
 
           <div class="vision-quote">
-            Every learner deserves a learning journey as unique as they are.
+            The future of personalized AI may begin with something
+            surprisingly human: knowing who it is talking to.
           </div>
+
         </div>
 
       </div>
     </section>
 
-   <section class="section section-white">
 
-<div class="container about-grid">
+    <!-- FOUNDER -->
 
-    <div class="about-photo">
+    <section class="section section-white">
+      <div class="container about-grid">
 
-        <img
+        <div class="about-photo">
+
+          <img
             src="/images/angelo-speaker.jpg"
             alt="Angelo Segarra"
-            class="founder-photo">
+          >
 
-    </div>
+        </div>
 
-    <div class="about-copy">
-      
-          <span class="eyebrow">Founder</span>
+        <div class="about-copy">
 
-          <h2>Angelo Segarra</h2>
+          <span class="eyebrow">
+            Founder
+          </span>
+
+          <h2>
+            Angelo Segarra
+          </h2>
 
           <p>
-            Angelo Segarra is the founder of Creative Intelligence World, an AI-powered personalized learning
-            platform built on the InnerCube Framework. As an author, educator, artist, and whole-systems designer,
-            he explores how artificial intelligence can help every learner discover their unique way of
-            thinking, creating, and contributing.
+            Angelo Segarra is the founder of Creative Intelligence World,
+            a Gemini-powered adaptive learning platform built on the
+            InnerCube Framework. As an author, educator, artist, and
+            whole-systems designer, he explores how artificial intelligence
+            can move beyond personalized content toward a deeper
+            understanding of the individual.
           </p>
 
           <p>
@@ -1614,19 +1612,26 @@ FOUNDING MEMBERS
 
           <p>
             Creative Intelligence World brings these fields together around
-            one central question: how can AI help every learner recognize and
-            develop their unique way of participating in creativity?
+            one central question: can AI personalize guidance without first
+            understanding the individual?
           </p>
 
           <div class="button-row">
-            <a class="button button-primary" href="/about.html">
+
+            <a
+              class="button button-primary"
+              href="/about.html">
               Read Angelo's Story
             </a>
 
-            <a class="button button-secondary" href="/cv.html">
+            <a
+              class="button button-secondary"
+              href="/cv.html">
               View Professional Profile
             </a>
+
           </div>
+
         </div>
 
       </div>
@@ -1634,50 +1639,77 @@ FOUNDING MEMBERS
 
   </main>
 
+
+  <!-- FOOTER -->
+
   <footer class="site-footer">
     <div class="container">
 
       <div class="footer-grid">
 
         <div class="footer-copy">
+
           <div class="brand">
-            <div class="brand-mark">ϕ</div>
+
+            <div class="brand-mark">
+              <img
+                src="/images/spiral-icon.png"
+                alt="Creative Intelligence World Logo"
+              >
+            </div>
 
             <div class="brand-copy">
               <strong>Creative Intelligence World</strong>
-              <span>Personalized learning for the age of AI</span>
+              <span>Adaptive learning for the age of AI</span>
             </div>
+
           </div>
 
           <p>
-            Helping learners discover how they imagine, understand,
-            transform, and contribute through human-centered AI.
+            Helping individuals discover how they imagine, understand,
+            transform, and contribute through human-centered adaptive AI.
           </p>
+
         </div>
 
         <div>
-          <div class="footer-title">Platform</div>
+
+          <div class="footer-title">
+            Platform
+          </div>
+
           <ul class="footer-links">
             <li><a href="#platform">Demonstration</a></li>
             <li><a href="#how">How It Works</a></li>
             <li><a href="/profile.html">Creative Intelligence Profile</a></li>
-            <li><a href="#partners">Founding Partners</a></li>
+            <li><a href="#partners">Begin Your Journey</a></li>
           </ul>
+
         </div>
 
         <div>
-          <div class="footer-title">Explore</div>
+
+          <div class="footer-title">
+            Explore
+          </div>
+
           <ul class="footer-links">
             <li><a href="/framework.html">InnerCube Framework</a></li>
             <li><a href="/ideas">Ideas</a></li>
             <li><a href="/education.html">Education</a></li>
             <li><a href="/books.html">Books</a></li>
           </ul>
+
         </div>
 
         <div>
-          <div class="footer-title">Connect</div>
+
+          <div class="footer-title">
+            Connect
+          </div>
+
           <ul class="footer-links">
+
             <li><a href="/about.html">About</a></li>
             <li><a href="/speaking.html">Speaking</a></li>
             <li><a href="/cv.html">Professional Profile</a></li>
@@ -1687,34 +1719,42 @@ FOUNDING MEMBERS
               <a
                 href="https://youtu.be/hMrTwTN8TmE"
                 target="_blank"
-                rel="noopener"
-              >
+                rel="noopener">
                 YouTube
               </a>
             </li>
 
-            <!-- Replace # with your LinkedIn profile -->
             <li>
-              <a href="#" target="_blank" rel="noopener">
+              <a
+                href="https://www.linkedin.com/in/angelo-manuel-segarra-203bbaa/"
+                target="_blank"
+                rel="noopener">
                 LinkedIn
               </a>
             </li>
+
           </ul>
+
         </div>
 
       </div>
 
       <div class="footer-bottom">
+
         <span>
           © <span id="year"></span> Creative Intelligence World.
           All rights reserved.
         </span>
 
-        <span>Founded by Angelo Segarra</span>
+        <span>
+          Founded by Angelo Segarra
+        </span>
+
       </div>
 
     </div>
   </footer>
+
 
   <script>
     const menuButton = document.getElementById("menuButton");
@@ -1737,7 +1777,3 @@ FOUNDING MEMBERS
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
-  </script>
-
-</body>
-</html>
