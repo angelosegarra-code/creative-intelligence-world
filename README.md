@@ -87,3 +87,20 @@ Creative Intelligence begins with another question:
 **Who is the individual asking it?**
 
 Our goal is to build AI learning experiences that understand both the individual's creative pattern and how that individual changes over time.
+## Agentic Follow-Up: The Creative Intelligence Companion
+
+The Creative Intelligence Profile is not the end of the experience. It becomes the starting point for an ongoing, adaptive relationship.
+
+After receiving a personalized profile, the individual can return with a goal, challenge, or next step. The Companion combines this new information with the individual's existing Creative Intelligence Profile. Gemini then generates a personalized next action based on both who the individual is and what they are trying to accomplish.
+
+After taking that action, the individual can report what happened. The system can then adapt its guidance again, creating a recursive learning cycle:
+
+**Understand the individual → Recommend an action → Receive new information → Adapt the guidance → Continue the journey**
+
+This moves the platform beyond a static assessment toward an agentic learning experience that can respond and adapt as the individual's goals and circumstances evolve.
+
+### Agentic Follow-Up Workflow
+
+**Tally → Google Sheets → Gemini → Personalized Adaptive Guidance → Gmail**
+
+![Creative Intelligence Agentic Follow-Up Workflow](UNADJUSTEDNONRAW_thumb_4bd6.jpg)
