@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Creative Intelligence World is a Gemini-powered adaptive learning platform that understands the individual, supports real goals, learns from reflection, and adapts what comes next."
+    content="Creative Intelligence World is a Gemini-powered adaptive platform that turns self-understanding into direction by understanding the individual, supporting real goals, learning from reflection, and adapting what comes next."
   />
 
   <style>
@@ -378,6 +378,44 @@
       max-width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* Creative Intelligence Definition */
+
+    .definition-section {
+      padding: 78px 0;
+      background: var(--teal-dark);
+      color: var(--white);
+    }
+
+    .definition-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .definition-section .eyebrow {
+      color: #eed598;
+    }
+
+    .definition-statement {
+      margin: 10px auto 28px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+    }
+
+    .definition-statement span {
+      color: #eed598;
+    }
+
+    .definition-explanation {
+      max-width: 790px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.08rem;
+      line-height: 1.75;
     }
 
     /* Video */
@@ -890,6 +928,14 @@
         padding: 25px;
       }
 
+      .definition-section {
+        padding: 62px 0;
+      }
+
+      .definition-statement {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
       .four-grid,
       .three-grid {
         grid-template-columns: 1fr;
@@ -1037,6 +1083,35 @@
     </section>
 
 
+    <!-- CREATIVE INTELLIGENCE DEFINITION -->
+
+    <section class="definition-section">
+      <div class="container">
+
+        <div class="definition-inner">
+
+          <span class="eyebrow">
+            What is Creative Intelligence?
+          </span>
+
+          <div class="definition-statement">
+            Creative Intelligence is the ability to turn
+            <span>self-understanding into direction.</span>
+          </div>
+
+          <p class="definition-explanation">
+            Cognitive intelligence helps us reason.
+            Emotional intelligence helps us understand emotions and relationships.
+            Creative Intelligence helps us understand how we create — and use that
+            understanding to decide what comes next.
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
     <!-- DEMONSTRATION -->
 
     <section class="section section-white" id="platform">
@@ -1063,12 +1138,6 @@
         <div class="video-shell">
 
           <div class="video-frame">
-
-            <!--
-              TEMPORARY VIDEO.
-              Replace BcYfdskDIy0 with the ID of the new Companion demo
-              when the new video is uploaded.
-            -->
 
             <iframe
               src="https://www.youtube.com/embed/_tyepUwvSEM"
@@ -1124,7 +1193,7 @@
         <div class="statement-copy">
 
           <span class="eyebrow">
-            From personalization to understanding
+            From self-understanding to direction
           </span>
 
           <h2>
@@ -1777,7 +1846,7 @@
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
-      </script>
+  </script>
 
-   </body>
-   </html>
+</body>
+</html>
