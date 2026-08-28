@@ -971,6 +971,155 @@
         flex-direction: column;
       }
     }
+ 
+  /* DECISION-MAKING QUIZ */
+
+.quiz-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 42px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--cream);
+  box-shadow: var(--shadow);
+}
+
+.quiz-progress-wrap {
+  margin-bottom: 34px;
+}
+
+.quiz-progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.quiz-progress-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cream-dark);
+}
+
+.quiz-progress-bar {
+  width: 10%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--gold);
+  transition: width 0.25s ease;
+}
+
+#quizQuestion {
+  margin-bottom: 28px;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  line-height: 1.25;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 14px;
+}
+
+.quiz-option {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--white);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.45;
+  transition: 0.2s ease;
+}
+
+.quiz-option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(29, 98, 103, 0.36);
+  box-shadow: 0 10px 24px rgba(21, 55, 59, 0.08);
+}
+
+.quiz-result {
+  text-align: center;
+}
+
+.quiz-result h2 {
+  margin-bottom: 18px;
+}
+
+.result-lead {
+  max-width: 680px;
+  margin: 0 auto 34px;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 32px 0;
+  text-align: left;
+}
+
+.result-card {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.result-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.result-card p {
+  color: var(--muted);
+}
+
+.result-definition {
+  margin: 34px auto;
+  padding: 24px;
+  border-left: 4px solid var(--gold);
+  border-radius: 14px;
+  background: var(--white);
+  color: var(--teal-dark);
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.quiz-restart {
+  margin-top: 28px;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--teal);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .quiz-shell {
+    padding: 28px 20px;
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -1111,7 +1260,84 @@
       </div>
     </section>
 
+<!-- DECISION-MAKING QUIZ -->
 
+<section class="section section-white" id="decision-quiz">
+  <div class="container">
+
+    <div class="section-heading center">
+      <span class="eyebrow">Free 3-Minute Quiz</span>
+
+      <h2>How Do You Make Decisions?</h2>
+
+      <p>
+        Discover the hidden pattern behind the choices you make —
+        and what may be helping or holding you back.
+      </p>
+    </div>
+
+    <div class="quiz-shell">
+
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-label">
+          <span id="quizStepLabel">Question 1 of 10</span>
+          <span id="quizPercent">10%</span>
+        </div>
+
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-bar" id="quizProgressBar"></div>
+        </div>
+      </div>
+
+      <div id="quizQuestionArea">
+        <h3 id="quizQuestion"></h3>
+        <div class="quiz-options" id="quizOptions"></div>
+      </div>
+
+      <div class="quiz-result" id="quizResult" hidden>
+
+        <span class="eyebrow">Your Decision Pattern</span>
+
+        <h2 id="resultTitle"></h2>
+
+        <p class="result-lead" id="resultDescription"></p>
+
+        <div class="result-grid">
+
+          <div class="result-card">
+            <span class="result-label">Your strength</span>
+            <p id="resultStrength"></p>
+          </div>
+
+          <div class="result-card">
+            <span class="result-label">Your potential trap</span>
+            <p id="resultTrap"></p>
+          </div>
+
+          <div class="result-card">
+            <span class="result-label">Your next move</span>
+            <p id="resultNextMove"></p>
+          </div>
+
+        </div>
+
+        <div class="result-definition">
+          <strong>Creative Intelligence</strong> is the ability to turn
+          self-understanding into direction.
+        </div>
+
+        <button type="button" class="quiz-restart" id="quizRestart">
+          Retake the Quiz
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+    
     <!-- DEMONSTRATION -->
 
     <section class="section section-white" id="platform">
@@ -1892,6 +2118,411 @@
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
+ 
+// DECISION-MAKING QUIZ
+
+const quizQuestions = [
+  {
+    question:
+      "You have an important decision to make, but none of the choices feels quite right. What do you naturally do first?",
+    answers: [
+      {
+        text: "Imagine other possibilities that have not been considered yet.",
+        type: "dreamer"
+      },
+      {
+        text: "Step back and gather more information before deciding.",
+        type: "observer"
+      },
+      {
+        text: "Try something small and see what happens.",
+        type: "alchemist"
+      },
+      {
+        text: "Ask which option best supports where I want to go.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "When you feel stuck between several possibilities, what is most likely to help you?",
+    answers: [
+      {
+        text: "Letting myself imagine without worrying about practicality.",
+        type: "dreamer"
+      },
+      {
+        text: "Understanding the situation more clearly.",
+        type: "observer"
+      },
+      {
+        text: "Changing something and learning from the result.",
+        type: "alchemist"
+      },
+      {
+        text: "Remembering the larger direction I want my life to take.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "A plan you were excited about suddenly stops working. What is your instinct?",
+    answers: [
+      {
+        text: "Imagine a completely different approach.",
+        type: "dreamer"
+      },
+      {
+        text: "Pause and understand what changed.",
+        type: "observer"
+      },
+      {
+        text: "Adapt the plan as I go.",
+        type: "alchemist"
+      },
+      {
+        text: "Revisit the goal and decide whether the plan still serves it.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "When someone asks you what you want to do next, which response feels most familiar?",
+    answers: [
+      {
+        text: "I have several possibilities in mind.",
+        type: "dreamer"
+      },
+      {
+        text: "I need more time to think about it.",
+        type: "observer"
+      },
+      {
+        text: "I will know once I start trying things.",
+        type: "alchemist"
+      },
+      {
+        text: "I usually know the direction, even if I do not know every step.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "Which situation is most likely to make a decision difficult for you?",
+    answers: [
+      {
+        text: "There are too many interesting possibilities.",
+        type: "dreamer"
+      },
+      {
+        text: "I do not feel I have enough information.",
+        type: "observer"
+      },
+      {
+        text: "I am unsure how things will change once I act.",
+        type: "alchemist"
+      },
+      {
+        text: "None of the options seems connected to where I want to go.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "What gives you the most confidence when making an important choice?",
+    answers: [
+      {
+        text: "Seeing a possibility that excites me.",
+        type: "dreamer"
+      },
+      {
+        text: "Feeling that I understand the situation clearly.",
+        type: "observer"
+      },
+      {
+        text: "Knowing I can adjust if things do not work.",
+        type: "alchemist"
+      },
+      {
+        text: "Knowing the choice moves me toward something meaningful.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "When you look back at your best decisions, what was usually present?",
+    answers: [
+      {
+        text: "I allowed myself to imagine something different.",
+        type: "dreamer"
+      },
+      {
+        text: "I noticed something important that I had previously missed.",
+        type: "observer"
+      },
+      {
+        text: "I learned by acting instead of waiting for certainty.",
+        type: "alchemist"
+      },
+      {
+        text: "I had a clear sense of where I wanted to go.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "You are offered an opportunity you did not expect. What is your first reaction?",
+    answers: [
+      {
+        text: "What else could this make possible?",
+        type: "dreamer"
+      },
+      {
+        text: "What do I need to understand before saying yes?",
+        type: "observer"
+      },
+      {
+        text: "Could I try it without committing completely?",
+        type: "alchemist"
+      },
+      {
+        text: "Does this fit the direction I want my life to take?",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "When you postpone a decision, what is usually happening?",
+    answers: [
+      {
+        text: "I keep imagining more possibilities.",
+        type: "dreamer"
+      },
+      {
+        text: "I keep looking for more clarity or certainty.",
+        type: "observer"
+      },
+      {
+        text: "I am waiting until I can test the situation more safely.",
+        type: "alchemist"
+      },
+      {
+        text: "I am unsure which choice really matters to me.",
+        type: "visionary"
+      }
+    ]
+  },
+
+  {
+    question:
+      "If you could strengthen one part of your decision-making, which would help most?",
+    answers: [
+      {
+        text: "Seeing possibilities I have not considered.",
+        type: "dreamer"
+      },
+      {
+        text: "Seeing the situation more clearly.",
+        type: "observer"
+      },
+      {
+        text: "Acting before I know exactly what will happen.",
+        type: "alchemist"
+      },
+      {
+        text: "Knowing which direction deserves my attention.",
+        type: "visionary"
+      }
+    ]
+  }
+];
+
+const quizResults = {
+  dreamer: {
+    title: "The Dreamer",
+    description:
+      "You tend to create direction by imagining what else might be possible. You are naturally drawn toward alternatives, new ideas, and paths that may not yet exist.",
+    strength:
+      "You can see possibilities that other people may overlook.",
+    trap:
+      "Too many possibilities can make choosing one direction difficult.",
+    nextMove:
+      "Borrow from the Visionary. Ask which possibility feels most worth moving toward now."
+  },
+
+  observer: {
+    title: "The Observer",
+    description:
+      "You tend to create direction through clarity and understanding. Before moving, you want to see what is really happening and make sense of the situation.",
+    strength:
+      "You notice patterns, details, and information others may miss.",
+    trap:
+      "You can wait for certainty long after you already know enough to begin.",
+    nextMove:
+      "Borrow from the Alchemist. Take one small action that will teach you something new."
+  },
+
+  alchemist: {
+    title: "The Alchemist",
+    description:
+      "You tend to discover direction through experience. Rather than needing the whole answer first, you learn by trying, adjusting, and transforming what happens.",
+    strength:
+      "You are adaptable and can turn experience into learning.",
+    trap:
+      "Constantly changing direction can make it difficult to build momentum.",
+    nextMove:
+      "Borrow from the Observer. Pause long enough to notice what your experiments are teaching you."
+  },
+
+  visionary: {
+    title: "The Visionary",
+    description:
+      "You tend to make decisions by connecting choices to a larger direction. You are naturally interested in where something is leading and why it matters.",
+    strength:
+      "You can turn possibility into purposeful movement.",
+    trap:
+      "A strong destination can sometimes make you overlook unexpected possibilities.",
+    nextMove:
+      "Borrow from the Dreamer. Ask what other possibilities might exist before committing to the path."
+  }
+};
+
+let quizIndex = 0;
+
+const quizScores = {
+  dreamer: 0,
+  observer: 0,
+  alchemist: 0,
+  visionary: 0
+};
+
+const quizQuestion = document.getElementById("quizQuestion");
+const quizOptions = document.getElementById("quizOptions");
+const quizQuestionArea = document.getElementById("quizQuestionArea");
+const quizResult = document.getElementById("quizResult");
+const quizStepLabel = document.getElementById("quizStepLabel");
+const quizPercent = document.getElementById("quizPercent");
+const quizProgressBar = document.getElementById("quizProgressBar");
+const quizRestart = document.getElementById("quizRestart");
+
+function renderQuizQuestion() {
+  const current = quizQuestions[quizIndex];
+
+  quizQuestion.textContent = current.question;
+  quizOptions.innerHTML = "";
+
+  const questionNumber = quizIndex + 1;
+  const percent = Math.round(
+    (questionNumber / quizQuestions.length) * 100
+  );
+
+  quizStepLabel.textContent =
+    `Question ${questionNumber} of ${quizQuestions.length}`;
+
+  quizPercent.textContent = `${percent}%`;
+  quizProgressBar.style.width = `${percent}%`;
+
+  current.answers.forEach(function(answer) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "quiz-option";
+    button.textContent = answer.text;
+
+    button.addEventListener("click", function() {
+      quizScores[answer.type] += 1;
+      quizIndex += 1;
+
+      if (quizIndex < quizQuestions.length) {
+        renderQuizQuestion();
+      } else {
+        showQuizResult();
+      }
+    });
+
+    quizOptions.appendChild(button);
+  });
+}
+
+function showQuizResult() {
+  quizQuestionArea.hidden = true;
+  quizResult.hidden = false;
+
+  quizProgressBar.style.width = "100%";
+  quizPercent.textContent = "100%";
+  quizStepLabel.textContent = "Quiz complete";
+
+  const rankedTypes = Object.keys(quizScores).sort(function(a, b) {
+    return quizScores[b] - quizScores[a];
+  });
+
+  const primaryType = rankedTypes[0];
+  const secondaryType = rankedTypes[1];
+
+  const primary = quizResults[primaryType];
+  const secondary = quizResults[secondaryType];
+
+  let resultTitle = primary.title;
+
+  if (
+    quizScores[primaryType] === quizScores[secondaryType] ||
+    quizScores[primaryType] - quizScores[secondaryType] === 1
+  ) {
+    resultTitle =
+      `${primary.title} with a strong ${secondary.title.replace("The ", "")} influence`;
+  }
+
+  document.getElementById("resultTitle").textContent =
+    resultTitle;
+
+  document.getElementById("resultDescription").textContent =
+    primary.description;
+
+  document.getElementById("resultStrength").textContent =
+    primary.strength;
+
+  document.getElementById("resultTrap").textContent =
+    primary.trap;
+
+  document.getElementById("resultNextMove").textContent =
+    primary.nextMove;
+}
+
+quizRestart.addEventListener("click", function() {
+  quizIndex = 0;
+
+  Object.keys(quizScores).forEach(function(type) {
+    quizScores[type] = 0;
+  });
+
+  quizResult.hidden = true;
+  quizQuestionArea.hidden = false;
+
+  renderQuizQuestion();
+
+  document
+    .getElementById("decision-quiz")
+    .scrollIntoView({ behavior: "smooth" });
+});
+
+renderQuizQuestion();
+    
   </script>
 
 </body>
