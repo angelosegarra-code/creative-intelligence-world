@@ -2475,33 +2475,99 @@ function showQuizResult() {
   const primaryType = rankedTypes[0];
   const secondaryType = rankedTypes[1];
 
+  
   const primary = quizResults[primaryType];
-  const secondary = quizResults[secondaryType];
+const secondary = quizResults[secondaryType];
 
-  let resultTitle = primary.title;
+const primaryName = primary.title.replace("The ", "");
+const secondaryName = secondary.title.replace("The ", "");
 
-  if (
-    quizScores[primaryType] === quizScores[secondaryType] ||
-    quizScores[primaryType] - quizScores[secondaryType] === 1
-  ) {
-    resultTitle =
-      `${primary.title} with a strong ${secondary.title.replace("The ", "")} influence`;
-  }
+const scoreDifference =
+  quizScores[primaryType] - quizScores[secondaryType];
 
-  document.getElementById("resultTitle").textContent =
-    resultTitle;
+const hasStrongSecondary = scoreDifference <= 1;
 
-  document.getElementById("resultDescription").textContent =
+let resultTitle = primary.title;
+let resultDescription = primary.description;
+let resultStrength = primary.strength;
+let resultTrap = primary.trap;
+let resultNextMove = primary.nextMove;
+
+if (hasStrongSecondary) {
+
+  resultTitle =
+    `${primary.title} with a strong ${secondaryName} influence`;
+
+  const combinationDescriptions = {
+
+    "dreamer-observer":
+      "You create direction by imagining what could be possible, while also needing to understand what is really happening. Your strongest decisions often emerge when imagination and clarity work together.",
+
+    "dreamer-alchemist":
+      "You create direction through possibility and experimentation. You are willing to imagine alternatives and then learn by trying them, turning ideas into experience.",
+
+    "dreamer-visionary":
+      "You combine imagination with a strong sense of direction. You can see possibilities beyond the obvious and are most effective when you choose the one that feels most worth pursuing.",
+
+    "observer-dreamer":
+      "You begin by trying to understand what is really happening, but your imagination also plays an important role. Your best decisions often come when clarity opens the door to possibilities you had not considered.",
+
+    "observer-alchemist":
+      "You create direction by understanding a situation and then learning through action. You tend to make your best decisions when reflection and experimentation reinforce one another.",
+
+    "observer-visionary":
+      "You create direction first by understanding what is really happening, while also needing to know where your choices are leading. Your best decisions often come when clarity and direction come together.",
+
+    "alchemist-dreamer":
+      "You discover direction through action, but imagination continually opens new possibilities for you. You learn by experimenting with ideas rather than waiting for certainty.",
+
+    "alchemist-observer":
+      "You learn by acting and adapting, while also paying close attention to what experience is teaching you. Your strongest decisions emerge when experimentation is followed by reflection.",
+
+    "alchemist-visionary":
+      "You discover direction through experience, but you also want your actions to lead somewhere meaningful. You are strongest when experimentation remains connected to a larger direction.",
+
+    "visionary-dreamer":
+      "You naturally look toward where you want to go, while imagination helps you see more than one possible route. Your strongest decisions combine purpose with possibility.",
+
+    "visionary-observer":
+      "You have a strong sense of direction, but you also want to understand the situation clearly before committing. Your best decisions bring purpose and careful observation together.",
+
+    "visionary-alchemist":
+      "You know the importance of direction, but you are also willing to learn by acting and adjusting. You are strongest when purpose guides experimentation without controlling it."
+  };
+
+  const combinationKey =
+    `${primaryType}-${secondaryType}`;
+
+  resultDescription =
+    combinationDescriptions[combinationKey] ||
     primary.description;
 
-  document.getElementById("resultStrength").textContent =
-    primary.strength;
+  resultStrength =
+    `Your ${primaryName} capacity gives you ${primary.strength.charAt(0).toLowerCase() + primary.strength.slice(1)} Your ${secondaryName} influence adds another way of seeing the decision.`;
 
-  document.getElementById("resultTrap").textContent =
-    primary.trap;
+  resultTrap =
+    `When these two patterns compete, you may feel pulled between ${primaryName.toLowerCase()} and ${secondaryName.toLowerCase()} ways of deciding. The goal is not to choose one over the other, but to let them work together.`;
 
-  document.getElementById("resultNextMove").textContent =
-    primary.nextMove;
+  resultNextMove =
+    `Before deciding, ask two questions: “What is my ${primaryName} noticing?” and “What would my ${secondaryName} add?” Then take one small step.`;
+}
+
+document.getElementById("resultTitle").textContent =
+  resultTitle;
+
+document.getElementById("resultDescription").textContent =
+  resultDescription;
+
+document.getElementById("resultStrength").textContent =
+  resultStrength;
+
+document.getElementById("resultTrap").textContent =
+  resultTrap;
+
+document.getElementById("resultNextMove").textContent =
+  resultNextMove;
 }
 
 quizRestart.addEventListener("click", function() {
