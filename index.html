@@ -2545,13 +2545,13 @@ if (hasStrongSecondary) {
     primary.description;
 
   resultStrength =
-    `Your ${primaryName} capacity gives you ${primary.strength.charAt(0).toLowerCase() + primary.strength.slice(1)} Your ${secondaryName} influence adds another way of seeing the decision.`;
+  `You combine careful ${primaryName.toLowerCase()} awareness with a strong ${secondaryName.toLowerCase()} influence. You can understand what is happening while also considering where your choices may lead.`;
 
-  resultTrap =
-    `When these two patterns compete, you may feel pulled between ${primaryName.toLowerCase()} and ${secondaryName.toLowerCase()} ways of deciding. The goal is not to choose one over the other, but to let them work together.`;
+resultTrap =
+  `You may keep looking for greater clarity even when you already have enough information to move forward.`;
 
-  resultNextMove =
-    `Before deciding, ask two questions: “What is my ${primaryName} noticing?” and “What would my ${secondaryName} add?” Then take one small step.`;
+resultNextMove =
+  `Ask: “What do I understand clearly enough to act on now?” Then take one small step in the direction that matters.`;
 }
 
 document.getElementById("resultTitle").textContent =
