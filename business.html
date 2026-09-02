@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Creative Intelligence for Business | Learn Faster by Doing</title>
+
+<meta name="description"
+content="Creative Intelligence helps organizations turn decisions, actions and outcomes into learning — with AI helping teams understand what happened and determine what to try next.">
+
+<style>
+:root {
+  --cream: #f5f0e7;
+  --cream-light: #fbf8f2;
+  --navy: #102d35;
+  --teal: #173f45;
+  --gold: #c69b52;
+  --text: #25383b;
+  --muted: #68777a;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--cream-light);
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--navy);
+  line-height: 1.12;
+  margin-top: 0;
+}
+
+.container {
+  width: min(1120px, 90%);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: .76rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* NAVIGATION */
+
+header {
+  background: rgba(251,248,242,.96);
+  border-bottom: 1px solid rgba(16,45,53,.10);
+}
+
+.nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: .9rem;
+}
+
+nav a:hover {
+  color: var(--gold);
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 30%, rgba(198,155,82,.17), transparent 28%),
+    linear-gradient(135deg, #f8f3e9 0%, #eee5d6 100%);
+  padding: 115px 0 120px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border: 1px solid rgba(198,155,82,.24);
+  border-radius: 50%;
+  right: -120px;
+  top: -100px;
+}
+
+.hero-content {
+  max-width: 790px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 7vw, 5.7rem);
+  margin: 14px 0 24px;
+}
+
+.hero h1 span {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.hero p {
+  font-size: 1.22rem;
+  max-width: 720px;
+  color: #43575a;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 15px 24px;
+  border-radius: 4px;
+  background: var(--navy);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.button:hover {
+  background: var(--teal);
+}
+
+/* INTRO */
+
+.intro {
+  padding: 95px 0;
+  text-align: center;
+}
+
+.intro h2 {
+  font-size: clamp(2.2rem, 4vw, 3.7rem);
+  max-width: 850px;
+  margin: 10px auto 25px;
+}
+
+.intro p {
+  max-width: 790px;
+  margin: 0 auto;
+  font-size: 1.12rem;
+  color: var(--muted);
+}
+
+/* LOOP */
+
+.loop-section {
+  background: var(--navy);
+  padding: 100px 0;
+  color: white;
+}
+
+.loop-section h2 {
+  color: white;
+  text-align: center;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+}
+
+.loop-intro {
+  max-width: 720px;
+  margin: 20px auto 55px;
+  text-align: center;
+  color: #d8e0df;
+}
+
+.loop {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.loop-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  padding: 28px 17px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.loop-number {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 1.6rem;
+}
+
+.loop-card h3 {
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: .9rem;
+  letter-spacing: .09em;
+  margin: 10px 0;
+}
+
+.loop-card p {
+  color: #c9d3d2;
+  font-size: .86rem;
+  line-height: 1.5;
+}
+
+.iterate {
+  text-align: center;
+  margin-top: 42px;
+  font-family: Georgia, serif;
+  font-size: 1.45rem;
+  color: var(--gold);
+}
+
+/* DIFFERENCE */
+
+.difference {
+  padding: 110px 0;
+}
+
+.difference-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.difference h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+
+.quote-box {
+  background: var(--cream);
+  border-left: 4px solid var(--gold);
+  padding: 40px;
+  font-family: Georgia, serif;
+  font-size: 1.45rem;
+  color: var(--navy);
+}
+
+/* ORGANIZATIONAL LEARNING */
+
+.learning {
+  background: var(--cream);
+  padding: 105px 0;
+}
+
+.learning h2 {
+  text-align: center;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+
+.learning-lead {
+  max-width: 760px;
+  text-align: center;
+  margin: 20px auto 60px;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.learning-card {
+  background: var(--cream-light);
+  padding: 35px;
+  border-radius: 8px;
+}
+
+.learning-card h3 {
+  font-size: 1.35rem;
+}
+
+.learning-card strong {
+  color: var(--gold);
+}
+
+/* AI ROLE */
+
+.ai-role {
+  padding: 105px 0;
+}
+
+.ai-role-inner {
+  max-width: 850px;
+  margin: auto;
+  text-align: center;
+}
+
+.ai-role h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+
+.ai-statement {
+  font-family: Georgia, serif;
+  font-size: 1.55rem;
+  color: var(--navy);
+  margin: 35px auto;
+}
+
+/* PILOT */
+
+.pilot {
+  padding: 105px 0;
+  background: var(--teal);
+  color: white;
+  text-align: center;
+}
+
+.pilot h2 {
+  color: white;
+  font-size: clamp(2.3rem, 4vw, 3.8rem);
+}
+
+.pilot p {
+  max-width: 720px;
+  margin: 20px auto;
+  color: #dce5e4;
+  font-size: 1.12rem;
+}
+
+.pilot .button {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.pilot-note {
+  margin-top: 20px !important;
+  font-size: .9rem !important;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 45px 0;
+  text-align: center;
+  background: #0b252b;
+  color: #aebcbd;
+  font-size: .85rem;
+}
+
+footer strong {
+  color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+  .nav {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 80px 0;
+  }
+
+  .loop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .difference-grid,
+  .learning-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .loop {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">Creative Intelligence World</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="framework.html">Framework</a>
+      <a href="education.html">Education</a>
+      <a href="business.html">For Business</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+
+      <div class="eyebrow">Creative Intelligence for Business</div>
+
+      <h1>
+        Your business learns by doing.
+        <span>Help it learn faster.</span>
+      </h1>
+
+      <p>
+        Turn decisions, actions and outcomes into organizational learning —
+        with AI helping your team understand what happened, what was learned,
+        and what to try next.
+      </p>
+
+      <a class="button" href="#pilot">
+        Explore a Creative Intelligence Pilot
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="intro">
+  <div class="container">
+
+    <div class="eyebrow">Beyond AI Productivity</div>
+
+    <h2>
+      What if AI didn't just help your people work —
+      but helped your organization learn?
+    </h2>
+
+    <p>
+      Every day, businesses make decisions, try new approaches and generate
+      experience. But much of what those experiences teach is lost.
+      Creative Intelligence creates a process for turning experience into
+      learning — and learning into better action.
+    </p>
+
+  </div>
+</section>
+
+
+<section class="loop-section">
+  <div class="container">
+
+    <div class="eyebrow" style="text-align:center;">The Creative Intelligence Learning Loop</div>
+
+    <h2>Learning doesn't end with a decision.</h2>
+
+    <p class="loop-intro">
+      Creative Intelligence follows what happens after the decision,
+      helping teams reflect, learn, adapt and begin the next iteration.
+    </p>
+
+    <div class="loop">
+
+      <div class="loop-card">
+        <div class="loop-number">01</div>
+        <h3>GOAL</h3>
+        <p>Define what the team is trying to accomplish.</p>
+      </div>
+
+      <div class="loop-card">
+        <div class="loop-number">02</div>
+        <h3>DECIDE</h3>
+        <p>Choose a direction and make assumptions visible.</p>
+      </div>
+
+      <div class="loop-card">
+        <div class="loop-number">03</div>
+        <h3>ACT</h3>
+        <p>Test the decision through real-world action.</p>
+      </div>
+
+      <div class="loop-card">
+        <div class="loop-number">04</div>
+        <h3>OBSERVE</h3>
+        <p>Capture what actually happened and what surprised you.</p>
+      </div>
+
+      <div class="loop-card">
+        <div class="loop-number">05</div>
+        <h3>LEARN</h3>
+        <p>Use human reflection and AI to identify what the experience reveals.</p>
+      </div>
+
+      <div class="loop-card">
+        <div class="loop-number">06</div>
+        <h3>ADAPT</h3>
+        <p>Turn what was learned into the next action or experiment.</p>
+      </div>
+
+    </div>
+
+    <div class="iterate">
+      ADAPT → ACT AGAIN → LEARN AGAIN ↻
+    </div>
+
+  </div>
+</section>
+
+
+<section class="difference">
+  <div class="container difference-grid">
+
+    <div>
+      <div class="eyebrow">The Difference</div>
+
+      <h2>
+        Most business AI helps complete the task.
+      </h2>
+
+      <p>
+        Creative Intelligence is interested in what happens next.
+      </p>
+
+      <p>
+        Did the decision work? What changed? What assumptions were wrong?
+        What surprised the team? What should be kept, changed or tested next?
+      </p>
+
+      <p>
+        Instead of treating each interaction as a new question,
+        Creative Intelligence can help create continuity between
+        decisions, actions and outcomes.
+      </p>
+    </div>
+
+    <div class="quote-box">
+      AI shouldn't replace organizational judgment.
+      It should help an organization develop better judgment
+      through experience.
+    </div>
+
+  </div>
+</section>
+
+
+<section class="learning">
+  <div class="container">
+
+    <div class="eyebrow" style="text-align:center;">Organizational Intelligence</div>
+
+    <h2>Your experience becomes an asset.</h2>
+
+    <p class="learning-lead">
+      Over time, Creative Intelligence can create a structured history
+      of how an organization learns.
+    </p>
+
+    <div class="learning-grid">
+
+      <div class="learning-card">
+        <strong>WE THOUGHT</strong>
+        <h3>Make assumptions visible.</h3>
+        <p>
+          Record what the team believed would happen and why a particular
+          direction was chosen.
+        </p>
+      </div>
+
+      <div class="learning-card">
+        <strong>WE DISCOVERED</strong>
+        <h3>Learn from reality.</h3>
+        <p>
+          Compare expectations with outcomes and identify patterns,
+          surprises and contradictions.
+        </p>
+      </div>
+
+      <div class="learning-card">
+        <strong>WE'LL TRY NEXT</strong>
+        <h3>Turn learning into action.</h3>
+        <p>
+          Use what the organization has learned to design the next
+          decision, experiment or iteration.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="ai-role">
+  <div class="container ai-role-inner">
+
+    <div class="eyebrow">Human + Artificial Intelligence</div>
+
+    <h2>AI participates in the learning process.</h2>
+
+    <p>
+      The role of AI is not to make the organization's decisions.
+      It helps teams examine experience, recognize patterns, challenge
+      assumptions and carry learning forward into the next iteration.
+    </p>
+
+    <div class="ai-statement">
+      People provide experience and judgment.<br>
+      AI helps make the learning visible.
+    </div>
+
+    <p>
+      The result is not simply greater productivity.
+      It is an organization that becomes better at learning from what it does.
+    </p>
+
+  </div>
+</section>
+
+
+<section class="pilot" id="pilot">
+  <div class="container">
+
+    <div class="eyebrow">Creative Intelligence Business Pilot</div>
+
+    <h2>Bring us one real business challenge.</h2>
+
+    <p>
+      Use Creative Intelligence with your team to make a decision,
+      take action, learn from the outcome and determine what to try next.
+    </p>
+
+    <a class="button" href="contact.html">
+      Explore a Creative Intelligence Pilot
+    </a>
+
+    <p class="pilot-note">
+      Designed for teams and organizations exploring innovation,
+      decision-making, organizational learning and human-centered AI.
+    </p>
+
+  </div>
+</section>
+
+</main>
+
+
+<footer>
+  <div class="container">
+    <strong>Creative Intelligence World</strong><br>
+    Turning self-understanding into direction.
+  </div>
+</footer>
+
+</body>
+</html>
