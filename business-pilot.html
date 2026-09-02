@@ -225,9 +225,7 @@ footer strong {
 <section class="form-section">
   <div class="container">
 
-    <form class="form-card"
-      action="https://script.google.com/macros/s/AKfycbycCKBj212DSbA_GHyH6gDEvuinIZiaHJxwmYYqm4a47bz_IVpyCL--fh7W0WVD-3sHmA/exec"
-      method="POST">
+    <form class="form-card" id="businessPilotForm">
 
       <h2>Tell us about your challenge.</h2>
 
@@ -323,6 +321,71 @@ footer strong {
     Turning self-understanding into direction.
   </div>
 </footer>
+<script>
+const businessPilotForm = document.getElementById("businessPilotForm");
 
+businessPilotForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const button = businessPilotForm.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+
+  button.disabled = true;
+  button.textContent = "Sending...";
+
+  const formData = new FormData(businessPilotForm);
+
+  try {
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbycCKBj212DSbA_GHyH6gDEvuinIZiaHJxwmYYqm4a47bz_IVpyCL--fh7W0WVD-3sHmA/exec",
+      {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+      }
+    );
+
+    businessPilotForm.innerHTML = `
+      <div style="text-align:center; padding:35px 10px;">
+        <div class="eyebrow">Inquiry Received</div>
+
+        <h2 style="margin-top:12px;">
+          Thank you. Your challenge has been received.
+        </h2>
+
+        <p style="
+          max-width:560px;
+          margin:18px auto;
+          color:#68777a;
+          font-size:1.05rem;
+        ">
+          We’ll review what you’ve shared and contact you about whether
+          a Creative Intelligence Pilot could be a good fit for your team.
+        </p>
+
+        <a href="/business.html"
+           style="
+             display:inline-block;
+             margin-top:18px;
+             padding:14px 22px;
+             background:#102d35;
+             color:white;
+             text-decoration:none;
+             border-radius:6px;
+             font-weight:700;
+           ">
+          Return to For Business
+        </a>
+      </div>
+    `;
+
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = originalText;
+
+    alert("Something went wrong. Please try again.");
+  }
+});
+</script>
 </body>
 </html>
