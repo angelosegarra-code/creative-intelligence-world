@@ -1268,6 +1268,121 @@
   margin-top: 10px;
   font-weight: 600;
 }
+
+    #quiz-email-status {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* HUMAN HERO OVERRIDE */
+
+.hero {
+  position: relative;
+  min-height: 720px;
+  display: grid;
+  align-items: center;
+  padding: 100px 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(248, 245, 238, 0.99) 0%,
+      rgba(248, 245, 238, 0.96) 38%,
+      rgba(248, 245, 238, 0.78) 52%,
+      rgba(248, 245, 238, 0.18) 72%,
+      rgba(248, 245, 238, 0.02) 100%
+    ),
+    url("/images/creative-intelligence-hero-human.jpg")
+      center right / cover no-repeat;
+  overflow: hidden;
+}
+
+.hero::after {
+  display: none;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-copy {
+  max-width: 650px;
+}
+
+.hero h1 {
+  margin-bottom: 28px;
+}
+
+.hero h1 span {
+  color: var(--teal);
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(248, 245, 238, 0.98) 0%,
+        rgba(248, 245, 238, 0.92) 55%,
+        rgba(248, 245, 238, 0.45) 100%
+      ),
+      url("/images/creative-intelligence-hero-human.jpg")
+        68% center / cover no-repeat;
+  }
+
+  .hero-copy {
+    max-width: 600px;
+    text-align: left;
+  }
+
+  .hero-copy .lead {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-copy .button-row,
+  .hero-note {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 760px;
+    padding: 64px 0 300px;
+    align-items: start;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(248, 245, 238, 1) 0%,
+        rgba(248, 245, 238, 0.96) 48%,
+        rgba(248, 245, 238, 0.55) 68%,
+        rgba(248, 245, 238, 0.06) 100%
+      ),
+      url("/images/creative-intelligence-hero-human.jpg")
+        67% bottom / cover no-repeat;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .hero-copy .lead {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .hero-copy .button-row {
+    align-items: stretch;
+  }
+
+  .hero-note {
+    justify-content: flex-start;
+  }
+}
+
+</style>
   </style>
 </head>
 
