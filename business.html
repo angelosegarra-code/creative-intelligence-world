@@ -432,6 +432,57 @@ footer strong {
     font-size: 3rem;
   }
 }
+
+  .use-cases {
+  padding: 105px 0;
+  background: var(--cream);
+}
+
+.use-cases h2 {
+  text-align: center;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  max-width: 850px;
+  margin: 12px auto 55px;
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.use-case-card {
+  background: var(--cream-light);
+  padding: 30px;
+  border-radius: 8px;
+  border-top: 3px solid var(--gold);
+}
+
+.use-case-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.use-case-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.use-case-close {
+  max-width: 720px;
+  margin: 48px auto 0;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  color: var(--navy);
+  font-style: italic;
+}
+
+@media (max-width: 850px) {
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
@@ -681,7 +732,59 @@ footer strong {
   </div>
 </section>
 
+<section class="use-cases">
+  <div class="container">
 
+    <div class="eyebrow" style="text-align:center;">
+      What Could Your Team Explore?
+    </div>
+
+    <h2>
+      Bring Creative Intelligence a challenge that matters.
+    </h2>
+
+    <div class="use-case-grid">
+
+      <div class="use-case-card">
+        <h3>Launch something new</h3>
+        <p>Test a product, service or new direction.</p>
+      </div>
+
+      <div class="use-case-card">
+        <h3>Improve a process</h3>
+        <p>Learn what works, what slows the team down, and what to change.</p>
+      </div>
+
+      <div class="use-case-card">
+        <h3>Make a strategic decision</h3>
+        <p>Turn assumptions into action and learn from the outcome.</p>
+      </div>
+
+      <div class="use-case-card">
+        <h3>Improve customer experience</h3>
+        <p>Test ideas, observe results and refine what happens next.</p>
+      </div>
+
+      <div class="use-case-card">
+        <h3>Explore a new market</h3>
+        <p>Use real-world feedback to guide the next iteration.</p>
+      </div>
+
+      <div class="use-case-card">
+        <h3>Explore an AI initiative</h3>
+        <p>Learn how AI can support the way your organization actually works.</p>
+      </div>
+
+    </div>
+
+    <p class="use-case-close">
+      You don't need to know the answer.
+      You need something worth learning from.
+    </p>
+
+  </div>
+</section>
+  
 <section class="pilot" id="pilot">
   <div class="container">
 
