@@ -1220,7 +1220,54 @@
 .companion-difference {
   margin-bottom: 0;
   font-size: 1.05rem;
-}   
+} 
+
+    .quiz-email-capture {
+  margin: 34px 0 28px;
+  padding: 28px;
+  text-align: center;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(20, 80, 78, 0.12);
+  border-radius: 22px;
+}
+
+.quiz-email-capture h3 {
+  margin: 8px 0 10px;
+  font-family: Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: #173f3c;
+}
+
+.quiz-email-capture p {
+  max-width: 680px;
+  margin: 0 auto 18px;
+}
+
+#quiz-email-form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#quiz-email {
+  min-width: 280px;
+  padding: 14px 16px;
+  border: 1px solid #c9d5d3;
+  border-radius: 999px;
+  font-size: 1rem;
+}
+
+.quiz-email-note {
+  margin-top: 12px !important;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+#quiz-email-status {
+  margin-top: 10px;
+  font-weight: 600;
+}
   </style>
 </head>
 
@@ -1414,7 +1461,36 @@
           </div>
 
         </div>
+<div class="quiz-email-capture" id="quiz-email-capture">
+  <span class="eyebrow">Save Your Result</span>
 
+  <h3>Want to keep your result?</h3>
+
+  <p>
+    Enter your email and we'll save your Creative Intelligence result
+    so you can return to it later.
+  </p>
+
+  <form id="quiz-email-form">
+    <input
+      type="email"
+      id="quiz-email"
+      placeholder="Your email address"
+      required
+      autocomplete="email"
+    >
+
+    <button type="submit" class="button button-secondary">
+      Send My Result
+    </button>
+  </form>
+
+  <p class="quiz-email-note">
+    Optional — no email required.
+  </p>
+
+  <p id="quiz-email-status"></p>
+</div>
   <div class="quiz-companion-bridge">
 
   <span class="eyebrow">
@@ -2675,6 +2751,9 @@ const scoreDifference =
 
 const hasStrongSecondary = scoreDifference <= 1;
 
+window.quizPrimaryPattern = primaryName;
+window.quizSecondaryPattern = hasStrongSecondary ? secondaryName : "";
+
 let resultTitle = primary.title;
 let resultDescription = primary.description;
 let resultStrength = primary.strength;
@@ -2776,7 +2855,48 @@ quizRestart.addEventListener("click", function() {
 });
 
 renderQuizQuestion();
-    
+   const quizEmailForm = document.getElementById("quiz-email-form");
+
+if (quizEmailForm) {
+  quizEmailForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const emailInput = document.getElementById("quiz-email");
+    const status = document.getElementById("quiz-email-status");
+
+    const email = emailInput.value.trim();
+
+    if (!email) return;
+
+    status.textContent = "Saving your result...";
+
+    try {
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbx1YdKtTtbXbBR4POKRi5vqw5CERX3Qnw7cjF8BSipZDiSI5-M8d6SRDvRSwDKUPgt0/exec",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain"
+          },
+          body: JSON.stringify({
+            email: email,
+            primary: window.quizPrimaryPattern || "",
+            secondary: window.quizSecondaryPattern || "",
+            source: "Website Quiz"
+          })
+        }
+      );
+
+      status.textContent = "Your result has been saved.";
+      emailInput.value = "";
+
+    } catch (error) {
+      status.textContent =
+        "Something went wrong. Please try again.";
+    }
+  });
+} 
   </script>
 
 </body>
