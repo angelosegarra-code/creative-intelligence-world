@@ -369,64 +369,57 @@ form.addEventListener("submit", async function(event) {
   const formData = new FormData(form);
 
   try {
-    const response = await fetch(
+    await fetch(
       "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec",
       {
         method: "POST",
-        body: formData
+        body: formData,
+        mode: "no-cors"
       }
     );
 
-    const result = await response.json();
+    document.querySelector(".form-section").innerHTML = `
+      <div class="container">
+        <div style="
+          background:#fbf8f2;
+          padding:50px 35px;
+          border-radius:12px;
+          text-align:center;
+          max-width:760px;
+          margin:auto;
+        ">
+          <div class="eyebrow">Perspective Received</div>
 
-    if (result.success) {
-      document.querySelector(".form-section").innerHTML = `
-        <div class="container">
-          <div style="
-            background:#fbf8f2;
-            padding:50px 35px;
-            border-radius:12px;
-            text-align:center;
-            max-width:760px;
+          <h2 style="
+            font-family:Georgia, 'Times New Roman', serif;
+            color:#10233f;
+            font-size:2.5rem;
+            margin:15px 0 18px;
+          ">
+            Thank you for sharing what you see.
+          </h2>
+
+          <p style="
+            color:#687381;
+            font-size:1.05rem;
+            max-width:600px;
             margin:auto;
           ">
-            <div class="eyebrow">Perspective Received</div>
-
-            <h2 style="
-              font-family:Georgia, 'Times New Roman', serif;
-              color:#10233f;
-              font-size:2.5rem;
-              margin:15px 0 18px;
-            ">
-              Thank you for sharing what you see.
-            </h2>
-
-            <p style="
-              color:#687381;
-              font-size:1.05rem;
-              max-width:600px;
-              margin:auto;
-            ">
-              Your perspective has been recorded independently and will
-              become part of your team's Creative Intelligence learning process.
-            </p>
-          </div>
+            Your perspective has been recorded independently and will
+            become part of your team's Creative Intelligence learning process.
+          </p>
         </div>
-      `;
-    } else {
-      throw new Error(result.error || "Submission failed.");
-    }
+      </div>
+    `;
 
   } catch (error) {
     alert("Something went wrong. Please try again.");
 
     button.disabled = false;
     button.textContent = "Submit My Perspective";
-
-    console.error(error);
   }
 });
 </script>
-
+  
 </body>
 </html>
