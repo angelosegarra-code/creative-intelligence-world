@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Team Intelligence Brief | Creative Intelligence World</title>
+
+<style>
+:root {
+  --cream: #f4efe5;
+  --cream-light: #fbf8f2;
+  --navy: #12343b;
+  --teal: #174b50;
+  --gold: #c69b52;
+  --text: #26383a;
+  --muted: #68787a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
+}
+
+.container {
+  width: min(1080px, 90%);
+  margin: auto;
+}
+
+.hero {
+  background: var(--navy);
+  color: white;
+  padding: 85px 0 75px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.7rem, 6vw, 5rem);
+  line-height: 1.05;
+  margin: 0 0 20px;
+  font-weight: normal;
+}
+
+.hero p {
+  max-width: 720px;
+  font-size: 1.15rem;
+  opacity: .86;
+}
+
+.meta {
+  margin-top: 28px;
+  font-size: .9rem;
+  opacity: .65;
+}
+
+.brief {
+  padding: 75px 0 100px;
+}
+
+.loading {
+  text-align: center;
+  padding: 70px 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  color: var(--navy);
+}
+
+.card {
+  background: var(--cream-light);
+  padding: 34px;
+  margin-bottom: 22px;
+  border-radius: 8px;
+  border-top: 3px solid var(--gold);
+}
+
+.card-number {
+  color: var(--gold);
+  font-size: .75rem;
+  font-weight: bold;
+  letter-spacing: .15em;
+}
+
+.card h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--navy);
+  font-size: 1.8rem;
+  margin: 8px 0 14px;
+  font-weight: normal;
+}
+
+.card p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.full-brief {
+  margin-top: 50px;
+  padding: 45px;
+  background: var(--teal);
+  color: white;
+  border-radius: 8px;
+}
+
+.full-brief h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: normal;
+  margin-top: 0;
+  color: white;
+}
+
+.full-brief-text {
+  white-space: pre-line;
+  opacity: .92;
+}
+
+.next-step {
+  text-align: center;
+  padding-top: 60px;
+}
+
+.next-step p {
+  max-width: 650px;
+  margin: 0 auto 25px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  color: var(--navy);
+}
+
+.button {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 16px 28px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.error {
+  background: #fff;
+  padding: 30px;
+  border-left: 4px solid var(--gold);
+}
+
+footer {
+  background: #0c292e;
+  color: rgba(255,255,255,.7);
+  text-align: center;
+  padding: 35px 20px;
+  font-size: .85rem;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding: 60px 0;
+  }
+
+  .card,
+  .full-brief {
+    padding: 25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="container">
+
+    <div class="eyebrow">
+      Creative Intelligence for Business
+    </div>
+
+    <h1>Team Intelligence Brief</h1>
+
+    <p>
+      Your team may see the same challenge differently.
+      Creative Intelligence helps make those perspectives visible
+      so the organization can decide what is worth testing next.
+    </p>
+
+    <div class="meta" id="brief-meta"></div>
+
+  </div>
+</section>
+
+
+<main class="brief">
+  <div class="container">
+
+    <div id="brief-content" class="loading">
+      Gathering your team's intelligence…
+    </div>
+
+  </div>
+</main>
+
+
+<footer>
+  Creative Intelligence World<br>
+  Turning self-understanding into direction.
+</footer>
+
+
+<script>
+
+/*
+  CREATIVE INTELLIGENCE TEAM BRIEF
+  --------------------------------
+  Replace YOUR_WEB_APP_URL below with the
+  Google Apps Script Web App URL we just tested.
+*/
+
+const API_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
+
+
+async function loadBrief() {
+
+  const content = document.getElementById("brief-content");
+  const meta = document.getElementById("brief-meta");
+
+  const params = new URLSearchParams(window.location.search);
+
+  const challengeId =
+    params.get("challenge_id") || "CI-001";
+
+  const iteration =
+    params.get("iteration") || "1";
+
+
+  try {
+
+    const url =
+      API_URL +
+      "?challenge_id=" +
+      encodeURIComponent(challengeId) +
+      "&iteration=" +
+      encodeURIComponent(iteration);
+
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+
+    if (!data.success) {
+
+      throw new Error(
+        data.message ||
+        data.error ||
+        "Team Brief could not be found."
+      );
+
+    }
+
+
+    meta.textContent =
+      "Challenge " +
+      data.challenge_id +
+      "  •  Iteration " +
+      data.iteration;
+
+
+    content.className = "";
+
+    content.innerHTML = `
+
+      <section class="card">
+        <div class="card-number">01</div>
+        <h2>What We Agree On</h2>
+        <p>${escapeHTML(data.agreement)}</p>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">02</div>
+        <h2>Where We See Things Differently</h2>
+        <p>${escapeHTML(data.differentPerspectives)}</p>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">03</div>
+        <h2>What Might Be Getting Overlooked</h2>
+        <p>${escapeHTML(data.minorityObservations)}</p>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">04</div>
+        <h2>Assumptions to Watch</h2>
+        <p>${escapeHTML(data.assumptions)}</p>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">05</div>
+        <h2>Questions Worth Testing</h2>
+        <p>${escapeHTML(data.questionsWorthTesting)}</p>
+      </section>
+
+
+      <section class="full-brief">
+
+        <div class="eyebrow">
+          Gemini Synthesis
+        </div>
+
+        <h2>The Full Team Brief</h2>
+
+        <div class="full-brief-text">
+          ${escapeHTML(data.fullBrief)}
+        </div>
+
+      </section>
+
+
+      <section class="next-step">
+
+        <p>
+          The purpose of the brief isn't to tell the team
+          what decision to make. It is to make the team's
+          intelligence visible before deciding what to test.
+        </p>
+
+        <a class="button" href="#">
+          Move to Decision &amp; Experiment
+        </a>
+
+      </section>
+
+    `;
+
+
+  } catch (error) {
+
+    content.className = "error";
+
+    content.innerHTML = `
+      <strong>We couldn't load this Team Brief.</strong>
+      <br><br>
+      ${escapeHTML(error.message)}
+    `;
+
+  }
+
+}
+
+
+function escapeHTML(value) {
+
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+loadBrief();
+
+</script>
+
+</body>
+</html>
