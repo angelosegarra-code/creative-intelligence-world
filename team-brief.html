@@ -244,13 +244,6 @@ async function loadBrief() {
 
   const iteration =
     params.get("iteration") || "1";
-const decisionLink = document.getElementById("decision-link");
-
-decisionLink.href =
-  "decision-experiment.html?challenge_id=" +
-  encodeURIComponent(challengeId) +
-  "&iteration=" +
-  encodeURIComponent(iteration);
 
   try {
 
@@ -379,7 +372,14 @@ decisionLink.href =
 
     `;
 
+const decisionLink = document.getElementById("decision-link");
 
+decisionLink.href =
+  "decision-experiment.html?challenge_id=" +
+  encodeURIComponent(challengeId) +
+  "&iteration=" +
+  encodeURIComponent(iteration);
+    
   } catch (error) {
 
     content.className = "error";
