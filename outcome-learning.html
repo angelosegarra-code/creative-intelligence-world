@@ -642,7 +642,21 @@ async function loadOutcome() {
     }
 
     console.log("Saved outcome:", outcome);
+const status = document.getElementById("status");
 
+status.innerHTML = `
+  <h2>What We Learned</h2>
+
+  <p>${outcome.learning || "No learning recorded."}</p>
+
+  <h3>Next Decision</h3>
+  <p>${outcome.nextDecision || "No next decision recorded."}</p>
+
+  <h3>Next Iteration</h3>
+  <p>${outcome.nextIteration || "Not yet determined."}</p>
+`;
+
+status.style.display = "block";
   } catch (error) {
     console.error("Could not load outcome:", error);
   }
