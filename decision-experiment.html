@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Decision & Experiment | Creative Intelligence World</title>
+
+<style>
+:root {
+  --cream: #f4efe5;
+  --cream-light: #fbf8f2;
+  --navy: #12343b;
+  --teal: #174b50;
+  --gold: #c69b52;
+  --text: #26383a;
+  --muted: #68787a;
+  --border: rgba(18,52,59,.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  width: min(100% - 40px, 980px);
+  margin: 0 auto;
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(198,155,82,.16), transparent 35%),
+    linear-gradient(135deg, #12343b 0%, #174b50 100%);
+  color: white;
+  padding: 90px 0 85px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 760px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: .98;
+  font-weight: 400;
+}
+
+.hero p {
+  max-width: 720px;
+  margin: 28px 0 0;
+  font-size: 1.15rem;
+  color: rgba(255,255,255,.82);
+}
+
+.meta {
+  margin-top: 32px;
+  font-size: .95rem;
+  color: rgba(255,255,255,.65);
+}
+
+.intro {
+  padding: 75px 0 35px;
+  text-align: center;
+}
+
+.intro h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--navy);
+  margin: 0 auto 18px;
+}
+
+.intro p {
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.form-wrap {
+  padding: 25px 0 90px;
+}
+
+.card {
+  background: var(--cream-light);
+  padding: 34px;
+  margin-bottom: 22px;
+  border-top: 3px solid var(--gold);
+  border-radius: 8px;
+}
+
+.card-number {
+  color: var(--gold);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--navy);
+}
+
+.card p {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 6px;
+  font: inherit;
+  color: var(--text);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid rgba(198,155,82,.35);
+  border-color: var(--gold);
+}
+
+.perspective {
+  margin: 30px 0;
+  padding: 35px;
+  background: var(--teal);
+  color: white;
+  border-radius: 8px;
+}
+
+.perspective .eyebrow {
+  margin-bottom: 12px;
+}
+
+.perspective h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 2.2rem;
+  margin: 0 0 15px;
+}
+
+.perspective p {
+  margin: 0;
+  color: rgba(255,255,255,.83);
+}
+
+.actions {
+  text-align: center;
+  padding-top: 25px;
+}
+
+.button {
+  display: inline-block;
+  border: 0;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 16px 28px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover {
+  opacity: .92;
+}
+
+.secondary-link {
+  display: block;
+  margin-top: 22px;
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.status {
+  display: none;
+  max-width: 720px;
+  margin: 30px auto 0;
+  padding: 24px;
+  background: white;
+  border-left: 4px solid var(--gold);
+  text-align: left;
+  border-radius: 6px;
+}
+
+.status h3 {
+  margin-top: 0;
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+}
+
+.footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.7);
+  text-align: center;
+  padding: 38px 20px;
+  font-size: .9rem;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding: 70px 0;
+  }
+
+  .card {
+    padding: 26px 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="container">
+
+    <div class="eyebrow">
+      Creative Intelligence for Business
+    </div>
+
+    <h1>
+      Decision &<br>
+      Experiment
+    </h1>
+
+    <p>
+      Turn the team's intelligence into something testable.
+      Choose one direction, make the assumptions visible,
+      and learn from what actually happens.
+    </p>
+
+    <div class="meta" id="page-meta">
+      Challenge · Iteration
+    </div>
+
+  </div>
+</section>
+
+
+<section class="intro">
+  <div class="container">
+
+    <div class="eyebrow">
+      From Understanding to Action
+    </div>
+
+    <h2>
+      What is worth testing next?
+    </h2>
+
+    <p>
+      The goal is not to prove that the team is right.
+      The goal is to design an action that can teach the organization
+      something it does not yet know.
+    </p>
+
+  </div>
+</section>
+
+
+<section class="form-wrap">
+  <div class="container">
+
+    <form id="experiment-form">
+
+      <section class="card">
+        <div class="card-number">01</div>
+
+        <h3>The Decision</h3>
+
+        <p>
+          What direction will the team choose for this iteration?
+        </p>
+
+        <label for="decision">
+          What are we deciding to try?
+        </label>
+
+        <textarea
+          id="decision"
+          name="decision"
+          required
+          placeholder="Example: Focus our next outreach test on one clearly defined customer segment rather than increasing outreach volume."
+        ></textarea>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">02</div>
+
+        <h3>The Hypothesis</h3>
+
+        <p>
+          Make the team's expectation visible before the experiment happens.
+        </p>
+
+        <label for="hypothesis">
+          What do we believe will happen?
+        </label>
+
+        <textarea
+          id="hypothesis"
+          name="hypothesis"
+          required
+          placeholder="We believe that more focused targeting will produce higher-quality engagement."
+        ></textarea>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">03</div>
+
+        <h3>The Experiment</h3>
+
+        <p>
+          Turn the decision into a small real-world action.
+        </p>
+
+        <label for="experiment">
+          What exactly will we do?
+        </label>
+
+        <textarea
+          id="experiment"
+          name="experiment"
+          required
+          placeholder="Describe the action, test, pilot, conversation, prototype, or change the team will make."
+        ></textarea>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">04</div>
+
+        <h3>Evidence</h3>
+
+        <p>
+          Decide what information will help the team learn from the result.
+        </p>
+
+        <label for="success">
+          What would count as a meaningful signal?
+        </label>
+
+        <textarea
+          id="success"
+          name="success"
+          required
+          placeholder="What result, behavior, feedback, response, or measurement would tell us something useful?"
+        ></textarea>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">05</div>
+
+        <h3>What Could Surprise Us?</h3>
+
+        <p>
+          Make room for outcomes the team is not currently expecting.
+        </p>
+
+        <label for="surprise">
+          What result would challenge our current assumptions?
+        </label>
+
+        <textarea
+          id="surprise"
+          name="surprise"
+          placeholder="What could happen that would cause us to rethink the challenge?"
+        ></textarea>
+      </section>
+
+
+      <section class="card">
+        <div class="card-number">06</div>
+
+        <h3>Review Point</h3>
+
+        <p>
+          Learning requires a moment when the team returns to what happened.
+        </p>
+
+        <label for="reviewDate">
+          When will we review the result?
+        </label>
+
+        <input
+          type="date"
+          id="reviewDate"
+          name="reviewDate"
+        >
+      </section>
+
+
+      <section class="perspective">
+
+        <div class="eyebrow">
+          Creative Intelligence
+        </div>
+
+        <h2>
+          Carry the missing perspective into the experiment.
+        </h2>
+
+        <p>
+          Before committing to the test, ask whether the decision includes
+          the perspective the Team Intelligence Brief identified as underused.
+          The purpose is not to force balance. It is to make sure an important
+          way of thinking is not being left out.
+        </p>
+
+      </section>
+
+
+      <div class="actions">
+
+        <button class="button" type="submit">
+          Save Decision & Experiment
+        </button>
+
+        <a id="back-link" class="secondary-link" href="#">
+          ← Return to Team Intelligence Brief
+        </a>
+
+        <div class="status" id="status">
+
+          <h3>Decision & Experiment saved.</h3>
+
+          <p>
+            The team now has a visible hypothesis and something real to test.
+            The next stage will be to record what actually happened and compare
+            the outcome with what the team expected.
+          </p>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  Creative Intelligence World · Turning self-understanding into direction.
+</footer>
+
+
+<script>
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const challengeId =
+  params.get("challenge_id") || "CI-001";
+
+const iteration =
+  params.get("iteration") || "1";
+
+
+document.getElementById("page-meta").textContent =
+  "Challenge " + challengeId +
+  " · Iteration " + iteration;
+
+
+document.getElementById("back-link").href =
+  "team-brief.html?challenge_id=" +
+  encodeURIComponent(challengeId) +
+  "&iteration=" +
+  encodeURIComponent(iteration);
+
+
+const storageKey =
+  "creative-intelligence-experiment-" +
+  challengeId +
+  "-" +
+  iteration;
+
+
+const form =
+  document.getElementById("experiment-form");
+
+
+const saved =
+  localStorage.getItem(storageKey);
+
+
+if (saved) {
+
+  try {
+
+    const data = JSON.parse(saved);
+
+    form.decision.value =
+      data.decision || "";
+
+    form.hypothesis.value =
+      data.hypothesis || "";
+
+    form.experiment.value =
+      data.experiment || "";
+
+    form.success.value =
+      data.success || "";
+
+    form.surprise.value =
+      data.surprise || "";
+
+    form.reviewDate.value =
+      data.reviewDate || "";
+
+  } catch (error) {
+
+    console.log(
+      "Could not restore saved experiment.",
+      error
+    );
+
+  }
+
+}
+
+
+form.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+    const experimentData = {
+
+      challengeId:
+        challengeId,
+
+      iteration:
+        iteration,
+
+      decision:
+        form.decision.value.trim(),
+
+      hypothesis:
+        form.hypothesis.value.trim(),
+
+      experiment:
+        form.experiment.value.trim(),
+
+      success:
+        form.success.value.trim(),
+
+      surprise:
+        form.surprise.value.trim(),
+
+      reviewDate:
+        form.reviewDate.value,
+
+      savedAt:
+        new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(experimentData)
+    );
+
+
+    const status =
+      document.getElementById("status");
+
+    status.style.display =
+      "block";
+
+    status.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+);
+
+</script>
+
+</body>
+</html>
