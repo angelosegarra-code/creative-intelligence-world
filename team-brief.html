@@ -244,7 +244,13 @@ async function loadBrief() {
 
   const iteration =
     params.get("iteration") || "1";
+const decisionLink = document.getElementById("decision-link");
 
+decisionLink.href =
+  "decision-experiment.html?challenge_id=" +
+  encodeURIComponent(challengeId) +
+  "&iteration=" +
+  encodeURIComponent(iteration);
 
   try {
 
@@ -365,7 +371,7 @@ async function loadBrief() {
           intelligence visible before deciding what to test.
         </p>
 
-        <a class="button" href="#">
+        <a class="button" id="decision-link" href="#">
           Move to Decision &amp; Experiment
         </a>
 
