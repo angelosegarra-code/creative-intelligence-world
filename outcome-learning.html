@@ -506,18 +506,30 @@ footer {
   </form>
 
 
-  <section class="status" id="status">
+ <section class="status" id="status">
 
-    <h2>Outcome recorded.</h2>
+  <h2>Outcome Recorded.</h2>
 
-    <p>
-      The team's experience has now become part of the learning
-      record. The next step is to compare what happened with what
-      the team expected and determine what this changes.
-    </p>
+  <p>
+    The team's experience has now become part of the learning record.
+    Creative Intelligence has compared what happened with what the team
+    expected and identified what this experience suggests next.
+  </p>
 
-  </section>
+  <div id="learning-results" style="display:none; margin-top:32px;">
 
+    <h3>What We Learned</h3>
+    <p id="generated-learning"></p>
+
+    <h3>What Should We Decide Next?</h3>
+    <p id="generated-next-decision"></p>
+
+    <h3>Next Iteration</h3>
+    <p id="generated-next-iteration"></p>
+
+  </div>
+
+</section>
 </main>
 
 
@@ -611,7 +623,32 @@ async function loadExperiment() {
       "Could not load saved success signal.";
   }
 }
+async function loadOutcome() {
+  try {
+    const response = await fetch(
+      SCRIPT_URL +
+      "?challenge_id=" +
+      encodeURIComponent(challengeId) +
+      "&iteration=" +
+      encodeURIComponent(iteration) +
+      "&type=outcome"
+    );
 
+    const outcome = await response.json();
+
+    if (!outcome.success) {
+      console.log("No saved outcome yet.");
+      return;
+    }
+
+    console.log("Saved outcome:", outcome);
+
+  } catch (error) {
+    console.error("Could not load outcome:", error);
+  }
+}
+
+loadOutcome();
 loadExperiment();
   const form =
   document.getElementById("outcome-form");
