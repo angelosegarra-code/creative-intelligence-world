@@ -456,6 +456,7 @@ textarea:focus {
 
         <button class="button" type="submit">
           Save Decision & Experiment
+          
         </button>
 
         <a id="back-link" class="secondary-link" href="#">
@@ -488,7 +489,13 @@ textarea:focus {
 
 
 <script>
+<script>
 
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
+
+const params =
+  new URLSearchParams(window.location.search);
 const params =
   new URLSearchParams(window.location.search);
 
@@ -564,48 +571,56 @@ if (saved) {
 
 form.addEventListener(
   "submit",
-  function(event) {
+  async function(event) {
 
     event.preventDefault();
 
     const experimentData = {
+  action: "saveExperiment",
 
-      challengeId:
-        challengeId,
+  challenge_id: challengeId,
 
-      iteration:
-        iteration,
+  iteration: iteration,
 
-      decision:
-        form.decision.value.trim(),
+  decision:
+    form.decision.value.trim(),
 
-      hypothesis:
-        form.hypothesis.value.trim(),
+  hypothesis:
+    form.hypothesis.value.trim(),
 
-      experiment:
-        form.experiment.value.trim(),
+  experiment:
+    form.experiment.value.trim(),
 
-      success:
-        form.success.value.trim(),
+  successSignal:
+    form.success.value.trim(),
 
-      surprise:
-        form.surprise.value.trim(),
+  assumptions:
+    form.surprise.value.trim(),
 
-      reviewDate:
-        form.reviewDate.value,
+  reviewDate:
+    form.reviewDate.value,
 
-      savedAt:
-        new Date().toISOString()
-
-    };
-
+  savedAt:
+    new Date().toISOString()
+};
 
     localStorage.setItem(
       storageKey,
       JSON.stringify(experimentData)
     );
 
-
+try {
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(experimentData)
+  });
+} catch (error) {
+  console.error("Experiment save error:", error);
+}
     const status =
       document.getElementById("status");
 
