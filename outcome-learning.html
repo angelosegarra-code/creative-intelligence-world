@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Outcome & Learning | Creative Intelligence World</title>
+
+<style>
+:root {
+  --cream: #f5f0e5;
+  --paper: #fffdf7;
+  --ink: #233838;
+  --muted: #667675;
+  --teal: #173f40;
+  --gold: #b98b57;
+  --line: rgba(35,56,56,.14);
+  --soft: #eee7da;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+.hero {
+  background: var(--teal);
+  color: white;
+  padding: 80px 24px 70px;
+}
+
+.hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #d2ad7d;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: 1.03;
+}
+
+.hero p {
+  max-width: 720px;
+  font-size: 19px;
+  color: rgba(255,255,255,.82);
+  margin: 0 0 25px;
+}
+
+.meta {
+  display: inline-block;
+  padding: 8px 13px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 30px;
+  font-size: 13px;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.85);
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 70px 24px 90px;
+}
+
+.intro {
+  max-width: 720px;
+  margin-bottom: 45px;
+}
+
+.intro h2 {
+  font-size: 38px;
+  line-height: 1.15;
+  margin: 7px 0 15px;
+}
+
+.intro p {
+  color: var(--muted);
+  font-size: 17px;
+}
+
+/* Previous experiment */
+
+.previous {
+  background: var(--teal);
+  color: white;
+  border-radius: 5px;
+  padding: 38px;
+  margin-bottom: 50px;
+}
+
+.previous .eyebrow {
+  margin-bottom: 10px;
+}
+
+.previous h2 {
+  font-size: 32px;
+  margin: 0 0 25px;
+}
+
+.previous-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.previous-item {
+  border-top: 1px solid rgba(255,255,255,.18);
+  padding-top: 16px;
+}
+
+.previous-label {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #d2ad7d;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.previous-value {
+  color: rgba(255,255,255,.9);
+}
+
+.loading {
+  color: rgba(255,255,255,.7);
+  font-style: italic;
+}
+
+/* Form */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 40px;
+  margin-bottom: 28px;
+}
+
+.number {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  font-size: 31px;
+  margin: 0 0 8px;
+}
+
+.description {
+  color: var(--muted);
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+textarea,
+input {
+  width: 100%;
+  border: 1px solid #cfc7b9;
+  background: white;
+  border-radius: 4px;
+  padding: 16px;
+  font: inherit;
+  color: var(--ink);
+}
+
+textarea {
+  min-height: 135px;
+  resize: vertical;
+}
+
+textarea:focus,
+input:focus {
+  outline: 2px solid rgba(185,139,87,.25);
+  border-color: var(--gold);
+}
+
+/* Reflection */
+
+.reflection {
+  background: #203839;
+  color: white;
+  padding: 45px 40px;
+  margin: 48px 0 35px;
+  border-radius: 5px;
+}
+
+.reflection h2 {
+  font-size: 35px;
+  margin: 5px 0 15px;
+}
+
+.reflection p {
+  color: rgba(255,255,255,.78);
+  max-width: 760px;
+}
+
+/* Button */
+
+.actions {
+  text-align: center;
+  margin-top: 40px;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  background: #c78e66;
+  color: #263a39;
+  padding: 17px 28px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .92;
+}
+
+.return-link {
+  display: block;
+  margin-top: 22px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.status {
+  display: none;
+  margin-top: 35px;
+  padding: 30px;
+  background: var(--paper);
+  border-left: 4px solid var(--gold);
+}
+
+.status h2 {
+  font-size: 30px;
+  margin-top: 0;
+}
+
+.status p {
+  color: var(--muted);
+}
+
+footer {
+  background: var(--teal);
+  color: rgba(255,255,255,.8);
+  text-align: center;
+  padding: 35px 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-top: 55px;
+  }
+
+  .previous-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .previous,
+  .reflection {
+    padding: 28px 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Creative Intelligence for Business
+    </div>
+
+    <h1>Outcome &amp; Learning</h1>
+
+    <p>
+      An experiment becomes valuable when the team learns from what
+      actually happened. Compare expectation with experience and turn
+      the result into the next intelligent move.
+    </p>
+
+    <div class="meta" id="page-meta">
+      Challenge CI-001 · Iteration 1
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      EXPERIENCE BECOMES INTELLIGENCE
+    </div>
+
+    <h2>
+      What did reality teach us?
+    </h2>
+
+    <p>
+      The purpose is not to prove that the team's original decision
+      was right or wrong. It is to notice what happened, compare it
+      with what the team expected, and use that learning to make the
+      next decision better.
+    </p>
+
+  </section>
+
+
+  <section class="previous">
+
+    <div class="eyebrow">
+      THE EXPERIMENT WE RAN
+    </div>
+
+    <h2>
+      Start with what we believed before we acted.
+    </h2>
+
+    <div class="previous-grid">
+
+      <div class="previous-item">
+        <div class="previous-label">Decision</div>
+        <div class="previous-value" id="previous-decision">
+          <span class="loading">Loading saved decision…</span>
+        </div>
+      </div>
+
+      <div class="previous-item">
+        <div class="previous-label">Hypothesis</div>
+        <div class="previous-value" id="previous-hypothesis">
+          <span class="loading">Loading saved hypothesis…</span>
+        </div>
+      </div>
+
+      <div class="previous-item">
+        <div class="previous-label">Experiment</div>
+        <div class="previous-value" id="previous-experiment">
+          <span class="loading">Loading saved experiment…</span>
+        </div>
+      </div>
+
+      <div class="previous-item">
+        <div class="previous-label">Success Signal</div>
+        <div class="previous-value" id="previous-success">
+          <span class="loading">Loading success signal…</span>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <form id="outcome-form">
+
+    <section class="card">
+
+      <div class="number">01</div>
+
+      <h2>What Actually Happened?</h2>
+
+      <p class="description">
+        Describe the outcome without trying to explain it yet.
+        What happened after the team carried out the experiment?
+      </p>
+
+      <label for="outcome">
+        What did you observe?
+      </label>
+
+      <textarea
+        id="outcome"
+        name="outcome"
+        required
+        placeholder="Describe what actually happened..."
+      ></textarea>
+
+    </section>
+
+
+    <section class="card">
+
+      <div class="number">02</div>
+
+      <h2>What Evidence Do We Have?</h2>
+
+      <p class="description">
+        Capture the information that supports the team's observation.
+        This could include customer responses, numbers, behavior,
+        feedback, or something unexpected that occurred.
+      </p>
+
+      <label for="evidence">
+        What evidence did the team observe?
+      </label>
+
+      <textarea
+        id="evidence"
+        name="evidence"
+        required
+        placeholder="What did you see, hear, measure, or discover?"
+      ></textarea>
+
+    </section>
+
+
+    <section class="card">
+
+      <div class="number">03</div>
+
+      <h2>What Surprised Us?</h2>
+
+      <p class="description">
+        Pay particular attention to anything that did not fit the
+        team's original expectation. Surprise often contains the most
+        useful learning.
+      </p>
+
+      <label for="surprise">
+        What was unexpected?
+      </label>
+
+      <textarea
+        id="surprise"
+        name="surprise"
+        placeholder="What happened that the team did not anticipate?"
+      ></textarea>
+
+    </section>
+
+
+    <section class="reflection">
+
+      <div class="eyebrow">
+        CREATIVE INTELLIGENCE
+      </div>
+
+      <h2>
+        The gap between expectation and reality is not failure.
+        It is information.
+      </h2>
+
+      <p>
+        Creative Intelligence uses that information to help the team
+        see what changed, what assumptions should be reconsidered,
+        and what direction may now be worth exploring.
+      </p>
+
+    </section>
+
+
+    <div class="actions">
+
+      <button type="submit">
+        Save Outcome &amp; Continue Learning
+      </button>
+
+      <a id="experiment-link"
+         class="return-link"
+         href="#">
+        ← Return to Decision &amp; Experiment
+      </a>
+
+    </div>
+
+  </form>
+
+
+  <section class="status" id="status">
+
+    <h2>Outcome recorded.</h2>
+
+    <p>
+      The team's experience has now become part of the learning
+      record. The next step is to compare what happened with what
+      the team expected and determine what this changes.
+    </p>
+
+  </section>
+
+</main>
+
+
+<footer>
+  Creative Intelligence World · Turning self-understanding into direction.
+</footer>
+
+
+<script>
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const challengeId =
+  params.get("challenge_id") || "CI-001";
+
+const iteration =
+  params.get("iteration") || "1";
+
+
+document.getElementById("page-meta").textContent =
+  "Challenge " +
+  challengeId +
+  " · Iteration " +
+  iteration;
+
+
+/*
+  Return to the correct Decision & Experiment
+*/
+
+document.getElementById("experiment-link").href =
+  "decision-experiment.html?challenge_id=" +
+  encodeURIComponent(challengeId) +
+  "&iteration=" +
+  encodeURIComponent(iteration);
+
+
+/*
+  TEMPORARY:
+  Retrieve the experiment from localStorage.
+
+  Next we will replace this with the permanent
+  Google Sheet / Apps Script record.
+*/
+
+const experimentStorageKey =
+  "ci-experiment-" +
+  challengeId +
+  "-" +
+  iteration;
+
+const savedExperiment =
+  localStorage.getItem(experimentStorageKey);
+
+if (savedExperiment) {
+
+  try {
+
+    const experiment =
+      JSON.parse(savedExperiment);
+
+    document.getElementById("previous-decision").textContent =
+      experiment.decision || "Not recorded.";
+
+    document.getElementById("previous-hypothesis").textContent =
+      experiment.hypothesis || "Not recorded.";
+
+    document.getElementById("previous-experiment").textContent =
+      experiment.experiment || "Not recorded.";
+
+    document.getElementById("previous-success").textContent =
+      experiment.successSignal ||
+      experiment.success ||
+      "Not recorded.";
+
+  } catch (error) {
+
+    console.error(
+      "Could not restore experiment:",
+      error
+    );
+
+  }
+
+} else {
+
+  document.getElementById("previous-decision").textContent =
+    "Saved experiment will appear here.";
+
+  document.getElementById("previous-hypothesis").textContent =
+    "Saved hypothesis will appear here.";
+
+  document.getElementById("previous-experiment").textContent =
+    "Saved experiment will appear here.";
+
+  document.getElementById("previous-success").textContent =
+    "Saved success signal will appear here.";
+
+}
+
+
+/*
+  Save outcome locally for this first test.
+*/
+
+const form =
+  document.getElementById("outcome-form");
+
+form.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+    const outcomeData = {
+
+      challenge_id:
+        challengeId,
+
+      iteration:
+        iteration,
+
+      outcome:
+        form.outcome.value.trim(),
+
+      evidence:
+        form.evidence.value.trim(),
+
+      surprise:
+        form.surprise.value.trim(),
+
+      recordedAt:
+        new Date().toISOString()
+
+    };
+
+
+    const outcomeStorageKey =
+      "ci-outcome-" +
+      challengeId +
+      "-" +
+      iteration;
+
+
+    localStorage.setItem(
+      outcomeStorageKey,
+      JSON.stringify(outcomeData)
+    );
+
+
+    const status =
+      document.getElementById("status");
+
+    status.style.display =
+      "block";
+
+    status.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+);
+
+</script>
+
+</body>
+</html>
