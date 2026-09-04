@@ -555,30 +555,29 @@ document.getElementById("experiment-link").href =
   "&iteration=" +
   encodeURIComponent(iteration);
 
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
 
-/*
-  TEMPORARY:
-  Retrieve the experiment from localStorage.
-
-  Next we will replace this with the permanent
-  Google Sheet / Apps Script record.
-*/
-
-const experimentStorageKey =
-  "ci-experiment-" +
-  challengeId +
-  "-" +
-  iteration;
-
-const savedExperiment =
-  localStorage.getItem(experimentStorageKey);
-
-if (savedExperiment) {
-
+async function loadExperiment() {
   try {
 
+    const response = await fetch(
+      SCRIPT_URL +
+      "?challenge_id=" +
+      encodeURIComponent(challengeId) +
+      "&iteration=" +
+      encodeURIComponent(iteration) +
+      "&type=experiment"
+    );
+
     const experiment =
-      JSON.parse(savedExperiment);
+      await response.json();
+
+    if (!experiment.success) {
+      throw new Error(
+        experiment.message || "Experiment not found."
+      );
+    }
 
     document.getElementById("previous-decision").textContent =
       experiment.decision || "Not recorded.";
@@ -590,100 +589,28 @@ if (savedExperiment) {
       experiment.experiment || "Not recorded.";
 
     document.getElementById("previous-success").textContent =
-      experiment.successSignal ||
-      experiment.success ||
-      "Not recorded.";
+      experiment.successSignal || "Not recorded.";
 
   } catch (error) {
 
     console.error(
-      "Could not restore experiment:",
+      "Could not load experiment:",
       error
     );
 
+    document.getElementById("previous-decision").textContent =
+      "Could not load saved experiment.";
+
+    document.getElementById("previous-hypothesis").textContent =
+      "Could not load saved hypothesis.";
+
+    document.getElementById("previous-experiment").textContent =
+      "Could not load saved experiment.";
+
+    document.getElementById("previous-success").textContent =
+      "Could not load saved success signal.";
   }
-
-} else {
-
-  document.getElementById("previous-decision").textContent =
-    "Saved experiment will appear here.";
-
-  document.getElementById("previous-hypothesis").textContent =
-    "Saved hypothesis will appear here.";
-
-  document.getElementById("previous-experiment").textContent =
-    "Saved experiment will appear here.";
-
-  document.getElementById("previous-success").textContent =
-    "Saved success signal will appear here.";
-
 }
 
+loadExperiment();
 
-/*
-  Save outcome locally for this first test.
-*/
-
-const form =
-  document.getElementById("outcome-form");
-
-form.addEventListener(
-  "submit",
-  function(event) {
-
-    event.preventDefault();
-
-    const outcomeData = {
-
-      challenge_id:
-        challengeId,
-
-      iteration:
-        iteration,
-
-      outcome:
-        form.outcome.value.trim(),
-
-      evidence:
-        form.evidence.value.trim(),
-
-      surprise:
-        form.surprise.value.trim(),
-
-      recordedAt:
-        new Date().toISOString()
-
-    };
-
-
-    const outcomeStorageKey =
-      "ci-outcome-" +
-      challengeId +
-      "-" +
-      iteration;
-
-
-    localStorage.setItem(
-      outcomeStorageKey,
-      JSON.stringify(outcomeData)
-    );
-
-
-    const status =
-      document.getElementById("status");
-
-    status.style.display =
-      "block";
-
-    status.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-  }
-);
-
-</script>
-
-</body>
-</html>
