@@ -654,6 +654,12 @@ status.innerHTML = `
 
   <h3>Next Iteration</h3>
   <p>${outcome.nextIteration || "Not yet determined."}</p>
+  <a
+  class="button"
+  href="team-perspective.html?challenge_id=${encodeURIComponent(challengeId)}&iteration=${encodeURIComponent(outcome.nextIteration || Number(iteration) + 1)}"
+>
+  Begin Next Iteration
+</a>
 `;
 
 status.style.display = "block";
