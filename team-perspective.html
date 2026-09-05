@@ -231,6 +231,19 @@ footer {
       </div>
     </div>
 
+    <div id="previous-learning" style="display: none;">
+  <div class="challenge-label" id="learning-label">
+    Learning from the previous iteration
+  </div>
+
+  <div class="challenge-text">
+    <strong>What we learned</strong>
+    <p id="previous-learning-text"></p>
+
+    <strong>What we need to explore next</strong>
+    <p id="previous-next-decision"></p>
+  </div>
+</div>
   </div>
 </section>
 
@@ -357,7 +370,62 @@ footer {
 
 
 <script>
-const form = document.getElementById("perspectiveForm");
+const params = new URLSearchParams(window.location.search);
+
+const challengeId =
+  params.get("challenge_id") || "CI-001";
+
+const iteration =
+  Number(params.get("iteration") || "1");
+
+document.querySelector(
+  'input[name="challenge_id"]'
+).value = challengeId;
+
+document.querySelector(
+  'input[name="iteration"]'
+).value = iteration;
+
+  async function loadPreviousLearning() {
+  if (iteration <= 1) return;
+
+  const previousIteration = iteration - 1;
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec", +
+      "?challenge_id=" +
+      encodeURIComponent(challengeId) +
+      "&iteration=" +
+      encodeURIComponent(previousIteration) +
+      "&type=outcome"
+    );
+
+    const outcome = await response.json();
+
+    if (!outcome.success) {
+      console.log("No previous learning found.");
+      return;
+    }
+
+    document.getElementById("learning-label").textContent =
+      "Learning from Iteration " + previousIteration;
+
+    document.getElementById("previous-learning-text").textContent =
+      outcome.learning || "No learning recorded.";
+
+    document.getElementById("previous-next-decision").textContent =
+      outcome.nextDecision || "No next decision recorded.";
+
+    document.getElementById("previous-learning").style.display = "block";
+  } catch (error) {
+    console.error("Could not load previous learning:", error);
+  }
+}
+
+loadPreviousLearning();
+  
+  const form = document.getElementById("perspectiveForm");
 
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
