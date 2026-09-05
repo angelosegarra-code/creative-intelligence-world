@@ -311,18 +311,52 @@
 
   </main>
 
-  <script>
-    const form = document.getElementById("challenge-form");
+ <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JNUYx80Hzy2G-S7ZqUV61fyGdz1IbGBLx0F0HgnCymwvrU0aa4J4/exec";
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+  const form = document.getElementById("challenge-form");
 
-      alert(
-        "The New Challenge page is ready. " +
-        "Next we will connect it to the Challenges database."
-      );
-    });
-  </script>
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = "Creating Challenge...";
+
+    const payload = {
+      action: "saveChallenge",
+      challenge: document.getElementById("challenge").value.trim(),
+      goal: document.getElementById("goal").value.trim(),
+      successMeasure: document.getElementById("successMeasure").value.trim()
+    };
+
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || "Could not create challenge.");
+      }
+
+      window.location.href =
+        "team-perspective.html?challenge_id=" +
+        encodeURIComponent(result.challenge_id) +
+        "&iteration=" +
+        encodeURIComponent(result.iteration || 1);
+
+    } catch (error) {
+      console.error(error);
+      alert("We could not create the challenge. Please try again.");
+
+      button.disabled = false;
+      button.textContent = "Begin Challenge";
+    }
+  });
+</script>
 
 </body>
 </html>
