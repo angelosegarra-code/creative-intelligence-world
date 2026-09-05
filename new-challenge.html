@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Start a New Challenge | Creative Intelligence</title>
+
+  <style>
+    :root {
+      --cream: #f5f1e8;
+      --white: #ffffff;
+      --ink: #17272b;
+      --muted: #617076;
+      --teal: #1d6267;
+      --teal-dark: #15494d;
+      --gold: #bd9144;
+      --border: rgba(29, 98, 103, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .hero {
+      padding: 80px 0 45px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 7vw, 76px);
+      line-height: 1;
+      font-weight: 500;
+      margin: 0 0 24px;
+    }
+
+    .intro {
+      max-width: 700px;
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .form-section {
+      padding: 10px 0 100px;
+    }
+
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 42px;
+      box-shadow: 0 12px 35px rgba(23, 39, 43, 0.06);
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 36px;
+      font-weight: 500;
+      margin: 0 0 12px;
+    }
+
+    .form-intro {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 32px;
+    }
+
+    .field {
+      margin-bottom: 26px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 15px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 2px solid rgba(29, 98, 103, 0.2);
+      border-color: var(--teal);
+    }
+
+    .button {
+      display: inline-block;
+      border: 0;
+      background: var(--teal);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: var(--teal-dark);
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 28px;
+      color: var(--teal);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding-top: 55px;
+      }
+
+      .form-card {
+        padding: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="brand">
+        Creative Intelligence for Business
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="eyebrow">
+          Start a New Challenge
+        </div>
+
+        <h1>
+          What is worth learning from next?
+        </h1>
+
+        <p class="intro">
+          A challenge does not need to be fully defined.
+          Begin with a real goal, decision, problem or opportunity
+          your organization wants to understand better.
+        </p>
+
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="container">
+
+        <div class="form-card">
+
+          <h2>New Business Challenge</h2>
+
+          <p class="form-intro">
+            This challenge will begin at Iteration 1 and develop
+            its own learning history as your organization acts,
+            observes and adapts.
+          </p>
+
+          <form id="challenge-form">
+
+            <div class="field">
+              <label for="organization">
+                Organization
+              </label>
+
+              <input
+                id="organization"
+                name="organization"
+                type="text"
+                placeholder="Company or organization name"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="owner">
+                Challenge lead
+              </label>
+
+              <input
+                id="owner"
+                name="owner"
+                type="text"
+                placeholder="Your name"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="challenge">
+                What challenge would you like to explore?
+              </label>
+
+              <textarea
+                id="challenge"
+                name="challenge"
+                placeholder="Describe the goal, decision, problem or opportunity."
+                required
+              ></textarea>
+            </div>
+
+            <button class="button" type="submit">
+              Begin Challenge
+            </button>
+
+            <p class="note">
+              Creative Intelligence will create a new challenge
+              and begin the first perspective cycle.
+            </p>
+
+          </form>
+
+          <a class="back" href="organization.html">
+            ← Back to Your Challenges
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const form = document.getElementById("challenge-form");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      alert(
+        "The New Challenge page is ready. " +
+        "Next we will connect it to the Challenges database."
+      );
+    });
+  </script>
+
+</body>
+</html>
