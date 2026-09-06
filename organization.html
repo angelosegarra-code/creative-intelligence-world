@@ -217,10 +217,24 @@
         return;
       }
 
-      list.innerHTML = data.challenges.map((item) => {
-        const iteration =
-          item.challenge_id === "CI-001" ? 2 : 1;
+      const latestChallenges = Object.values(
+  data.challenges.reduce((latest, item) => {
+    const id = item.challenge_id;
+    const iteration = Number(item.iteration || 1);
 
+    if (
+      !latest[id] ||
+      iteration > Number(latest[id].iteration || 1)
+    ) {
+      latest[id] = item;
+    }
+
+    return latest;
+  }, {})
+);
+
+list.innerHTML = latestChallenges.map((item) => {
+        const iteration = Number(item.iteration || 1);
         const statusText =
           iteration > 1
             ? "Learning from the previous iteration is ready to inform what you explore next."
