@@ -203,63 +203,70 @@
 
   </main>
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrU0aa4JA/exec";
+ <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
 
-async function loadChallenges() {
-  try {
-    const response = await fetch(
-      SCRIPT_URL + "?type=challenges"
-    );
+  function loadChallenges() {
+    const callbackName = "receiveChallenges";
 
-    const data = await response.json();
+    window[callbackName] = function(data) {
+      const list = document.getElementById("challenges-list");
 
-    const list = document.getElementById("challenges-list");
+      if (!data || !data.success || !data.challenges) {
+        list.innerHTML = "<p>Could not load challenges.</p>";
+        return;
+      }
 
-if (!data.success || !data.challenges) {
-  list.innerHTML = "<p>Could not load challenges.</p>";
-  return;
-}
+      list.innerHTML = data.challenges.map((item) => {
+        const iteration =
+          item.challenge_id === "CI-001" ? 2 : 1;
 
-list.innerHTML = data.challenges.map((item) => {
-  const iteration = item.challenge_id === "CI-001" ? 2 : 1;
+        const statusText =
+          iteration > 1
+            ? "Learning from the previous iteration is ready to inform what you explore next."
+            : "This challenge is ready to begin its first learning cycle.";
 
-  const statusText =
-    iteration > 1
-      ? "Learning from the previous iteration is ready to inform what you explore next."
-      : "This challenge is ready to begin its first learning cycle.";
+        const buttonText =
+          iteration > 1
+            ? "Continue Challenge"
+            : "Begin Challenge";
 
-  const buttonText =
-    iteration > 1 ? "Continue Challenge" : "Begin Challenge";
+        return `
+          <div class="challenge-card">
+            <div class="challenge-meta">
+              ${item.challenge_id} · Iteration ${iteration}
+            </div>
 
-  return `
-    <div class="challenge-card">
-      <div class="challenge-meta">
-        ${item.challenge_id} · Iteration ${iteration}
-      </div>
+            <h3>${item.challenge}</h3>
 
-      <h3>${item.challenge}</h3>
+            <div class="status">
+              ${statusText}
+            </div>
 
-      <div class="status">
-        ${statusText}
-      </div>
+            <a
+              class="button"
+              href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}"
+            >
+              ${buttonText}
+            </a>
+          </div>
+        `;
+      }).join("");
+    };
 
-      <a
-        class="button"
-        href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}"
-      >
-        ${buttonText}
-      </a>
-    </div>
-  `;
-}).join("");
+    const script = document.createElement("script");
 
-  } catch (error) {
-    console.error("Could not load challenges:", error);
+    script.src =
+      SCRIPT_URL +
+      "?type=challenges&callback=" +
+      callbackName;
+
+    document.body.appendChild(script);
   }
-}
 
-loadChallenges();
+  loadChallenges();
+    
+       
   </script>
   
 </body>
