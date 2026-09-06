@@ -371,6 +371,7 @@ footer {
 
 <script>
 const params = new URLSearchParams(window.location.search);
+const challengeText = params.get("challenge") || "";
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57zqUV6IiyGdziIbGBLx0FOHgnCyWWvrUOaa4JA/exec";
 const challengeId =
   params.get("challenge_id") || "CI-001";
@@ -386,38 +387,11 @@ document.querySelector(
   'input[name="iteration"]'
 ).value = iteration;
 
-  function loadChallenge() {
-  const callbackName = "receiveChallenges";
-
-  window[callbackName] = function(data) {
-    console.log("Challenge data:", data);
-    const challenge = data.challenges.find(
-      item => String(item.challenge_id) === String(challengeId)
-    );
-    
-    if (challenge) {
-      document.getElementById("challenge-text").textContent =
-        challenge.challenge;
-    } else {
-      document.getElementById("challenge-text").textContent =
-        "Challenge not found.";
-    }
-
-    delete window[callbackName];
-    script.remove();
-  };
-
-  const script = document.createElement("script");
-
-  script.src =
-    SCRIPT_URL +
-    "?type=challenges&callback=" +
-    callbackName;
-
-  document.body.appendChild(script);
+ 
+if (challengeText) {
+  document.getElementById("challenge-text").textContent =
+    challengeText;
 }
-
-loadChallenge();
   async function loadPreviousLearning() {
   if (iteration <= 1) return;
 
