@@ -220,7 +220,18 @@
             observes and adapts.
           </p>
 
-          <form id="challenge-form">
+         <iframe
+  name="challenge-submit-frame"
+  style="display:none;"
+></iframe>
+
+<form
+  id="challenge-form"
+  method="POST"
+  action="https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec"
+  target="challenge-submit-frame"
+>
+  <input type="hidden" name="action" value="saveChallenge">
 
             <div class="field">
               <label for="organization">
@@ -311,43 +322,6 @@
 
   </main>
 
- <script>
- const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
-
-  const form = document.getElementById("challenge-form");
-
-  form.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const button = form.querySelector('button[type="submit"]');
-    button.disabled = true;
-    button.textContent = "Creating Challenge...";
-
-    const payload = {
-      action: "saveChallenge",
-      challenge: document.getElementById("challenge").value.trim(),
-      goal: document.getElementById("goal").value.trim(),
-      successMeasure: document.getElementById("successMeasure").value.trim()
-    };
-
-    try {
-     await fetch(SCRIPT_URL, {
-  method: "POST",
-  mode: "no-cors",
-  body: new URLSearchParams(payload)
-});
-
-window.location.href = "organization.html";
-
-    } catch (error) {
-      console.error(error);
-      alert("We could not create the challenge. Please try again.");
-
-      button.disabled = false;
-      button.textContent = "Begin Challenge";
-    }
-  });
-</script>
 
 </body>
 </html>
