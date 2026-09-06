@@ -196,29 +196,7 @@
           </a>
         </div>
 
-        <div class="challenge-card">
-
-          <div class="challenge-meta">
-            CI-001 · Iteration 2
-          </div>
-
-          <h3>
-            How can we secure our first paying business pilot?
-          </h3>
-
-          <div class="status">
-            Learning from the previous iteration is ready to inform
-            what you explore next.
-          </div>
-
-          <a
-            class="button"
-            href="team-perspective.html?challenge_id=CI-001&iteration=2"
-          >
-            Continue Challenge
-          </a>
-
-        </div>
+       <div id="challenges-list"></div>
 
       </div>
     </section>
@@ -236,7 +214,45 @@ async function loadChallenges() {
 
     const data = await response.json();
 
-    console.log("Challenges:", data);
+    const list = document.getElementById("challenges-list");
+
+if (!data.success || !data.challenges) {
+  list.innerHTML = "<p>Could not load challenges.</p>";
+  return;
+}
+
+list.innerHTML = data.challenges.map((item) => {
+  const iteration = item.challenge_id === "CI-001" ? 2 : 1;
+
+  const statusText =
+    iteration > 1
+      ? "Learning from the previous iteration is ready to inform what you explore next."
+      : "This challenge is ready to begin its first learning cycle.";
+
+  const buttonText =
+    iteration > 1 ? "Continue Challenge" : "Begin Challenge";
+
+  return `
+    <div class="challenge-card">
+      <div class="challenge-meta">
+        ${item.challenge_id} · Iteration ${iteration}
+      </div>
+
+      <h3>${item.challenge}</h3>
+
+      <div class="status">
+        ${statusText}
+      </div>
+
+      <a
+        class="button"
+        href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}"
+      >
+        ${buttonText}
+      </a>
+    </div>
+  `;
+}).join("");
 
   } catch (error) {
     console.error("Could not load challenges:", error);
