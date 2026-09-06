@@ -387,7 +387,7 @@ document.querySelector(
 ).value = iteration;
 
   function loadChallenge() {
-  const callbackName = "receiveCurrentChallenge";
+  const callbackName = "receiveChallenges";
 
   window[callbackName] = function(data) {
     const challenge = data.challenges.find(
