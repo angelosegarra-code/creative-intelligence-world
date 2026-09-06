@@ -322,6 +322,24 @@
 
   </main>
 
+<script>
+  const submitFrame = document.querySelector(
+    'iframe[name="challenge-submit-frame"]'
+  );
 
+  const challengeForm = document.getElementById("challenge-form");
+
+  let challengeSubmitted = false;
+
+  challengeForm.addEventListener("submit", function () {
+    challengeSubmitted = true;
+  });
+
+  submitFrame.addEventListener("load", function () {
+    if (challengeSubmitted) {
+      window.location.href = "organization.html";
+    }
+  });
+</script>
 </body>
 </html>
