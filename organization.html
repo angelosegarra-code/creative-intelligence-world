@@ -259,7 +259,7 @@ list.innerHTML = latestChallenges.map((item) => {
 
             <a
               class="button"
-              href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}"
+             href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}&challenge=${encodeURIComponent(item.challenge)}"
             >
               ${buttonText}
             </a>
