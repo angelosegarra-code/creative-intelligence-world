@@ -390,10 +390,11 @@ document.querySelector(
   const callbackName = "receiveChallenges";
 
   window[callbackName] = function(data) {
+    console.log("Challenge data:", data);
     const challenge = data.challenges.find(
       item => String(item.challenge_id) === String(challengeId)
     );
-
+    
     if (challenge) {
       document.getElementById("challenge-text").textContent =
         challenge.challenge;
