@@ -331,22 +331,13 @@
     };
 
     try {
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      });
+     await fetch(SCRIPT_URL, {
+  method: "POST",
+  mode: "no-cors",
+  body: JSON.stringify(payload)
+});
 
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error(result.error || "Could not create challenge.");
-      }
-
-      window.location.href =
-        "team-perspective.html?challenge_id=" +
-        encodeURIComponent(result.challenge_id) +
-        "&iteration=" +
-        encodeURIComponent(result.iteration || 1);
+window.location.href = "organization.html";
 
     } catch (error) {
       console.error(error);
