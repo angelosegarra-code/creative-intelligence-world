@@ -209,7 +209,7 @@
 async function loadChallenges() {
   try {
     const response = await fetch(
-      SCRIPT_URL + "?type=challenges&challenge_id=all"
+      SCRIPT_URL + "?type=challenges"
     );
 
     const data = await response.json();
