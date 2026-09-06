@@ -225,5 +225,26 @@
 
   </main>
 
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrU0aa4JA/exec";
+
+async function loadChallenges() {
+  try {
+    const response = await fetch(
+      SCRIPT_URL + "?type=challenges&challenge_id=all"
+    );
+
+    const data = await response.json();
+
+    console.log("Challenges:", data);
+
+  } catch (error) {
+    console.error("Could not load challenges:", error);
+  }
+}
+
+loadChallenges();
+  </script>
+  
 </body>
 </html>
