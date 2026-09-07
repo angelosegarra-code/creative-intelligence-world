@@ -256,7 +256,12 @@ list.innerHTML = latestChallenges.map((item) => {
             <div class="status">
               ${statusText}
             </div>
-
+<div
+  class="status"
+  id="perspective-count-${item.challenge_id}"
+>
+  Loading perspectives...
+</div>
             <a
               class="button"
              href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}&challenge=${encodeURIComponent(item.challenge)}"
@@ -266,6 +271,10 @@ list.innerHTML = latestChallenges.map((item) => {
           </div>
         `;
       }).join("");
+      latestChallenges.forEach((item) => {
+  const iteration = Number(item.iteration || 1);
+  loadPerspectiveCount(item.challenge_id, iteration);
+});
     };
 
     const script = document.createElement("script");
@@ -277,7 +286,39 @@ list.innerHTML = latestChallenges.map((item) => {
 
     document.body.appendChild(script);
   }
+function loadPerspectiveCount(challengeId, iteration) {
+  const callbackName =
+    "receivePerspectiveCount_" +
+    challengeId.replace(/[^a-zA-Z0-9]/g, "_");
 
+  window[callbackName] = function(data) {
+    const element =
+      document.getElementById("perspective-count-" + challengeId);
+
+    if (element && data && data.success) {
+      const count = Number(data.perspectiveCount || 0);
+
+      element.textContent =
+        count === 1
+          ? "1 perspective received"
+          : count + " perspectives received";
+    }
+
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement("script");
+
+  script.src =
+    SCRIPT_URL +
+    "?type=perspectiveCount" +
+    "&challenge_id=" + encodeURIComponent(challengeId) +
+    "&iteration=" + encodeURIComponent(iteration) +
+    "&callback=" + callbackName;
+
+  document.body.appendChild(script);
+}
   loadChallenges();
     
        
