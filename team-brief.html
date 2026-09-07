@@ -363,6 +363,9 @@ async function loadBrief() {
           what decision to make. It is to make the team's
           intelligence visible before deciding what to test.
         </p>
+<button class="button" id="share-brief-button" type="button">
+  Share Team Brief
+</button>
 
         <a class="button" id="decision-link" href="#">
           Move to Decision &amp; Experiment
@@ -379,6 +382,27 @@ decisionLink.href =
   encodeURIComponent(challengeId) +
   "&iteration=" +
   encodeURIComponent(iteration);
+   const shareButton = document.getElementById("share-brief-button");
+
+shareButton.addEventListener("click", async function () {
+  const shareUrl = window.location.href;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Team Intelligence Brief",
+        text: "View our Team Intelligence Brief",
+        url: shareUrl
+      });
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      shareButton.textContent = "Link Copied";
+    }
+  } catch (error) {
+    console.error("Could not share Team Brief:", error);
+  }
+});
+
     
   } catch (error) {
 
