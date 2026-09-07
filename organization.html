@@ -253,9 +253,12 @@ list.innerHTML = latestChallenges.map((item) => {
 
             <h3>${item.challenge}</h3>
 
-            <div class="status">
-              ${statusText}
-            </div>
+            <div
+  class="status"
+  id="challenge-status-${item.challenge_id}"
+>
+  ${statusText}
+</div>
 <div
   class="status"
   id="perspective-count-${item.challenge_id}"
@@ -263,11 +266,12 @@ list.innerHTML = latestChallenges.map((item) => {
   Loading perspectives...
 </div>
             <a
-              class="button"
-             href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${iteration}&challenge=${encodeURIComponent(item.challenge)}"
-            >
-              ${buttonText}
-            </a>
+  class="button"
+  id="challenge-action-${item.challenge_id}"
+  href="team-perspective.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${encodeURIComponent(iteration)}"
+>
+  ${buttonText}
+</a>
             <a
   class="button"
   href="team-brief.html?challenge_id=${encodeURIComponent(item.challenge_id)}&iteration=${encodeURIComponent(iteration)}"
@@ -277,9 +281,11 @@ list.innerHTML = latestChallenges.map((item) => {
           </div>
         `;
       }).join("");
-      latestChallenges.forEach((item) => {
+     latestChallenges.forEach((item) => {
   const iteration = Number(item.iteration || 1);
+
   loadPerspectiveCount(item.challenge_id, iteration);
+  loadExperimentStatus(item.challenge_id, iteration);
 });
     };
 
@@ -322,6 +328,55 @@ function loadPerspectiveCount(challengeId, iteration) {
     "&challenge_id=" + encodeURIComponent(challengeId) +
     "&iteration=" + encodeURIComponent(iteration) +
     "&callback=" + callbackName;
+
+  document.body.appendChild(script);
+}
+   function loadExperimentStatus(challengeId, iteration) {
+  const callbackName =
+    "receiveExperimentStatus_" +
+    challengeId.replace(/[^a-zA-Z0-9_]/g, "_") +
+    "_" +
+    iteration;
+
+  window[callbackName] = function(data) {
+    const statusElement =
+      document.getElementById("challenge-status-" + challengeId);
+
+    const actionButton =
+      document.getElementById("challenge-action-" + challengeId);
+
+    if (data && data.success) {
+      if (statusElement) {
+        statusElement.textContent =
+          "Experiment in progress. Record what happened when the test is complete.";
+      }
+
+      if (actionButton) {
+        actionButton.textContent = "Record Outcome";
+
+        actionButton.href =
+          "outcome-learning.html?challenge_id=" +
+          encodeURIComponent(challengeId) +
+          "&iteration=" +
+          encodeURIComponent(iteration);
+      }
+    }
+
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement("script");
+
+  script.src =
+    SCRIPT_URL +
+    "?type=experiment" +
+    "&challenge_id=" +
+    encodeURIComponent(challengeId) +
+    "&iteration=" +
+    encodeURIComponent(iteration) +
+    "&callback=" +
+    callbackName;
 
   document.body.appendChild(script);
 }
