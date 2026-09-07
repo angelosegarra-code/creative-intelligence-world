@@ -286,6 +286,7 @@ list.innerHTML = latestChallenges.map((item) => {
 
   loadPerspectiveCount(item.challenge_id, iteration);
   loadExperimentStatus(item.challenge_id, iteration);
+  loadOutcomeStatus(item.challenge_id, iteration);
 });
     };
 
@@ -371,6 +372,58 @@ function loadPerspectiveCount(challengeId, iteration) {
   script.src =
     SCRIPT_URL +
     "?type=experiment" +
+    "&challenge_id=" +
+    encodeURIComponent(challengeId) +
+    "&iteration=" +
+    encodeURIComponent(iteration) +
+    "&callback=" +
+    callbackName;
+
+  document.body.appendChild(script);
+}
+   function loadOutcomeStatus(challengeId, iteration) {
+  const callbackName =
+    "receiveOutcomeStatus_" +
+    challengeId.replace(/[^a-zA-Z0-9_]/g, "_") +
+    "_" +
+    iteration;
+
+  window[callbackName] = function(data) {
+    const statusElement =
+      document.getElementById("challenge-status-" + challengeId);
+
+    const actionButton =
+      document.getElementById("challenge-action-" + challengeId);
+
+    if (data && data.success) {
+      if (statusElement) {
+        statusElement.textContent =
+          "Outcome recorded. Learning from this iteration is ready to inform what comes next.";
+      }
+
+      if (actionButton) {
+        actionButton.textContent = "Begin Next Iteration";
+
+        const nextIteration =
+          Number(data.nextIteration) || (Number(iteration) + 1);
+
+        actionButton.href =
+          "team-perspective.html?challenge_id=" +
+          encodeURIComponent(challengeId) +
+          "&iteration=" +
+          encodeURIComponent(nextIteration);
+      }
+    }
+
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement("script");
+
+  script.src =
+    SCRIPT_URL +
+    "?type=outcome" +
     "&challenge_id=" +
     encodeURIComponent(challengeId) +
     "&iteration=" +
