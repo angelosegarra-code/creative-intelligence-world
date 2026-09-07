@@ -398,7 +398,9 @@ function loadPerspectiveCount(challengeId, iteration) {
     if (data && data.success) {
       if (statusElement) {
         statusElement.textContent =
-          "Outcome recorded. Learning from this iteration is ready to inform what comes next.";
+  "Outcome recorded. Iteration " +
+  Number(data.nextIteration || (Number(iteration) + 1)) +
+  " is ready to begin with what the team learned.";
       }
 
       if (actionButton) {
