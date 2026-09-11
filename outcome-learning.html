@@ -450,6 +450,55 @@ footer {
 
       <h2>What Surprised Us?</h2>
 
+      <section class="card">
+
+  <div class="number">04</div>
+
+  <h2>What Changed Our Understanding?</h2>
+
+  <p class="description">
+    Sometimes what happens changes the way the team understands the
+    original challenge. Notice whether an assumption, interpretation,
+    priority, or intended outcome now looks different.
+  </p>
+
+  <label for="changedUnderstanding">
+    What do we understand differently now?
+  </label>
+
+  <textarea
+    id="changedUnderstanding"
+    name="changedUnderstanding"
+    placeholder="What has changed in the way the team understands the challenge?"
+  ></textarea>
+
+</section>
+
+
+<section class="card">
+
+  <div class="number">05</div>
+
+  <h2>What New Possibilities Appeared?</h2>
+
+  <p class="description">
+    Unexpected results can reveal directions the team was not
+    considering before. Capture any new opportunity, alternative,
+    question, or path that emerged from the experience.
+  </p>
+
+  <label for="newPossibilities">
+    What possibilities can we see now that we could not see before?
+  </label>
+
+  <textarea
+    id="newPossibilities"
+    name="newPossibilities"
+    placeholder="Describe any new direction, opportunity, or possibility that emerged..."
+  ></textarea>
+
+</section>
+
       <p class="description">
         Pay particular attention to anything that did not fit the
         team's original expectation. Surprise often contains the most
@@ -680,24 +729,29 @@ form.addEventListener(
     event.preventDefault();
 
     const outcomeData = {
-      action: "saveOutcome",
+  action: "saveOutcome",
 
-      challenge_id:
-        challengeId,
+  challenge_id:
+    challengeId,
 
-      iteration:
-        iteration,
+  iteration:
+    iteration,
 
-      outcome:
-        form.outcome.value.trim(),
+  outcome:
+    form.outcome.value.trim(),
 
-      evidence:
-        form.evidence.value.trim(),
+  evidence:
+    form.evidence.value.trim(),
 
-      surprise:
-        form.surprise.value.trim()
-    };
+  surprise:
+    form.surprise.value.trim(),
 
+  changedUnderstanding:
+    form.changedUnderstanding.value.trim(),
+
+  newPossibilities:
+    form.newPossibilities.value.trim()
+};
 
     /*
       Keep a local browser copy as backup
