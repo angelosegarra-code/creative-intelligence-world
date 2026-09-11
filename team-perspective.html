@@ -405,14 +405,19 @@ if (challengeText) {
     const challengeElement =
       document.getElementById("challenge-text");
 
-    const match =
-      data &&
-      data.challenges &&
-      data.challenges.find(
-        item =>
-          String(item.challenge_id).trim() ===
-          String(challengeId).trim()
-      );
+   const normalizeId = value =>
+  String(value || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+
+const match =
+  data &&
+  data.challenges &&
+  data.challenges.find(
+    item =>
+      normalizeId(item.challenge_id) ===
+      normalizeId(challengeId)
+  );
 
     if (match && match.challenge) {
       challengeElement.textContent = match.challenge;
