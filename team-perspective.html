@@ -422,9 +422,15 @@ const match =
     if (match && match.challenge) {
       challengeElement.textContent = match.challenge;
     } else {
-      challengeElement.textContent =
-        "Challenge not found.";
-    }
+  const availableIds =
+    data && data.challenges
+      ? data.challenges.map(item => item.challenge_id).join(", ")
+      : "none";
+
+  challengeElement.textContent =
+    "Looking for: " + challengeId +
+    " | Available: " + availableIds;
+}
 
   } catch (error) {
     console.error(
