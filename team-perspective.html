@@ -428,7 +428,11 @@ const match =
       : "none";
 
   challengeElement.textContent =
-  "MATCH FOUND: " + JSON.stringify(match);
+  "Target: " + normalizeId(challengeId) +
+  " | Available: " +
+  data.challenges
+    .map(item => normalizeId(item.challenge_id))
+    .join(", ");
 }
 
   } catch (error) {
