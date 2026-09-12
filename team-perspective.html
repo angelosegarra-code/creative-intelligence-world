@@ -394,56 +394,63 @@ if (challengeText) {
 } else {
   loadChallengeText();
 }
- async function loadChallengeText() {
-  try {
-    const response = await fetch(
-      SCRIPT_URL + "?type=challenges"
-    );
+ function loadChallengeText() {
 
-    const data = await response.json();
+  const callbackName =
+    "receiveChallenge_" + Date.now();
+
+  window[callbackName] = function(data) {
 
     const challengeElement =
       document.getElementById("challenge-text");
 
-   const normalizeId = value =>
-  String(value || "")
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, "");
+    let foundChallenge = null;
 
-const match =
-  data &&
-  data.challenges &&
-  data.challenges.find(
-    item =>
-      normalizeId(item.challenge_id) ===
-      normalizeId(challengeId)
-  );
+    if (data && data.challenges) {
 
-    if (match && match.challenge) {
-      challengeElement.textContent = match.challenge;
+      for (let i = 0; i < data.challenges.length; i++) {
+
+        const itemId =
+          String(data.challenges[i].challenge_id || "")
+            .toUpperCase()
+            .replace(/[^A-Z0-9]/g, "");
+
+        const wantedId =
+          String(challengeId || "")
+            .toUpperCase()
+            .replace(/[^A-Z0-9]/g, "");
+
+        if (itemId === wantedId) {
+          foundChallenge = data.challenges[i];
+          break;
+        }
+      }
+    }
+
+    if (foundChallenge && foundChallenge.challenge) {
+      challengeElement.textContent =
+        foundChallenge.challenge;
     } else {
-  const availableIds =
-    data && data.challenges
-      ? data.challenges.map(item => item.challenge_id).join(", ")
-      : "none";
+      challengeElement.textContent =
+        "Challenge not found.";
+    }
 
-  challengeElement.textContent =
-  "Target: " + normalizeId(challengeId) +
-  " | Available: " +
-  data.challenges
-    .map(item => normalizeId(item.challenge_id))
-    .join(", ");
-}
+    delete window[callbackName];
 
-  } catch (error) {
-    console.error(
-      "Could not load challenge:",
-      error
-    );
+    if (script.parentNode) {
+      script.parentNode.removeChild(script);
+    }
+  };
 
-    document.getElementById("challenge-text").textContent =
-      "Could not load challenge.";
-  }
+  const script =
+    document.createElement("script");
+
+  script.src =
+    SCRIPT_URL +
+    "?type=challenges&callback=" +
+    encodeURIComponent(callbackName);
+
+  document.body.appendChild(script);
 }
   async function loadPreviousLearning() {
   if (iteration <= 1) return;
