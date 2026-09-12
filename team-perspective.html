@@ -407,13 +407,20 @@ if (challengeText) {
     const challengeElement =
       document.getElementById("challenge-text");
 
-    if (data.success && data.challenge) {
-      challengeElement.textContent = data.challenge;
-    } else {
-      challengeElement.textContent =
-        "Challenge not found.";
-    }
+    const match =
+  data.success && Array.isArray(data.challenges)
+    ? data.challenges.find(
+        item =>
+          String(item.challenge_id).trim() ===
+          String(challengeId).trim()
+      )
+    : null;
 
+if (match && match.challenge) {
+  challengeElement.textContent = match.challenge;
+} else {
+  challengeElement.textContent = "Challenge not found.";
+}
   } catch (error) {
     console.error(
       "Could not load challenge:",
