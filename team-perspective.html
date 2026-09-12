@@ -280,7 +280,7 @@ footer {
 
   <div class="field">
     <div class="question-number">Question 1</div>
-    <label for="happening">
+    <label for="happening" id="question-1-label">
       What do you think is happening?
     </label>
 
@@ -294,7 +294,7 @@ footer {
 
   <div class="field">
     <div class="question-number">Question 2</div>
-    <label for="causing">
+   <label for="causing" id="question-2-label">
       What do you think is causing it?
     </label>
 
@@ -308,7 +308,7 @@ footer {
 
   <div class="field">
     <div class="question-number">Question 3</div>
-    <label for="try">
+   <label for="try" id="question-3-label">
       What would you try?
     </label>
 
@@ -322,7 +322,7 @@ footer {
 
   <div class="field">
     <div class="question-number">Question 4</div>
-    <label for="expect">
+    <label for="expect" id="question-4-label">
       What do you expect would happen if the team tried that?
     </label>
 
@@ -336,7 +336,7 @@ footer {
 
   <div class="field">
     <div class="question-number">Question 5</div>
-    <label for="wrong">
+    <label for="wrong" id="question-5-label">
       What might the team be assuming that could be wrong?
     </label>
 
@@ -386,7 +386,22 @@ document.querySelector(
 document.querySelector(
   'input[name="iteration"]'
 ).value = iteration;
+if (iteration > 1) {
+  document.getElementById("question-1-label").textContent =
+    "What happened?";
 
+  document.getElementById("question-2-label").textContent =
+    "What did you expect to happen?";
+
+  document.getElementById("question-3-label").textContent =
+    "What surprised you?";
+
+  document.getElementById("question-4-label").textContent =
+    "What did you learn from what happened?";
+
+  document.getElementById("question-5-label").textContent =
+    "What new possibilities do you now see?";
+}
  
 if (challengeText) {
   document.getElementById("challenge-text").textContent =
