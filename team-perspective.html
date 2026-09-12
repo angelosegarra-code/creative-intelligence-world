@@ -394,63 +394,35 @@ if (challengeText) {
 } else {
   loadChallengeText();
 }
- function loadChallengeText() {
+ async function loadChallengeText() {
+  try {
+    const response = await fetch(
+      SCRIPT_URL +
+      "?type=challenge&challenge_id=" +
+      encodeURIComponent(challengeId)
+    );
 
-  const callbackName =
-    "receiveChallenge_" + Date.now();
-
-  window[callbackName] = function(data) {
+    const data = await response.json();
 
     const challengeElement =
       document.getElementById("challenge-text");
 
-    let foundChallenge = null;
-
-    if (data && data.challenges) {
-
-      for (let i = 0; i < data.challenges.length; i++) {
-
-        const itemId =
-          String(data.challenges[i].challenge_id || "")
-            .toUpperCase()
-            .replace(/[^A-Z0-9]/g, "");
-
-        const wantedId =
-          String(challengeId || "")
-            .toUpperCase()
-            .replace(/[^A-Z0-9]/g, "");
-
-        if (itemId === wantedId) {
-          foundChallenge = data.challenges[i];
-          break;
-        }
-      }
-    }
-
-    if (foundChallenge && foundChallenge.challenge) {
-      challengeElement.textContent =
-        foundChallenge.challenge;
+    if (data.success && data.challenge) {
+      challengeElement.textContent = data.challenge;
     } else {
       challengeElement.textContent =
         "Challenge not found.";
     }
 
-    delete window[callbackName];
+  } catch (error) {
+    console.error(
+      "Could not load challenge:",
+      error
+    );
 
-    if (script.parentNode) {
-      script.parentNode.removeChild(script);
-    }
-  };
-
-  const script =
-    document.createElement("script");
-
-  script.src =
-    SCRIPT_URL +
-    "?type=challenges&callback=" +
-    encodeURIComponent(callbackName);
-
-  document.body.appendChild(script);
+    document.getElementById("challenge-text").textContent =
+      "Could not load challenge.";
+  }
 }
   async function loadPreviousLearning() {
   if (iteration <= 1) return;
