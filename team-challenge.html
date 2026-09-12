@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Creative Intelligence Team Challenge</title>
+
+  <meta
+    name="description"
+    content="A facilitated two-session Creative Intelligence process that helps teams bring different perspectives together, identify a practical next move, learn from what happens, and determine what to do next."
+  >
+
+  <style>
+    :root {
+      --cream: #f5f1e8;
+      --white: #ffffff;
+      --ink: #17272b;
+      --muted: #617076;
+      --teal: #1d6267;
+      --teal-dark: #15494d;
+      --gold: #bd9144;
+      --border: rgba(29, 98, 103, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .back-link {
+      color: var(--teal);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 95px 0 80px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(50px, 7vw, 82px);
+      line-height: 0.98;
+      font-weight: 500;
+      margin: 0 0 28px;
+      max-width: 900px;
+    }
+
+    .intro {
+      max-width: 760px;
+      font-size: 20px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 34px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      text-decoration: none;
+      padding: 15px 22px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .button:hover {
+      background: var(--teal-dark);
+    }
+
+    .button-secondary {
+      display: inline-block;
+      color: var(--teal);
+      text-decoration: none;
+      padding: 14px 0;
+      margin-left: 20px;
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .section-number {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.08;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 500;
+      margin: 0 0 16px;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin: 0 0 20px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 34px;
+      box-shadow: 0 12px 35px rgba(23, 39, 43, 0.05);
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 35px;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .step-label {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .callout {
+      background: var(--teal);
+      color: white;
+      padding: 80px 0;
+    }
+
+    .callout h2 {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .callout p {
+      max-width: 730px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 19px;
+    }
+
+    .callout .button {
+      background: white;
+      color: var(--teal);
+      margin-top: 12px;
+    }
+
+    .callout .button:hover {
+      background: var(--cream);
+    }
+
+    .principle {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    footer {
+      padding: 42px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        padding: 65px 0 55px;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .step-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .button-secondary {
+        display: block;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+
+      .card {
+        padding: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">Creative Intelligence World</div>
+
+        <a class="back-link" href="organization.html">
+          For Organizations
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="eyebrow">
+          Creative Intelligence Team Challenge
+        </div>
+
+        <h1>
+          Bring one real challenge.<br>
+          Leave with your next move.
+        </h1>
+
+        <p class="intro">
+          I work with teams facing a real challenge where the answer is not
+          already obvious. Together, we make different perspectives visible,
+          identify what is worth trying next, and learn from what actually happens.
+        </p>
+
+        <a class="button" href="contact.html">
+          Start a Conversation
+        </a>
+
+        <a class="button-secondary" href="#how-it-works">
+          See how it works ↓
+        </a>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">Why Creative Intelligence</div>
+
+            <h2>
+              The problem is rarely a lack of ideas.
+            </h2>
+          </div>
+
+          <div>
+            <p>
+              Teams often have more information, possibilities and opinions than
+              they know what to do with.
+            </p>
+
+            <p>
+              The harder question is:
+              <strong>Which direction is worth pursuing now?</strong>
+            </p>
+
+            <p class="muted">
+              Creative Intelligence is the capacity to learn what to do next.
+              Instead of beginning with an outside answer, the process begins
+              with the knowledge, experience and different perspectives already
+              inside your team.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section" id="how-it-works">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">Session 01</div>
+
+            <h2>
+              See the challenge differently.
+            </h2>
+          </div>
+
+          <div>
+
+            <p>
+              Before we meet, team members respond independently to a small set
+              of questions about one real organizational challenge.
+            </p>
+
+            <p>
+              Creative Intelligence technology helps make the team's collective
+              intelligence visible — including areas of agreement, different
+              perspectives, assumptions worth questioning and possibilities
+              that may otherwise be overlooked.
+            </p>
+
+            <div class="card">
+              <h3>During the first session</h3>
+
+              <p class="muted">
+                I facilitate the conversation around what the team is seeing,
+                where perspectives differ, what may be assumed rather than known,
+                and what appears worth trying.
+              </p>
+
+              <p>
+                The team leaves with a practical next move, a hypothesis,
+                evidence to watch for, possible surprises and a clear review point.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">Between Sessions</div>
+
+            <h2>
+              Reality becomes part of the process.
+            </h2>
+          </div>
+
+          <div>
+
+            <p>
+              The team puts its next move into practice.
+            </p>
+
+            <p>
+              This is not about proving the original idea was right. It is about
+              discovering what actually happens.
+            </p>
+
+            <p class="principle">
+              Success matters. Failure matters. Surprise may matter most.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">Session 02</div>
+
+            <h2>
+              Learn from what happened.
+            </h2>
+          </div>
+
+          <div>
+
+            <p>
+              We reconvene around the evidence rather than assumptions.
+            </p>
+
+            <div class="step-grid">
+
+              <div class="step">
+                <div class="step-label">01</div>
+                <h3>What happened?</h3>
+                <p class="muted">
+                  Compare what actually occurred with what the team expected.
+                </p>
+              </div>
+
+              <div class="step">
+                <div class="step-label">02</div>
+                <h3>What surprised us?</h3>
+                <p class="muted">
+                  Pay particular attention to unexpected signals and results.
+                </p>
+              </div>
+
+              <div class="step">
+                <div class="step-label">03</div>
+                <h3>What changed?</h3>
+                <p class="muted">
+                  Identify how the team's understanding of the challenge has evolved.
+                </p>
+              </div>
+
+              <div class="step">
+                <div class="step-label">04</div>
+                <h3>What can we see now?</h3>
+                <p class="muted">
+                  Surface possibilities that were not visible at the beginning.
+                </p>
+              </div>
+
+            </div>
+
+            <p style="margin-top: 30px;">
+              That learning becomes the basis for the team's next move.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">The Difference</div>
+
+            <h2>
+              The technology doesn't make the decision.
+            </h2>
+          </div>
+
+          <div>
+
+            <p>
+              Your people understand your organization.
+            </p>
+
+            <p>
+              Creative Intelligence technology supports the process by helping
+              reveal patterns, differences, assumptions and emerging possibilities.
+            </p>
+
+            <p>
+              <strong>Your team makes the decision.</strong>
+            </p>
+
+            <p class="muted">
+              AI is not automatically the solution. Sometimes it may be part of
+              the next move. Sometimes it may not. Creative Intelligence helps
+              the team determine what is worth trying before choosing the tool.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+
+        <div class="section-grid">
+
+          <div>
+            <div class="section-number">The Process</div>
+
+            <h2>
+              Learning becomes part of how the team moves forward.
+            </h2>
+          </div>
+
+          <div>
+
+            <div class="card">
+
+              <p class="principle">
+                Challenge → Perspectives → Next Move → Action → What Happened →
+                Learning → New Possibilities → Next Move
+              </p>
+
+            </div>
+
+            <p class="muted" style="margin-top: 28px;">
+              The objective is not simply to solve one challenge. It is to
+              strengthen the team's capacity to learn what to do next.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="callout">
+      <div class="container">
+
+        <div class="eyebrow" style="color: #e6c88c;">
+          Start Small
+        </div>
+
+        <h2>
+          You don't need a transformation program.
+        </h2>
+
+        <p>
+          Bring one team and one real challenge. We'll start there.
+        </p>
+
+        <a class="button" href="contact.html">
+          Talk With Angelo
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="container">
+      <strong>Angelo Segarra</strong><br>
+      Founder & Creative Intelligence Facilitator<br>
+      Creative Intelligence World
+    </div>
+  </footer>
+
+</body>
+</html>
