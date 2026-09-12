@@ -422,12 +422,25 @@ if (challengeText) {
     const challengeElement =
       document.getElementById("challenge-text");
 
-    const match =
+  const requestedId = String(challengeId).trim();
+
+const possibleIds = [requestedId];
+
+const legacyMatch = requestedId.match(/^CI-(\d+)$/);
+
+if (legacyMatch) {
+  possibleIds.push(
+    "CI-A" + legacyMatch[1].padStart(3, "0")
+  );
+}
+
+const match =
   data.success && Array.isArray(data.challenges)
     ? data.challenges.find(
         item =>
-          String(item.challenge_id).trim() ===
-          String(challengeId).trim()
+          possibleIds.includes(
+            String(item.challenge_id).trim()
+          )
       )
     : null;
 
