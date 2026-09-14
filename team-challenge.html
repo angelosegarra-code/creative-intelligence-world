@@ -71,7 +71,28 @@
     }
 
     .hero {
-      padding: 95px 0 80px;
+      padding: 80px 0 75px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .hero-content {
+      min-width: 0;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      min-height: 510px;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+      box-shadow: 0 18px 45px rgba(23, 39, 43, 0.12);
     }
 
     .eyebrow {
@@ -85,19 +106,25 @@
 
     h1 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(50px, 7vw, 82px);
+      font-size: clamp(48px, 5.3vw, 72px);
       line-height: 0.98;
       font-weight: 500;
-      margin: 0 0 28px;
-      max-width: 900px;
+      margin: 0 0 30px;
     }
 
     .intro {
-      max-width: 760px;
-      font-size: 20px;
-      line-height: 1.65;
+      font-size: 18px;
+      line-height: 1.7;
       color: var(--muted);
-      margin-bottom: 34px;
+      margin-bottom: 22px;
+    }
+
+    .intro strong {
+      color: var(--ink);
+    }
+
+    .hero-actions {
+      margin-top: 30px;
     }
 
     .button {
@@ -242,9 +269,25 @@
       font-size: 14px;
     }
 
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-image {
+        min-height: 0;
+        aspect-ratio: 16 / 10;
+      }
+    }
+
     @media (max-width: 760px) {
       .hero {
-        padding: 65px 0 55px;
+        padding: 60px 0 55px;
+      }
+
+      h1 {
+        font-size: clamp(44px, 12vw, 62px);
       }
 
       .section {
@@ -274,6 +317,10 @@
       .card {
         padding: 26px;
       }
+
+      .hero-image {
+        border-radius: 14px;
+      }
     }
   </style>
 </head>
@@ -283,11 +330,15 @@
   <header>
     <div class="container">
       <div class="header-inner">
-        <div class="brand">Creative Intelligence World</div>
+
+        <div class="brand">
+          Creative Intelligence World
+        </div>
 
         <a class="back-link" href="organization.html">
           For Organizations
         </a>
+
       </div>
     </div>
   </header>
@@ -297,28 +348,71 @@
     <section class="hero">
       <div class="container">
 
-        <div class="eyebrow">
-          Creative Intelligence Team Challenge
+        <div class="hero-grid">
+
+          <div class="hero-content">
+
+            <div class="eyebrow">
+              Creative Intelligence Team Challenge
+            </div>
+
+            <h1>
+              Bring one real challenge.<br>
+              Leave with your next move.
+            </h1>
+
+            <p class="intro">
+              <strong>
+                Creative Intelligence is a proficiency that helps teams express
+                different perspectives, discover possibilities, and ultimately
+                align around what to do next.
+              </strong>
+            </p>
+
+            <p class="intro">
+              When perspectives remain hidden, teams can become rigid. Decisions
+              slow down, assumptions go unchallenged, and innovation becomes
+              harder. Creative Intelligence makes those differences visible—not
+              to eliminate them, but to use them as a source of learning,
+              experimentation, and better decisions.
+            </p>
+
+            <p class="intro">
+              Alignment doesn't mean everyone agrees. It means the team
+              understands its different perspectives well enough to agree on
+              <strong>what is worth trying next.</strong>
+            </p>
+
+            <p class="intro">
+              I work with teams facing a real challenge where the answer is not
+              already obvious. Together, we make different perspectives visible,
+              identify what is worth trying next, and learn from what actually
+              happens.
+            </p>
+
+            <div class="hero-actions">
+
+              <a class="button" href="contact.html">
+                Start a Conversation
+              </a>
+
+              <a class="button-secondary" href="#how-it-works">
+                See how it works ↓
+              </a>
+
+            </div>
+
+          </div>
+
+          <div>
+            <img
+              class="hero-image"
+              src="creative-intelligence-team-session.jpg"
+              alt="A team participating in a Creative Intelligence session with a remote facilitator"
+            >
+          </div>
+
         </div>
-
-        <h1>
-          Bring one real challenge.<br>
-          Leave with your next move.
-        </h1>
-
-        <p class="intro">
-          I work with teams facing a real challenge where the answer is not
-          already obvious. Together, we make different perspectives visible,
-          identify what is worth trying next, and learn from what actually happens.
-        </p>
-
-        <a class="button" href="contact.html">
-          Start a Conversation
-        </a>
-
-        <a class="button-secondary" href="#how-it-works">
-          See how it works ↓
-        </a>
 
       </div>
     </section>
