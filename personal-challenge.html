@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Start a Personal Challenge | Creative Intelligence</title>
+
+  <style>
+    :root {
+      --cream: #f5f1e8;
+      --white: #ffffff;
+      --ink: #17272b;
+      --muted: #617076;
+      --teal: #1d6267;
+      --teal-dark: #15494d;
+      --gold: #bd9144;
+      --border: rgba(29, 98, 103, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .hero {
+      padding: 90px 0 55px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      max-width: 780px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 7vw, 5.4rem);
+      line-height: 0.98;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .journey {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 38px;
+    }
+
+    .journey span {
+      padding: 8px 13px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--teal-dark);
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 42px;
+      margin-bottom: 80px;
+      box-shadow: 0 18px 45px rgba(21, 73, 77, 0.07);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.25rem;
+      font-weight: 500;
+    }
+
+    .intro {
+      margin: 0 0 35px;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .field {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfbf8;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(29,98,103,.08);
+    }
+
+    .hint {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 25px;
+      background: var(--teal);
+      color: white;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--teal-dark);
+    }
+
+    .note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .message {
+      display: none;
+      margin-top: 24px;
+      padding: 18px 20px;
+      background: rgba(29,98,103,.08);
+      border-radius: 12px;
+      color: var(--teal-dark);
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        padding: 65px 0 40px;
+      }
+
+      .card {
+        padding: 28px 22px;
+      }
+
+      h1 {
+        font-size: 3.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="brand">Creative Intelligence</div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="eyebrow">Begin a Personal Challenge</div>
+
+        <h1>
+          What do you want to move forward?
+        </h1>
+
+        <p>
+          You don't need to know the answer. Begin with something real:
+          a goal, decision, challenge, or possibility that matters to you.
+          Your Creative Intelligence Coach will help you find a next step,
+          learn from what happens, and adapt.
+        </p>
+
+        <div class="journey">
+          <span>Your Goal</span>
+          <span>→</span>
+          <span>Next Step</span>
+          <span>→</span>
+          <span>Action</span>
+          <span>→</span>
+          <span>Reflection</span>
+          <span>→</span>
+          <span>Adaptation</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <div class="card">
+
+          <h2>Your Challenge</h2>
+
+          <p class="intro">
+            Don't try to make it perfect. Creative Intelligence develops
+            through action and reflection. Start with what matters now.
+          </p>
+
+          <form id="challengeForm">
+
+            <div class="field">
+              <label for="name">Your name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Your name"
+              >
+            </div>
+
+            <div class="field">
+              <label for="goal">
+                What do you want to move forward?
+              </label>
+
+              <textarea
+                id="goal"
+                name="goal"
+                required
+                placeholder="For example: I want to change careers, begin a creative project, make an important decision, or explore a new possibility."
+              ></textarea>
+
+              <span class="hint">
+                A direction is enough. You don't need a complete plan.
+              </span>
+            </div>
+
+            <div class="field">
+              <label for="why">
+                Why does this matter to you now?
+              </label>
+
+              <textarea
+                id="why"
+                name="why"
+                placeholder="What makes this worth exploring?"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="uncertainty">
+                What feels uncertain?
+              </label>
+
+              <textarea
+                id="uncertainty"
+                name="uncertainty"
+                placeholder="What don't you know yet? What are you trying to understand?"
+              ></textarea>
+            </div>
+
+            <button type="submit">
+              Begin My Challenge →
+            </button>
+
+            <p class="note">
+              The goal isn't to have AI make the decision for you.
+              It's to become better at making the decisions that move you
+              toward your goal.
+            </p>
+
+            <div class="message" id="message">
+              Your challenge has begun.
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const form = document.getElementById("challengeForm");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const challenge = {
+        name: document.getElementById("name").value.trim(),
+        goal: document.getElementById("goal").value.trim(),
+        why: document.getElementById("why").value.trim(),
+        uncertainty: document.getElementById("uncertainty").value.trim(),
+        createdAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(
+        "creativeIntelligencePersonalChallenge",
+        JSON.stringify(challenge)
+      );
+
+      document.getElementById("message").style.display = "block";
+
+      setTimeout(function() {
+        window.location.href = "decision-experiment.html";
+      }, 700);
+    });
+  </script>
+
+</body>
+</html>
