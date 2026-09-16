@@ -423,7 +423,21 @@
           <p id="resultNotice"></p>
 
         </div>
+<div class="experiment-box" id="coachResponseBox">
+  <strong>Creative Intelligence Coach</strong>
 
+  <p><strong>Reflection</strong></p>
+  <p id="coachReflection"></p>
+
+  <p><strong>Your next step</strong></p>
+  <p id="coachNextStep"></p>
+
+  <p><strong>Why this step</strong></p>
+  <p id="coachWhy"></p>
+
+  <p><strong>One question to carry with you</strong></p>
+  <p id="coachQuestion"></p>
+</div>
         <p style="margin-top:25px;color:var(--muted);">
           After you take the action, come back to what happened.
           That is where the next cycle of Creative Intelligence begins.
@@ -450,6 +464,7 @@
 
   const savedChallenge =
     localStorage.getItem("creativeIntelligencePersonalChallenge");
+  const COACH_URL = "https://script.google.com/macros/s/AKfycbzXCV-KhxEoPD9L9JINUYx80Hzy2G-57ZqUV6IiyGdziIbGBLx0F0HgnCymwvrUOaa4JA/exec";
 
   let challenge = null;
 
@@ -480,7 +495,7 @@
     document.getElementById("resultCard");
 
 
-  experimentForm.addEventListener("submit", function(event) {
+  experimentForm.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
@@ -498,7 +513,31 @@
         new Date().toISOString()
     };
 
+const coachResponse = await fetch(COACH_URL, {
+  method: "POST",
+  body: new URLSearchParams({
+    action: "personalCoach",
+    goal: challenge && challenge.goal ? challenge.goal : "",
+    possibility: experiment.possibility,
+    next_action: experiment.action,
+    learning: experiment.notice
+  })
+});
 
+const coachData = await coachResponse.json();
+
+console.log("Creative Intelligence Coach:", coachData);
+    document.getElementById("coachReflection").textContent =
+  coachData.reflection || "";
+
+document.getElementById("coachNextStep").textContent =
+  coachData.nextStep || "";
+
+document.getElementById("coachWhy").textContent =
+  coachData.whyThisStep || "";
+
+document.getElementById("coachQuestion").textContent =
+  coachData.question || "";
     localStorage.setItem(
       "creativeIntelligencePersonalExperiment",
       JSON.stringify(experiment)
