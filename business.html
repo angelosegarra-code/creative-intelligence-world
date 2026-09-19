@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creative Intelligence for Business | Learn Faster by Doing</title>
+<title>Your Creative Coach for Teams | Creative Intelligence World</title>
 
 <meta name="description"
-content="Creative Intelligence helps organizations turn decisions, actions and outcomes into learning — with AI helping teams understand what happened and determine what to try next.">
+content="Your Creative Coach for Teams helps organizations bring different perspectives together, find shared direction, test practical ideas, and learn from experience. Start with one real Team Challenge.">
 
 <style>
 :root {
@@ -57,6 +57,46 @@ h1, h2, h3 {
   color: var(--gold);
 }
 
+.button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 15px 24px;
+  border-radius: 4px;
+  background: var(--navy);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+  transition: background .2s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  background: var(--teal);
+}
+
+.button-secondary {
+  background: transparent;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+}
+
+.button-secondary:hover,
+.button-secondary:focus-visible {
+  color: white;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.button-row .button {
+  margin-top: 0;
+}
+
 /* NAVIGATION */
 
 header {
@@ -92,7 +132,8 @@ nav a {
   font-size: .9rem;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus-visible {
   color: var(--gold);
 }
 
@@ -102,7 +143,6 @@ nav a:hover {
   position: relative;
   overflow: hidden;
   background: var(--cream);
-  padding: 0;
 }
 
 .hero::before {
@@ -135,22 +175,22 @@ nav a:hover {
   z-index: 1;
   pointer-events: none;
 }
-  
+
 .hero-content {
-  min-height: 620px;
+  min-height: 650px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   z-index: 2;
-  padding: 90px 6%;
-  max-width: 58%;
+  padding: 85px 0;
+  max-width: 650px;
+  width: 58%;
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 6vw, 5.4rem);
+  font-size: clamp(3rem, 5.7vw, 5.2rem);
   margin: 14px 0 24px;
-  max-width: 720px;
 }
 
 .hero h1 span {
@@ -160,23 +200,25 @@ nav a:hover {
 
 .hero p {
   font-size: 1.18rem;
-  max-width: 650px;
+  max-width: 590px;
   color: #43575a;
 }
 
-.button {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 15px 24px;
-  border-radius: 4px;
-  background: var(--navy);
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
+.hero-tagline {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.32rem !important;
+  color: var(--navy) !important;
+  margin-top: 8px;
+  margin-bottom: 30px;
 }
 
-.button:hover {
-  background: var(--teal);
+.hero .button-row {
+  align-self: flex-start;
+}
+
+.hero-note {
+  font-size: .91rem !important;
+  margin-top: 20px;
 }
 
 /* INTRO */
@@ -199,6 +241,132 @@ nav a:hover {
   color: var(--muted);
 }
 
+/* COACH EXPERIENCE */
+
+.coach {
+  background: var(--cream);
+  padding: 105px 0;
+}
+
+.section-heading {
+  max-width: 790px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.section-heading h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  margin: 12px 0 22px;
+}
+
+.section-heading p {
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.coach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.coach-card {
+  background: var(--cream-light);
+  padding: 34px;
+  border-radius: 8px;
+  border-top: 3px solid var(--gold);
+}
+
+.coach-card .number {
+  display: block;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 1.55rem;
+  margin-bottom: 15px;
+}
+
+.coach-card h3 {
+  font-size: 1.45rem;
+  margin-bottom: 14px;
+}
+
+.coach-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.coach-close {
+  max-width: 850px;
+  margin: 55px auto 0;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.35;
+  color: var(--navy);
+}
+
+/* TEAM BRIEF */
+
+.brief {
+  padding: 110px 0;
+}
+
+.brief-grid {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.brief h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  margin: 15px 0 25px;
+}
+
+.brief p {
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.brief-preview {
+  background: white;
+  border: 1px solid rgba(16,45,53,.12);
+  border-top: 5px solid var(--gold);
+  border-radius: 8px;
+  padding: 35px;
+  box-shadow: 0 20px 50px rgba(16,45,53,.07);
+}
+
+.brief-preview .eyebrow {
+  margin-bottom: 12px;
+}
+
+.brief-preview h3 {
+  font-size: 1.75rem;
+  margin-bottom: 25px;
+}
+
+.brief-item {
+  border-top: 1px solid rgba(16,45,53,.12);
+  padding: 17px 0;
+}
+
+.brief-item strong {
+  display: block;
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+
+.brief-item p {
+  font-size: .96rem;
+  margin: 0;
+}
+
+.brief-note {
+  font-size: .86rem !important;
+  margin-top: 18px;
+}
+
 /* LOOP */
 
 .loop-section {
@@ -214,7 +382,7 @@ nav a:hover {
 }
 
 .loop-intro {
-  max-width: 720px;
+  max-width: 760px;
   margin: 20px auto 55px;
   text-align: center;
   color: #d8e0df;
@@ -280,14 +448,6 @@ nav a:hover {
   font-size: clamp(2.2rem, 4vw, 3.6rem);
 }
 
-.quote-box {
-  background: var(--cream);
-  border-left: 4px solid var(--gold);
-  padding: 40px;
-  font-family: Georgia, serif;
-  font-size: 1.45rem;
-  color: var(--navy);
-}
 .difference-intro {
   font-size: 1.12rem;
   color: var(--muted);
@@ -301,7 +461,7 @@ nav a:hover {
 }
 
 .comparison-card {
-  padding: 34px;
+  padding: 30px;
   border-radius: 8px;
 }
 
@@ -317,7 +477,7 @@ nav a:hover {
 }
 
 .comparison-card h3 {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   margin-bottom: 22px;
 }
 
@@ -354,11 +514,6 @@ nav a:hover {
   color: var(--gold);
 }
 
-@media (max-width: 850px) {
-  .comparison {
-    grid-template-columns: 1fr;
-  }
-}
 /* ORGANIZATIONAL LEARNING */
 
 .learning {
@@ -422,88 +577,9 @@ nav a:hover {
   margin: 35px auto;
 }
 
-/* PILOT */
+/* USE CASES */
 
-.pilot {
-  padding: 105px 0;
-  background: var(--teal);
-  color: white;
-  text-align: center;
-}
-
-.pilot h2 {
-  color: white;
-  font-size: clamp(2.3rem, 4vw, 3.8rem);
-}
-
-.pilot p {
-  max-width: 720px;
-  margin: 20px auto;
-  color: #dce5e4;
-  font-size: 1.12rem;
-}
-
-.pilot .button {
-  background: var(--gold);
-  color: var(--navy);
-}
-
-.pilot-note {
-  margin-top: 20px !important;
-  font-size: .9rem !important;
-}
-
-/* FOOTER */
-
-footer {
-  padding: 45px 0;
-  text-align: center;
-  background: #0b252b;
-  color: #aebcbd;
-  font-size: .85rem;
-}
-
-footer strong {
-  color: white;
-}
-
-/* MOBILE */
-
-@media (max-width: 850px) {
-  .nav {
-    flex-direction: column;
-    padding: 20px 0;
-  }
-
-  nav {
-    justify-content: center;
-  }
-
-  .hero {
-    padding: 80px 0;
-  }
-
-  .loop {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .difference-grid,
-  .learning-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 520px) {
-  .loop {
-    grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    font-size: 3rem;
-  }
-}
-
-  .use-cases {
+.use-cases {
   padding: 105px 0;
   background: var(--cream);
 }
@@ -548,9 +624,146 @@ footer strong {
   font-style: italic;
 }
 
+/* PILOT */
+
+.pilot {
+  padding: 105px 0;
+  background: var(--teal);
+  color: white;
+  text-align: center;
+}
+
+.pilot h2 {
+  color: white;
+  font-size: clamp(2.3rem, 4vw, 3.8rem);
+}
+
+.pilot p {
+  max-width: 720px;
+  margin: 20px auto;
+  color: #dce5e4;
+  font-size: 1.12rem;
+}
+
+.pilot .button {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.pilot .button:hover,
+.pilot .button:focus-visible {
+  background: #dfb66f;
+}
+
+.pilot-note {
+  margin-top: 20px !important;
+  font-size: .9rem !important;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 45px 0;
+  text-align: center;
+  background: #0b252b;
+  color: #aebcbd;
+  font-size: .85rem;
+}
+
+footer strong {
+  color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+  .hero-content {
+    width: 65%;
+  }
+
+  .loop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 850px) {
+  .nav {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .hero {
+    background: var(--cream);
+  }
+
+  .hero::before {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(248,243,233,.86) 0%,
+        rgba(248,243,233,.93) 55%,
+        rgba(248,243,233,.99) 100%
+      ),
+      url("/images/business-team.jpg") center / cover no-repeat;
+  }
+
+  .hero-content {
+    min-height: 590px;
+    width: 100%;
+    max-width: 650px;
+    padding: 85px 0;
+  }
+
+  .difference-grid,
+  .brief-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .coach-grid,
+  .learning-grid,
   .use-case-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero h1 {
+    font-size: clamp(2.65rem, 11vw, 3.4rem);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.17rem !important;
+  }
+
+  .loop {
+    grid-template-columns: 1fr;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .button-row .button {
+    width: 100%;
+  }
+
+  .brief-preview {
+    padding: 25px;
   }
 }
 </style>
@@ -560,137 +773,468 @@ footer strong {
 
 <header>
   <div class="container nav">
-    <a class="brand" href="index.html">Creative Intelligence World</a>
 
-    <nav>
+    <a class="brand" href="index.html">
+      Creative Intelligence World
+    </a>
+
+    <nav aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="framework.html">Framework</a>
       <a href="education.html">Education</a>
-      <a href="business.html">For Business</a>
+      <a href="business.html" aria-current="page">For Business</a>
       <a href="about.html">About</a>
     </nav>
+
   </div>
 </header>
 
 <main>
 
+<!-- HERO -->
+
 <section class="hero">
   <div class="container">
+
     <div class="hero-content">
 
-      <div class="eyebrow">Creative Intelligence for Business</div>
+      <div class="eyebrow">
+        Creative Intelligence for Organizations
+      </div>
 
       <h1>
-        Your business learns by doing.
-        <span>Help it learn faster.</span>
+        Your Creative Coach
+        <span>for Teams.</span>
       </h1>
 
       <p>
-  Most AI helps your team complete a task. Creative Intelligence helps
-  your organization understand what is happening as decisions are put
-  into practice — so it can learn from experience and make better decisions.
-</p>
+        Creative Intelligence is the capacity to learn, adapt,
+        and create in response to challenges.
+      </p>
 
-      <a class="button" href="team-challenge.html">
-  Explore The Team Challenge
-</a>
-   </div>
+      <p>
+        Your Creative Coach helps your team bring different
+        perspectives together, discover what it may be missing,
+        and turn insight into practical action.
+      </p>
+
+      <p class="hero-tagline">
+        Different perspectives. Shared direction.
+        Meaningful action.
+      </p>
+
+      <div class="button-row">
+
+        <a class="button" href="team-challenge.html">
+          Explore the Team Challenge
+        </a>
+
+        <a class="button button-secondary" href="#how-it-works">
+          How It Works
+        </a>
+
+      </div>
+
+      <p class="hero-note">
+        Start with one real challenge.
+        Leave with your next move.
+      </p>
+
+    </div>
+
   </div>
 </section>
 
+<!-- INTRO -->
 
 <section class="intro">
   <div class="container">
 
-    <div class="eyebrow">Beyond AI Productivity</div>
+    <div class="eyebrow">
+      Beyond AI Productivity
+    </div>
 
     <h2>
-      What if AI didn't just help your people work —
-      but helped your organization learn?
+      Your team doesn't need another answer.
+      It needs a way to learn together.
     </h2>
 
     <p>
-      Every day, businesses make decisions, try new approaches and generate
-      experience. But much of what those experiences teach is lost.
-      Creative Intelligence creates a process for turning experience into
-      learning — and learning into better action.
+      Every organization contains different experiences,
+      observations, and ideas. Yet important perspectives
+      can be overlooked when teams move too quickly
+      toward agreement.
+      <br><br>
+      Your Creative Coach gives those perspectives
+      a structured place in the process. It helps
+      your team understand its challenge, choose
+      what is worth trying, and learn from the results.
     </p>
 
   </div>
 </section>
 
+<!-- HOW THE COACH WORKS -->
+
+<section class="coach" id="how-it-works">
+  <div class="container">
+
+    <div class="section-heading">
+
+      <div class="eyebrow">
+        How Your Creative Coach Works
+      </div>
+
+      <h2>
+        One challenge.
+        A more complete picture.
+        A practical next step.
+      </h2>
+
+      <p>
+        Your Creative Coach guides a structured experience
+        that brings individual insight into a shared
+        organizational learning process.
+      </p>
+
+    </div>
+
+    <div class="coach-grid">
+
+      <div class="coach-card">
+
+        <span class="number">01</span>
+
+        <h3>Bring a real challenge.</h3>
+
+        <p>
+          Start with a question that matters to your team.
+          Clarify what you want to accomplish and why.
+        </p>
+
+      </div>
+
+      <div class="coach-card">
+
+        <span class="number">02</span>
+
+        <h3>Hear every perspective.</h3>
+
+        <p>
+          Team members contribute independently,
+          making room for different experiences,
+          ideas, and observations.
+        </p>
+
+      </div>
+
+      <div class="coach-card">
+
+        <span class="number">03</span>
+
+        <h3>See the bigger picture.</h3>
+
+        <p>
+          Receive a Team Intelligence Brief that
+          brings together agreements, differences,
+          assumptions, and questions worth exploring.
+        </p>
+
+      </div>
+
+      <div class="coach-card">
+
+        <span class="number">04</span>
+
+        <h3>Choose what to try.</h3>
+
+        <p>
+          Use the brief to discuss your options
+          and agree on one practical experiment
+          or next action.
+        </p>
+
+      </div>
+
+      <div class="coach-card">
+
+        <span class="number">05</span>
+
+        <h3>Learn from experience.</h3>
+
+        <p>
+          Compare what you expected with what
+          actually happened. Identify discoveries,
+          surprises, and lessons.
+        </p>
+
+      </div>
+
+      <div class="coach-card">
+
+        <span class="number">06</span>
+
+        <h3>Decide what comes next.</h3>
+
+        <p>
+          Use what you've learned to continue,
+          adapt, try something different,
+          or bring the challenge to a close.
+        </p>
+
+      </div>
+
+    </div>
+
+    <p class="coach-close">
+      The coach guides the process.
+      Your team makes the decisions.
+    </p>
+
+  </div>
+</section>
+
+<!-- TEAM INTELLIGENCE BRIEF -->
+
+<section class="brief">
+  <div class="container">
+
+    <div class="brief-grid">
+
+      <div>
+
+        <div class="eyebrow">
+          What Your Team Receives
+        </div>
+
+        <h2>
+          Discover what your team
+          sees together.
+        </h2>
+
+        <p>
+          Your Creative Coach brings individual
+          contributions into a Team Intelligence Brief.
+        </p>
+
+        <p>
+          Instead of reducing every perspective to
+          a single answer, the brief helps your team
+          see where people agree, where their
+          observations differ, and which assumptions
+          deserve closer examination.
+        </p>
+
+        <p>
+          It provides a starting point for a
+          more informed conversation and a
+          practical decision.
+        </p>
+
+        <a class="button" href="team-challenge.html">
+          See the Team Challenge
+        </a>
+
+      </div>
+
+      <div>
+
+        <div class="brief-preview">
+
+          <div class="eyebrow">
+            Your Creative Coach
+          </div>
+
+          <h3>
+            Team Intelligence Brief
+          </h3>
+
+          <div class="brief-item">
+
+            <strong>Where we agree</strong>
+
+            <p>
+              Shared observations and priorities
+              emerging from the team's contributions.
+            </p>
+
+          </div>
+
+          <div class="brief-item">
+
+            <strong>Different perspectives</strong>
+
+            <p>
+              Important differences, including
+              observations that may otherwise
+              be overlooked.
+            </p>
+
+          </div>
+
+          <div class="brief-item">
+
+            <strong>Assumptions worth examining</strong>
+
+            <p>
+              Beliefs the team may need to
+              question or test.
+            </p>
+
+          </div>
+
+          <div class="brief-item">
+
+            <strong>Questions worth testing</strong>
+
+            <p>
+              Questions that can help the team
+              move from discussion toward learning.
+            </p>
+
+          </div>
+
+          <div class="brief-item">
+
+            <strong>Our next perspective</strong>
+
+            <p>
+              A question to carry into the
+              team's next conversation or decision.
+            </p>
+
+          </div>
+
+        </div>
+
+        <p class="brief-note">
+          Illustrative overview of the brief's structure.
+          Actual content reflects your team's contributions.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- LEARNING LOOP -->
 
 <section class="loop-section">
   <div class="container">
 
-    <div class="eyebrow" style="text-align:center;">The Creative Intelligence Learning Loop</div>
+    <div class="eyebrow" style="text-align:center;">
+      The Creative Intelligence Learning Loop
+    </div>
 
-    <h2>Learning doesn't end with a decision.</h2>
+    <h2>
+      Learning doesn't end with a decision.
+    </h2>
 
     <p class="loop-intro">
-      Creative Intelligence follows what happens after the decision,
-      helping teams reflect, learn, adapt and begin the next iteration.
+      The Team Challenge is the starting experience.
+      The learning loop shows how the same process
+      can support future challenges as your
+      organization continues to learn.
     </p>
 
     <div class="loop">
 
       <div class="loop-card">
+
         <div class="loop-number">01</div>
+
         <h3>GOAL</h3>
-        <p>Define what the team is trying to accomplish.</p>
+
+        <p>
+          Define what the team is
+          trying to accomplish.
+        </p>
+
       </div>
 
       <div class="loop-card">
+
         <div class="loop-number">02</div>
+
         <h3>DECIDE</h3>
-        <p>Choose a direction and make assumptions visible.</p>
+
+        <p>
+          Choose a direction and
+          make assumptions visible.
+        </p>
+
       </div>
 
       <div class="loop-card">
+
         <div class="loop-number">03</div>
+
         <h3>ACT</h3>
-        <p>Test the decision through real-world action.</p>
+
+        <p>
+          Test the decision through
+          real-world action.
+        </p>
+
       </div>
 
       <div class="loop-card">
+
         <div class="loop-number">04</div>
+
         <h3>OBSERVE</h3>
-        <p>Capture what actually happened and what surprised you.</p>
+
+        <p>
+          Capture what actually happened
+          and what surprised you.
+        </p>
+
       </div>
 
       <div class="loop-card">
+
         <div class="loop-number">05</div>
+
         <h3>LEARN</h3>
-        <p>Use human reflection and AI to identify what the experience reveals.</p>
+
+        <p>
+          Use reflection and AI to
+          examine what the experience reveals.
+        </p>
+
       </div>
 
       <div class="loop-card">
+
         <div class="loop-number">06</div>
+
         <h3>ADAPT</h3>
-        <p>Turn what was learned into the next action or experiment.</p>
+
+        <p>
+          Decide whether to continue,
+          change direction, or conclude.
+        </p>
+
       </div>
 
     </div>
 
-   <p style="
-  max-width: 820px;
-  margin: 34px auto 0;
-  text-align: center;
-  color: #d8e0df;
-  font-size: 1rem;
-  line-height: 1.7;
-">
-  AI helps connect each iteration — remembering what was tried,
-  examining what happened, and carrying what was learned into what happens next.
-</p>
+    <p class="loop-intro" style="margin-top:40px; margin-bottom:0;">
+      The goal is not endless experimentation.
+      It is to turn experience into useful learning
+      and reach better-informed decisions.
+    </p>
 
-<div class="iterate">
-  ADAPT → ACT AGAIN → LEARN AGAIN ↻
-</div>
+    <div class="iterate">
+      DECIDE → ACT → LEARN → ADAPT ↻
+    </div>
 
   </div>
 </section>
 
+<!-- DIFFERENCE -->
 
 <section class="difference">
   <div class="container">
@@ -698,42 +1242,62 @@ footer strong {
     <div class="difference-grid">
 
       <div>
-        <div class="eyebrow">Why Creative Intelligence?</div>
+
+        <div class="eyebrow">
+          Why a Creative Coach?
+        </div>
 
         <h2>
-          An AI answer is not organizational learning.
+          An AI answer is not
+          organizational learning.
         </h2>
 
         <p class="difference-intro">
-          Any business can ask AI what it should do. The advantage comes
-          from observing what is actually happening when a decision is put
-          into practice, understanding what the experience reveals, and
-          using that learning to improve the next decision.
+          A general-purpose AI assistant can help
+          produce ideas, summarize information,
+          and recommend actions.
         </p>
+
+        <p class="difference-intro">
+          Your Creative Coach provides a defined
+          process for gathering the team's
+          perspectives, examining assumptions,
+          choosing an action, and learning
+          from its outcome.
+        </p>
+
       </div>
 
       <div class="comparison">
 
         <div class="comparison-card ordinary">
-          <h3>Ordinary business AI</h3>
+
+          <h3>
+            Asking AI for an answer
+          </h3>
 
           <ul>
-            <li>Begins with the current prompt</li>
-            <li>Helps complete an immediate task</li>
-            <li>Produces an answer or recommendation</li>
-            <li>Often loses what the experience later reveals</li>
+            <li>Starts with the information provided in a prompt</li>
+            <li>Can generate ideas and recommendations</li>
+            <li>May reflect only the perspective of the person asking</li>
+            <li>Requires a separate process to test and review results</li>
           </ul>
+
         </div>
 
         <div class="comparison-card creative">
-          <h3>Creative Intelligence</h3>
+
+          <h3>
+            Your Creative Coach
+          </h3>
 
           <ul>
-            <li>Begins with the team’s goal and context</li>
-            <li>Connects decisions, actions and outcomes</li>
-            <li>Makes assumptions and discoveries visible</li>
-            <li>Strengthens organizational judgment over time</li>
+            <li>Starts with a shared challenge and individual contributions</li>
+            <li>Makes agreements and differences visible</li>
+            <li>Helps the team identify an experiment or action</li>
+            <li>Connects the outcome to the next decision</li>
           </ul>
+
         </div>
 
       </div>
@@ -741,53 +1305,81 @@ footer strong {
     </div>
 
     <div class="difference-closing">
-      Access to AI will become universal.<br>
-      <strong>The ability to learn from experience will not.</strong>
+      AI can generate possibilities.<br>
+      <strong>Your team creates the learning.</strong>
     </div>
 
   </div>
 </section>
 
+<!-- ORGANIZATIONAL LEARNING -->
 
 <section class="learning">
   <div class="container">
 
-    <div class="eyebrow" style="text-align:center;">Organizational Intelligence</div>
+    <div class="eyebrow" style="text-align:center;">
+      Organizational Learning
+    </div>
 
-    <h2>Your experience becomes an asset.</h2>
+    <h2>
+      Your experience becomes an asset.
+    </h2>
 
     <p class="learning-lead">
-      Over time, Creative Intelligence can create a structured history
-      of how an organization learns.
+      As your team works through challenges,
+      the process can build a structured
+      record of its decisions, experiments,
+      outcomes, and discoveries.
     </p>
 
     <div class="learning-grid">
 
       <div class="learning-card">
+
         <strong>WE THOUGHT</strong>
-        <h3>Make assumptions visible.</h3>
+
+        <h3>
+          Make assumptions visible.
+        </h3>
+
         <p>
-          Record what the team believed would happen and why a particular
-          direction was chosen.
+          Record what the team expected
+          and why a particular direction
+          was chosen.
         </p>
+
       </div>
 
       <div class="learning-card">
+
         <strong>WE DISCOVERED</strong>
-        <h3>Learn from reality.</h3>
+
+        <h3>
+          Learn from reality.
+        </h3>
+
         <p>
-          Compare expectations with outcomes and identify patterns,
-          surprises and contradictions.
+          Compare expectations with outcomes.
+          Identify patterns, surprises,
+          and contradictions.
         </p>
+
       </div>
 
       <div class="learning-card">
+
         <strong>WE'LL TRY NEXT</strong>
-        <h3>Turn learning into action.</h3>
+
+        <h3>
+          Turn learning into action.
+        </h3>
+
         <p>
-          Use what the organization has learned to design the next
-          decision, experiment or iteration.
+          Use what the organization has learned
+          to choose its next decision,
+          experiment, or action.
         </p>
+
       </div>
 
     </div>
@@ -795,18 +1387,26 @@ footer strong {
   </div>
 </section>
 
+<!-- AI ROLE -->
 
 <section class="ai-role">
   <div class="container ai-role-inner">
 
-    <div class="eyebrow">Human + Artificial Intelligence</div>
+    <div class="eyebrow">
+      Human + Artificial Intelligence
+    </div>
 
-    <h2>AI participates in the learning process.</h2>
+    <h2>
+      AI supports the process.
+      People remain responsible
+      for the decisions.
+    </h2>
 
     <p>
-      The role of AI is not to make the organization's decisions.
-      It helps teams examine experience, recognize patterns, challenge
-      assumptions and carry learning forward into the next iteration.
+      Your Creative Coach helps teams organize
+      contributions, recognize patterns,
+      examine assumptions, and reflect
+      on outcomes.
     </p>
 
     <div class="ai-statement">
@@ -815,12 +1415,16 @@ footer strong {
     </div>
 
     <p>
-      The result is not simply greater productivity.
-      It is an organization that becomes better at learning from what it does.
+      The purpose is not to replace leadership
+      or team discussion. It is to give those
+      conversations a clearer structure
+      and connect decisions with experience.
     </p>
 
   </div>
 </section>
+
+<!-- USE CASES -->
 
 <section class="use-cases">
   <div class="container">
@@ -830,39 +1434,77 @@ footer strong {
     </div>
 
     <h2>
-      Bring Creative Intelligence a challenge that matters.
+      Bring your coach a challenge
+      that matters.
     </h2>
 
     <div class="use-case-grid">
 
       <div class="use-case-card">
+
         <h3>Launch something new</h3>
-        <p>Test a product, service or new direction.</p>
+
+        <p>
+          Explore a product, service,
+          or new direction.
+        </p>
+
       </div>
 
       <div class="use-case-card">
+
         <h3>Improve a process</h3>
-        <p>Learn what works, what slows the team down, and what to change.</p>
+
+        <p>
+          Discover what works,
+          what slows the team down,
+          and what to change.
+        </p>
+
       </div>
 
       <div class="use-case-card">
+
         <h3>Make a strategic decision</h3>
-        <p>Turn assumptions into action and learn from the outcome.</p>
+
+        <p>
+          Bring different perspectives
+          into a consequential choice.
+        </p>
+
       </div>
 
       <div class="use-case-card">
+
         <h3>Improve customer experience</h3>
-        <p>Test ideas, observe results and refine what happens next.</p>
+
+        <p>
+          Test ideas, observe results,
+          and refine your approach.
+        </p>
+
       </div>
 
       <div class="use-case-card">
+
         <h3>Explore a new market</h3>
-        <p>Use real-world feedback to guide the next iteration.</p>
+
+        <p>
+          Examine assumptions and
+          use feedback to guide action.
+        </p>
+
       </div>
 
       <div class="use-case-card">
+
         <h3>Explore an AI initiative</h3>
-        <p>Learn how AI can support the way your organization actually works.</p>
+
+        <p>
+          Discover how AI could support
+          the way your team actually works.
+        </p>
+
       </div>
 
     </div>
@@ -874,26 +1516,45 @@ footer strong {
 
   </div>
 </section>
-  
+
+<!-- PILOT -->
+
 <section class="pilot" id="pilot">
   <div class="container">
 
-    <div class="eyebrow">Creative Intelligence Business Pilot</div>
+    <div class="eyebrow">
+      Begin With One Team Challenge
+    </div>
 
-    <h2>Bring us one real business challenge.</h2>
+    <h2>
+      Meet your team's
+      Creative Coach.
+    </h2>
 
     <p>
-      Use Creative Intelligence with your team to make a decision,
-      take action, learn from the outcome and determine what to try next.
+      Bring one real business challenge.
+      Gather your team's perspectives,
+      receive a Team Intelligence Brief,
+      and identify a practical next move.
+    </p>
+
+    <a class="button" href="team-challenge.html">
+      Explore the Team Challenge
+    </a>
+
+    <p>
+      Interested in trying the experience
+      with your organization?
     </p>
 
     <a class="button" href="business-pilot.html">
-      Explore a Creative Intelligence Pilot
+      Explore a Business Pilot
     </a>
 
     <p class="pilot-note">
-      Designed for teams and organizations exploring innovation,
-      decision-making, organizational learning and human-centered AI.
+      Designed for teams exploring innovation,
+      decision-making, organizational learning,
+      and human-centered AI.
     </p>
 
   </div>
@@ -901,11 +1562,21 @@ footer strong {
 
 </main>
 
-
 <footer>
   <div class="container">
-    <strong>Creative Intelligence World</strong><br>
-    Turning self-understanding into direction.
+
+    <strong>
+      Creative Intelligence World
+    </strong>
+
+    <br>
+
+    Your Creative Coach for Teams.
+
+    <br>
+
+    Turning understanding into direction.
+
   </div>
 </footer>
 
