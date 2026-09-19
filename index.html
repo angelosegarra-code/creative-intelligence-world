@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Creative Intelligence World | An Adaptive AI Coach</title>
+  <title>Your Creative Coach | Creative Intelligence World</title>
 
   <meta
     name="description"
-    content="Creative Intelligence World is an adaptive learning platform that turns self-understanding into direction by understanding the individual, supporting real goals, learning from reflection, and adapting what comes next."
+    content="A Creative Intelligence Coach for people and organizations. Explore new perspectives, find direction, take meaningful action, and learn from experience."
   />
 
   <style>
@@ -20,7 +20,6 @@
       --muted: #617076;
       --teal: #1d6267;
       --teal-dark: #15494d;
-      --teal-soft: #dcebea;
       --gold: #bd9144;
       --border: rgba(29, 98, 103, 0.16);
       --shadow: 0 20px 55px rgba(21, 55, 59, 0.12);
@@ -56,8 +55,13 @@
       text-decoration: none;
     }
 
-    button {
+    button,
+    input {
       font: inherit;
+    }
+
+    [hidden] {
+      display: none !important;
     }
 
     .container {
@@ -95,7 +99,6 @@
     }
 
     h1 {
-      max-width: 850px;
       font-size: clamp(3rem, 7vw, 6.2rem);
       line-height: 1;
       letter-spacing: -0.05em;
@@ -112,8 +115,11 @@
       line-height: 1.2;
     }
 
+    p + p {
+      margin-top: 16px;
+    }
+
     .lead {
-      max-width: 720px;
       color: var(--muted);
       font-size: 1.15rem;
     }
@@ -153,7 +159,9 @@
       border: 1px solid transparent;
       border-radius: 999px;
       font-weight: 700;
+      text-align: center;
       transition: 0.2s ease;
+      cursor: pointer;
     }
 
     .button:hover {
@@ -171,7 +179,7 @@
     }
 
     .button-secondary {
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       color: var(--teal-dark);
       border-color: var(--border);
     }
@@ -190,11 +198,7 @@
       border-color: rgba(255, 255, 255, 0.45);
     }
 
-    .button-outline-light:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Header */
+    /* HEADER */
 
     .site-header {
       position: sticky;
@@ -222,16 +226,13 @@
     .brand-mark {
       width: 46px;
       height: 46px;
+      flex: 0 0 46px;
       display: grid;
       place-items: center;
       overflow: hidden;
       border: 2px solid var(--gold);
       border-radius: 50%;
       background: var(--white);
-      color: var(--gold);
-      font-family: Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 700;
     }
 
     .brand-mark img {
@@ -291,117 +292,68 @@
       font-size: 1.3rem;
     }
 
-    /* Hero */
+    /* HERO */
 
-.hero {
-  position: relative;
-  min-height: 700px;
-  display: grid;
-  align-items: center;
-  padding: 100px 0;
-  background:
-    radial-gradient(
-      circle at 12% 15%,
-      rgba(189, 145, 68, 0.14),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #f8f5ee 0%,
-      #edf3ef 100%
-    );
-  overflow: hidden;
-}
+    .hero {
+      position: relative;
+      min-height: 720px;
+      display: grid;
+      align-items: center;
+      padding: 100px 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(248, 245, 238, 0.99) 0%,
+          rgba(248, 245, 238, 0.96) 38%,
+          rgba(248, 245, 238, 0.78) 52%,
+          rgba(248, 245, 238, 0.18) 72%,
+          rgba(248, 245, 238, 0.02) 100%
+        ),
+        url("/images/creative-intelligence-hero-human.jpg")
+          center right / cover no-repeat;
+    }
 
-/* Large spiral becomes a subtle background element */
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: -5%;
-  width: min(62vw, 760px);
-  aspect-ratio: 1;
-  transform: translateY(-50%);
-  background:
-    url("/images/spiral-logo-pearl.png")
-    center / contain
-    no-repeat;
-  opacity: 0.10;
-  pointer-events: none;
-  z-index: 0;
-}
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
 
-.hero-grid {
-  position: relative;
-  z-index: 1;
-  display: block;
-}
+    .hero h1 {
+      margin-bottom: 28px;
+    }
 
-.hero-copy {
-  max-width: 690px;
-}
+    .hero h1 span {
+      color: var(--teal);
+    }
 
-.hero h1 {
-  margin-bottom: 28px;
-}
+    .hero .lead {
+      margin-bottom: 22px;
+    }
 
-.hero h1 span {
-  color: var(--teal);
-}
+    .hero .button-row {
+      margin-top: 34px;
+    }
 
-.hero .lead {
-  margin-bottom: 22px;
-}
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
 
-.hero .button-row {
-  margin-top: 34px;
-}
+    .hero-note::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      flex: 0 0 10px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
 
-.hero-note {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 26px;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.hero-note::before {
-  content: "";
-  width: 10px;
-  height: 10px;
-  flex: 0 0 10px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 6px rgba(189, 145, 68, 0.13);
-}
-
-@media (max-width: 1000px) {
-  .hero::after {
-    right: -20%;
-    width: 80vw;
-    opacity: 0.07;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero {
-    min-height: auto;
-    padding: 75px 0;
-  }
-
-  .hero::after {
-    top: 44%;
-    right: -42%;
-    width: 115vw;
-    opacity: 0.055;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.8rem, 14vw, 4.3rem);
-  }
-}
-    /* Creative Intelligence Definition */
+    /* DEFINITION */
 
     .definition-section {
       padding: 78px 0;
@@ -421,7 +373,7 @@
 
     .definition-statement {
       margin: 10px auto 28px;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, serif;
       font-size: clamp(2.2rem, 5vw, 4.2rem);
       line-height: 1.12;
       letter-spacing: -0.035em;
@@ -436,88 +388,55 @@
       margin: 0 auto;
       color: rgba(255, 255, 255, 0.78);
       font-size: 1.08rem;
-      line-height: 1.75;
     }
 
-    /* Video */
+    /* TWO EXPERIENCES */
 
-    .video-shell {
-      max-width: 1020px;
-      margin: 0 auto;
-      padding: 16px;
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .experience-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 42px;
       border: 1px solid var(--border);
-      border-radius: 30px;
-      background: var(--cream);
+      border-radius: 26px;
+      background: var(--white);
       box-shadow: var(--shadow);
     }
 
-    .video-frame {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #132629;
+    .experience-card h3 {
+      margin-bottom: 18px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
     }
 
-    .video-frame iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .video-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 24px 10px 8px;
-    }
-
-    .video-bottom p {
+    .experience-card p {
+      margin-bottom: 28px;
       color: var(--muted);
     }
 
-    /* Statement */
-
-    .statement-grid {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 70px;
-      align-items: center;
+    .experience-card .button {
+      margin-top: auto;
     }
 
-    .statement-box {
-      padding: 46px;
-      border-radius: var(--radius);
-      background: var(--teal);
+    .experience-card.team {
+      background: var(--teal-dark);
       color: var(--white);
-      box-shadow: var(--shadow);
     }
 
-    .statement-box p {
-      font-family: Georgia, serif;
-      font-size: clamp(1.8rem, 3.8vw, 3rem);
-      line-height: 1.23;
-    }
-
-    .statement-box span {
+    .experience-card.team .eyebrow {
       color: #eed598;
     }
 
-    .statement-copy h2 {
-      margin-bottom: 24px;
+    .experience-card.team p {
+      color: rgba(255, 255, 255, 0.8);
     }
 
-    .statement-copy p {
-      margin-bottom: 20px;
-      color: var(--muted);
-      font-size: 1.06rem;
-    }
-
-    /* Cards */
+    /* SHARED PAGE COMPONENTS */
 
     .four-grid {
       display: grid;
@@ -571,10 +490,209 @@
       text-align: center;
       font-family: Georgia, serif;
       font-size: 1.28rem;
-      line-height: 1.5;
     }
 
-    /* Framework */
+    /* QUIZ */
+
+    .quiz-shell {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 42px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--cream);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-progress-wrap {
+      margin-bottom: 34px;
+    }
+
+    .quiz-progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quiz-progress-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--cream-dark);
+    }
+
+    .quiz-progress-bar {
+      width: 10%;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--gold);
+      transition: width 0.25s ease;
+    }
+
+    #quizQuestion {
+      margin-bottom: 28px;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 14px;
+    }
+
+    .quiz-option {
+      width: 100%;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: var(--white);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--teal);
+    }
+
+    .quiz-result {
+      text-align: center;
+    }
+
+    .quiz-result h2 {
+      margin-bottom: 18px;
+    }
+
+    .result-lead {
+      max-width: 680px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 32px 0;
+      text-align: left;
+    }
+
+    .result-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--white);
+    }
+
+    .result-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .result-card p {
+      color: var(--muted);
+    }
+
+    .quiz-email-capture,
+    .quiz-companion-bridge {
+      margin-top: 32px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .quiz-email-capture h3,
+    .quiz-companion-bridge h3 {
+      margin-bottom: 12px;
+      font-size: 1.8rem;
+    }
+
+    #quiz-email-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    #quiz-email {
+      min-width: 260px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+
+    #quiz-email-status,
+    .quiz-email-note,
+    .quiz-bridge-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quiz-restart {
+      margin-top: 28px;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--teal);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* VIDEO */
+
+    .video-shell {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: var(--cream);
+      box-shadow: var(--shadow);
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #132629;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 10px 8px;
+    }
+
+    .video-bottom p {
+      color: var(--muted);
+    }
+
+    /* FRAMEWORK */
 
     .framework {
       background: var(--teal-dark);
@@ -585,8 +703,9 @@
       color: #eed598;
     }
 
-    .framework .section-heading p {
-      color: rgba(255, 255, 255, 0.72);
+    .framework .section-heading p,
+    .framework .card p {
+      color: rgba(255, 255, 255, 0.75);
     }
 
     .framework .card {
@@ -594,23 +713,13 @@
       border-color: rgba(255, 255, 255, 0.14);
     }
 
-    .framework .card p {
-      color: rgba(255, 255, 255, 0.72);
-    }
-
     .framework-symbol {
-      width: 45px;
-      height: 45px;
-      display: grid;
-      place-items: center;
       margin-bottom: 22px;
-      border-radius: 50%;
-      background: rgba(238, 213, 152, 0.14);
       color: #eed598;
-      font-size: 1.1rem;
+      font-size: 1.8rem;
     }
 
-    /* Pilot */
+    /* TEAM PANEL */
 
     .pilot-panel {
       display: grid;
@@ -640,112 +749,69 @@
       list-style: none;
     }
 
-    .pilot-list li {
-      position: relative;
-      padding-left: 29px;
-      color: #3f5157;
-    }
-
     .pilot-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
+      content: "✓ ";
       color: var(--teal);
       font-weight: 900;
     }
 
-    /* Companion CTA */
+    /* OFFER */
 
     .partner-panel {
-      position: relative;
       padding: 72px;
       border-radius: 34px;
-      background:
-        radial-gradient(circle at 88% 28%, rgba(238, 213, 152, 0.18), transparent 25%),
-        linear-gradient(135deg, var(--teal-dark), var(--teal));
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
       color: var(--white);
-      overflow: hidden;
-      box-shadow: 0 24px 65px rgba(21, 73, 77, 0.25);
+      box-shadow: var(--shadow);
     }
 
     .partner-panel h2 {
-      max-width: 760px;
       margin-bottom: 22px;
     }
 
     .partner-panel > p {
-      max-width: 720px;
-      margin-bottom: 30px;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 1.06rem;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.85);
     }
 
-    .partner-tags {
+    .companion-explainer,
+    .offer-box {
+      max-width: 780px;
+      margin: 32px 0;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .companion-explainer h3,
+    .offer-box h3 {
+      margin-bottom: 16px;
+    }
+
+    .companion-process {
+      margin: 24px 0;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .tag-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 34px;
+      margin: 28px 0;
     }
 
-    .partner-tags span {
+    .tag {
       padding: 8px 13px;
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.07);
       font-size: 0.86rem;
     }
 
-    /* Vision */
-
-    .vision-grid {
-      display: grid;
-      grid-template-columns: 0.75fr 1.25fr;
-      gap: 70px;
-      align-items: center;
-    }
-
-    .vision-circle {
-      width: min(100%, 390px);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      margin: auto;
-      border: 1px solid rgba(29, 98, 103, 0.22);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, var(--teal) 0 19%, transparent 20%),
-        radial-gradient(circle, transparent 0 41%, rgba(189, 145, 68, 0.22) 42% 42.5%, transparent 43%),
-        radial-gradient(circle, transparent 0 68%, rgba(29, 98, 103, 0.17) 69% 69.5%, transparent 70%);
-    }
-
-    .vision-circle span {
-      width: 120px;
-      color: var(--white);
-      text-align: center;
-      font-family: Georgia, serif;
-      line-height: 1.18;
-    }
-
-    .vision-copy h2 {
-      margin-bottom: 24px;
-    }
-
-    .vision-copy p {
-      margin-bottom: 19px;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .vision-quote {
-      margin-top: 28px;
-      padding-left: 22px;
-      border-left: 3px solid var(--gold);
-      color: var(--teal-dark);
-      font-family: Georgia, serif;
-      font-size: 1.35rem;
-    }
-
-    /* About */
+    /* FOUNDER AND FOOTER */
 
     .about-grid {
       display: grid;
@@ -760,7 +826,6 @@
       aspect-ratio: 4 / 5;
       object-fit: cover;
       object-position: center top;
-      margin: auto;
       border-radius: 28px;
       box-shadow: var(--shadow);
     }
@@ -770,12 +835,8 @@
     }
 
     .about-copy p {
-      margin-bottom: 18px;
       color: var(--muted);
-      font-size: 1.04rem;
     }
-
-    /* Footer */
 
     .site-footer {
       padding: 65px 0 30px;
@@ -790,10 +851,9 @@
       margin-bottom: 45px;
     }
 
-    .footer-copy p {
-      max-width: 390px;
-      margin-top: 16px;
-      color: rgba(255, 255, 255, 0.63);
+    .footer-copy p,
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
       font-size: 0.9rem;
     }
 
@@ -802,7 +862,6 @@
       color: #eed598;
       font-size: 0.76rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
@@ -812,72 +871,37 @@
       list-style: none;
     }
 
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.9rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
     .footer-bottom {
       display: flex;
       justify-content: space-between;
       gap: 20px;
       padding-top: 23px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.48);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 0.82rem;
     }
 
-    /* Mobile */
-
     @media (max-width: 1000px) {
-      .hero-grid,
-      .statement-grid,
-      .vision-grid,
-      .about-grid,
-      .pilot-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-copy {
-        text-align: center;
-      }
-
-      .hero-copy .lead {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-copy .button-row,
-      .hero-note {
-        justify-content: center;
-      }
-
-      .four-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
+      .four-grid,
       .three-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .footer-grid {
-        grid-template-columns: 1.4fr 1fr 1fr;
+      .pilot-panel,
+      .about-grid {
+        grid-template-columns: 1fr;
       }
 
-      .footer-grid > div:last-child {
-        grid-column: 2 / 4;
-      }
-
-      .about-copy {
-        text-align: center;
-      }
-
-      .about-copy .button-row {
-        justify-content: center;
+      .hero {
+        background:
+          linear-gradient(
+            90deg,
+            rgba(248, 245, 238, 0.98) 0%,
+            rgba(248, 245, 238, 0.92) 55%,
+            rgba(248, 245, 238, 0.45) 100%
+          ),
+          url("/images/creative-intelligence-hero-human.jpg")
+            68% center / cover no-repeat;
       }
     }
 
@@ -901,9 +925,8 @@
         align-items: stretch;
         gap: 0;
         padding: 15px 4%;
-        background: rgba(245, 241, 232, 0.99);
+        background: var(--cream);
         border-bottom: 1px solid var(--border);
-        box-shadow: 0 14px 28px rgba(21, 55, 59, 0.1);
       }
 
       .nav-links.open {
@@ -915,18 +938,9 @@
         padding: 12px 10px;
       }
 
-      .nav-links .contact-link {
-        margin-top: 8px;
-        text-align: center;
-      }
-
       .video-bottom {
         align-items: flex-start;
         flex-direction: column;
-      }
-
-      .partner-panel {
-        padding: 52px 34px;
       }
     }
 
@@ -936,453 +950,59 @@
       }
 
       .hero {
-        min-height: auto;
-        padding: 75px 0;
+        min-height: 760px;
+        padding: 64px 0 300px;
+        align-items: start;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(248, 245, 238, 1) 0%,
+            rgba(248, 245, 238, 0.96) 48%,
+            rgba(248, 245, 238, 0.55) 68%,
+            rgba(248, 245, 238, 0.06) 100%
+          ),
+          url("/images/creative-intelligence-hero-human.jpg")
+            67% bottom / cover no-repeat;
       }
 
       .hero h1 {
         font-size: clamp(2.8rem, 14vw, 4.3rem);
       }
 
-      .hero-card {
-        min-height: 370px;
-        padding: 25px;
-      }
-
-      .definition-section {
-        padding: 62px 0;
-      }
-
-      .definition-statement {
-        font-size: clamp(2rem, 10vw, 3rem);
-      }
-
+      .experience-grid,
       .four-grid,
-      .three-grid {
+      .three-grid,
+      .result-grid {
         grid-template-columns: 1fr;
       }
 
-      .statement-box,
+      .experience-card,
+      .quiz-shell,
       .pilot-panel,
       .partner-panel {
-        padding: 32px 24px;
+        padding: 28px 22px;
       }
 
       .button-row {
         flex-direction: column;
       }
 
-      .button {
+      .button-row .button {
         width: 100%;
-      }
-
-      .brand-copy span {
-        display: none;
       }
 
       .footer-grid {
         grid-template-columns: 1fr;
       }
 
-      .footer-grid > div:last-child {
-        grid-column: auto;
-      }
-
       .footer-bottom {
         flex-direction: column;
       }
+
+      .brand-copy span {
+        display: none;
+      }
     }
- 
-  /* DECISION-MAKING QUIZ */
-
-.quiz-shell {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 42px;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  background: var(--cream);
-  box-shadow: var(--shadow);
-}
-
-.quiz-progress-wrap {
-  margin-bottom: 34px;
-}
-
-.quiz-progress-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 10px;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.quiz-progress-track {
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--cream-dark);
-}
-
-.quiz-progress-bar {
-  width: 10%;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--gold);
-  transition: width 0.25s ease;
-}
-
-#quizQuestion {
-  margin-bottom: 28px;
-  font-size: clamp(1.7rem, 4vw, 2.4rem);
-  line-height: 1.25;
-}
-
-.quiz-options {
-  display: grid;
-  gap: 14px;
-}
-
-.quiz-option {
-  width: 100%;
-  padding: 18px 20px;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  background: var(--white);
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1.45;
-  transition: 0.2s ease;
-}
-
-.quiz-option:hover {
-  transform: translateY(-2px);
-  border-color: rgba(29, 98, 103, 0.36);
-  box-shadow: 0 10px 24px rgba(21, 55, 59, 0.08);
-}
-
-.quiz-result {
-  text-align: center;
-}
-
-.quiz-result h2 {
-  margin-bottom: 18px;
-}
-
-.result-lead {
-  max-width: 680px;
-  margin: 0 auto 34px;
-  color: var(--muted);
-  font-size: 1.1rem;
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin: 32px 0;
-  text-align: left;
-}
-
-.result-card {
-  padding: 24px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: var(--white);
-}
-
-.result-label {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--teal);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
-.result-card p {
-  color: var(--muted);
-}
-
-.result-definition {
-  margin: 34px auto;
-  padding: 24px;
-  border-left: 4px solid var(--gold);
-  border-radius: 14px;
-  background: var(--white);
-  color: var(--teal-dark);
-  font-family: Georgia, serif;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  text-align: left;
-}
-
-.quiz-restart {
-  margin-top: 28px;
-  padding: 12px 18px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--teal);
-  cursor: pointer;
-  font-weight: 700;
-}
-
-@media (max-width: 760px) {
-  .quiz-shell {
-    padding: 28px 20px;
-  }
-
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-    .quiz-companion-bridge {
-  margin-top: 32px;
-  padding: 34px 28px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(29, 91, 86, 0.18);
-  border-radius: 22px;
-}
-
-.quiz-companion-bridge h3 {
-  margin: 10px auto 12px;
-  max-width: 650px;
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  line-height: 1.15;
-}
-
-.quiz-companion-bridge > p {
-  max-width: 650px;
-  margin: 0 auto 22px;
-  line-height: 1.7;
-}
-
-.quiz-companion-bridge .button {
-  display: inline-flex;
-  justify-content: center;
-  margin-top: 4px;
-}
-
-.quiz-companion-bridge .quiz-bridge-note {
-  margin: 14px auto 0;
-  font-size: 0.88rem;
-  opacity: 0.72;
-}
- .companion-explainer {
-  max-width: 780px;
-  margin: 36px auto;
-  padding: 32px;
-  text-align: left;
-  border-radius: 20px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-}
-
-.companion-explainer h3 {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.companion-explainer p {
-  line-height: 1.7;
-}
-
-.companion-lead {
-  font-size: 1.12rem;
-}
-
-.companion-process {
-  margin: 26px 0;
-  padding: 18px;
-  text-align: center;
-  border-radius: 14px;
-  background: rgba(255,255,255,.07);
-}
-
-.companion-example {
-  margin: 26px 0;
-  padding: 22px;
-  border-radius: 14px;
-  background: rgba(255,255,255,.05);
-}
-
-.companion-example p:last-child {
-  margin-bottom: 0;
-}
-
-.companion-difference {
-  margin-bottom: 0;
-  font-size: 1.05rem;
-} 
-
-    .quiz-email-capture {
-  margin: 34px 0 28px;
-  padding: 28px;
-  text-align: center;
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(20, 80, 78, 0.12);
-  border-radius: 22px;
-}
-
-.quiz-email-capture h3 {
-  margin: 8px 0 10px;
-  font-family: Georgia, serif;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: #173f3c;
-}
-
-.quiz-email-capture p {
-  max-width: 680px;
-  margin: 0 auto 18px;
-}
-
-#quiz-email-form {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-#quiz-email {
-  min-width: 280px;
-  padding: 14px 16px;
-  border: 1px solid #c9d5d3;
-  border-radius: 999px;
-  font-size: 1rem;
-}
-
-.quiz-email-note {
-  margin-top: 12px !important;
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
-
-#quiz-email-status {
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-    #quiz-email-status {
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-/* HUMAN HERO OVERRIDE */
-
-.hero {
-  position: relative;
-  min-height: 720px;
-  display: grid;
-  align-items: center;
-  padding: 100px 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(248, 245, 238, 0.99) 0%,
-      rgba(248, 245, 238, 0.96) 38%,
-      rgba(248, 245, 238, 0.78) 52%,
-      rgba(248, 245, 238, 0.18) 72%,
-      rgba(248, 245, 238, 0.02) 100%
-    ),
-    url("/images/creative-intelligence-hero-human.jpg")
-      center right / cover no-repeat;
-  overflow: hidden;
-}
-
-.hero::after {
-  display: none;
-}
-
-.hero-grid {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-copy {
-  max-width: 650px;
-}
-
-.hero h1 {
-  margin-bottom: 28px;
-}
-
-.hero h1 span {
-  color: var(--teal);
-}
-
-@media (max-width: 1000px) {
-  .hero {
-    background:
-      linear-gradient(
-        90deg,
-        rgba(248, 245, 238, 0.98) 0%,
-        rgba(248, 245, 238, 0.92) 55%,
-        rgba(248, 245, 238, 0.45) 100%
-      ),
-      url("/images/creative-intelligence-hero-human.jpg")
-        68% center / cover no-repeat;
-  }
-
-  .hero-copy {
-    max-width: 600px;
-    text-align: left;
-  }
-
-  .hero-copy .lead {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .hero-copy .button-row,
-  .hero-note {
-    justify-content: flex-start;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero {
-    min-height: 760px;
-    padding: 64px 0 300px;
-    align-items: start;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(248, 245, 238, 1) 0%,
-        rgba(248, 245, 238, 0.96) 48%,
-        rgba(248, 245, 238, 0.55) 68%,
-        rgba(248, 245, 238, 0.06) 100%
-      ),
-      url("/images/creative-intelligence-hero-human.jpg")
-        67% bottom / cover no-repeat;
-  }
-
-  .hero-copy {
-    max-width: 100%;
-    text-align: left;
-  }
-
-  .hero-copy .lead {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .hero-copy .button-row {
-    align-items: stretch;
-  }
-
-  .hero-note {
-    justify-content: flex-start;
-  }
-}
-
-</style>
   </style>
 </head>
 
@@ -1396,7 +1016,7 @@
           <img
             src="/images/spiral-icon.png"
             alt="Creative Intelligence World Logo"
-          >
+          />
         </div>
 
         <div class="brand-copy">
@@ -1440,60 +1060,55 @@
     <!-- HERO -->
 
     <section class="hero">
-      <div class="container hero-grid">
+      <div class="container">
 
         <div class="hero-copy">
 
           <span class="eyebrow">
-  Creative Intelligence Coach
-</span>
+            A Creative Intelligence Coach for People and Organizations
+          </span>
 
-<h1>
-  AI that moves
-  <span>with you.</span>
-</h1>
+          <h1>
+            Move forward with
+            <span>a new perspective.</span>
+          </h1>
 
-<p>
-  A Creative Intelligence Coach that understands how you approach decisions,
-  helps you find your next step, and adapts as you act, reflect, and move forward.
-</p>
+          <p class="lead">
+            Whether you're pursuing a personal goal or navigating
+            a challenge with your team, Creative Intelligence helps
+            you see new possibilities, find direction, take action,
+            and learn from experience.
+          </p>
 
-<p>
-  Bring a real goal, decision, or challenge. The Coach doesn't make the decision
-  for you. It helps you explore what matters, take an achievable step, learn from
-  what happens, and decide what comes next.
-</p>
+          <p>
+            Your Creative Coach helps you explore what matters
+            and identify an achievable next step.
+            It doesn't make decisions for you.
+            You choose what to try and learn from what happens.
+          </p>
 
-<p>
-  Meet the Creative Intelligence Coach — an adaptive AI experience
-  that connects this understanding to a real goal, helps you take action,
-  learns from your experience, and adapts.
-</p>
-          
           <div class="button-row">
 
             <a class="button button-primary" href="#decision-quiz">
-              Try One Challenge Free
+              Your Creative Coach
             </a>
 
-            <a class="button button-secondary" href="#platform">
-              Watch the Demonstration
+            <a class="button button-secondary" href="/business.html">
+              Your Creative Coach for Teams
             </a>
 
           </div>
 
           <div class="hero-note">
-            More than an answer. Bring one real challenge. Find one achievable next step. Meet the moment.
+            Bring one real challenge. Find a meaningful next step.
           </div>
 
         </div>
 
-       
       </div>
     </section>
 
-
-    <!-- CREATIVE INTELLIGENCE DEFINITION -->
+    <!-- DEFINITION -->
 
     <section class="definition-section">
       <div class="container">
@@ -1511,9 +1126,10 @@
 
           <p class="definition-explanation">
             Cognitive intelligence helps us reason.
-            Emotional intelligence helps us understand emotions and relationships.
-            Creative Intelligence helps us understand how we create — and use that
-            understanding to decide what comes next.
+            Emotional intelligence helps us understand emotions
+            and relationships. Creative Intelligence helps us
+            understand how we create — and use that understanding
+            to decide what comes next.
           </p>
 
         </div>
@@ -1521,137 +1137,245 @@
       </div>
     </section>
 
-<!-- DECISION-MAKING QUIZ -->
+    <!-- CHOOSE YOUR EXPERIENCE -->
 
-<section class="section section-white" id="decision-quiz">
-  <div class="container">
+    <section class="section section-white" id="experiences">
+      <div class="container">
 
-    <div class="section-heading center">
-      <span class="eyebrow">Free 3-Minute Quiz</span>
+        <div class="section-heading center">
 
-      <h2>How Do You Make Decisions?</h2>
+          <span class="eyebrow">
+            Two ways to begin
+          </span>
 
-      <p>
-        Discover the hidden pattern behind the choices you make —
-        and what may be helping or holding you back.
-      </p>
-    </div>
+          <h2>
+            Your challenge. Your next move.
+          </h2>
 
-    <div class="quiz-shell">
-
-      <div class="quiz-progress-wrap">
-        <div class="quiz-progress-label">
-          <span id="quizStepLabel">Question 1 of 10</span>
-          <span id="quizPercent">10%</span>
-        </div>
-
-        <div class="quiz-progress-track">
-          <div class="quiz-progress-bar" id="quizProgressBar"></div>
-        </div>
-      </div>
-
-      <div id="quizQuestionArea">
-        <h3 id="quizQuestion"></h3>
-        <div class="quiz-options" id="quizOptions"></div>
-      </div>
-
-      <div class="quiz-result" id="quizResult" hidden>
-
-        <span class="eyebrow">Your Decision Pattern</span>
-
-        <h2 id="resultTitle"></h2>
-
-        <p class="result-lead" id="resultDescription"></p>
-
-        <div class="result-grid">
-
-          <div class="result-card">
-            <span class="result-label">Your strength</span>
-            <p id="resultStrength"></p>
-          </div>
-
-          <div class="result-card">
-            <span class="result-label">Your potential trap</span>
-            <p id="resultTrap"></p>
-          </div>
-
-          <div class="result-card">
-            <span class="result-label">What to strengthen</span>
-            <p id="resultNextMove"></p>
-          </div>
+          <p>
+            Creative Intelligence supports both individual
+            development and shared learning within teams.
+            Choose the experience that fits your challenge.
+          </p>
 
         </div>
-<div class="quiz-email-capture" id="quiz-email-capture">
-  <span class="eyebrow">Save Your Result</span>
 
-  <h3>Want to keep your result?</h3>
+        <div class="experience-grid">
 
-  <p>
-    Enter your email and we'll save your Creative Intelligence result
-    so you can return to it later.
-  </p>
+          <article class="experience-card">
 
-  <form id="quiz-email-form">
-    <input
-      type="email"
-      id="quiz-email"
-      placeholder="Your email address"
-      required
-      autocomplete="email"
-    >
+            <span class="eyebrow">
+              For Individuals
+            </span>
 
-    <button type="submit" class="button button-secondary">
-      Send My Result
-    </button>
-  </form>
+            <h3>
+              Your Creative Coach
+            </h3>
 
-  <p class="quiz-email-note">
-    Optional — no email required.
-  </p>
+            <p>
+              Understand how you approach decisions.
+              Bring a personal goal or challenge.
+              Explore possibilities, take an achievable step,
+              and learn from experience.
+            </p>
 
-  <p id="quiz-email-status"></p>
-</div>
-  <div class="quiz-companion-bridge">
+            <a
+              class="button button-primary"
+              href="#decision-quiz">
+              Try One Challenge Free
+            </a>
 
-  <span class="eyebrow">
-    Put Your Insight To Work
-  </span>
+          </article>
 
-  <h3>
-    What should I do next?
-  </h3>
+          <article class="experience-card team">
 
-  <p>
-    Now bring one real goal, decision, or challenge you're facing.
-    Your Creative Intelligence pattern can help you move beyond
-    simply understanding yourself and identify your
-    <strong>next achievable step.</strong>
-  </p>
+            <span class="eyebrow">
+              For Organizations
+            </span>
 
-  <a
-    class="button button-primary"
-    href="personal-challenge.html">
-    Find My Next Achievable Step
-  </a>
+            <h3>
+              Your Creative Coach for Teams
+            </h3>
 
-  <p class="quiz-bridge-note">
-    Continue with the Creative Intelligence Coach
-  </p>
+            <p>
+              Different perspectives. Shared direction.
+              Meaningful action. Bring a real team challenge,
+              understand where people agree and differ,
+              and choose what is worth trying next.
+            </p>
 
-</div>
+            <a
+              class="button button-light"
+              href="/team-challenge.html">
+              Explore the Team Challenge
+            </a>
 
-        <button type="button" class="quiz-restart" id="quizRestart">
-          Retake the Quiz
-        </button>
+          </article>
+
+        </div>
 
       </div>
+    </section>
 
-    </div>
+    <!-- DECISION-MAKING QUIZ -->
 
-  </div>
-</section>
+    <section class="section section-white" id="decision-quiz">
+      <div class="container">
 
-    
+        <div class="section-heading center">
+          <span class="eyebrow">Free 3-Minute Quiz</span>
+
+          <h2>How Do You Make Decisions?</h2>
+
+          <p>
+            Explore the pattern behind the choices you make —
+            and what may be helping or holding you back.
+          </p>
+        </div>
+
+        <div class="quiz-shell">
+
+          <div class="quiz-progress-wrap">
+            <div class="quiz-progress-label">
+              <span id="quizStepLabel">Question 1 of 10</span>
+              <span id="quizPercent">10%</span>
+            </div>
+
+            <div class="quiz-progress-track">
+              <div
+                class="quiz-progress-bar"
+                id="quizProgressBar">
+              </div>
+            </div>
+          </div>
+
+          <div id="quizQuestionArea">
+            <h3 id="quizQuestion"></h3>
+
+            <div
+              class="quiz-options"
+              id="quizOptions">
+            </div>
+          </div>
+
+          <div class="quiz-result" id="quizResult" hidden>
+
+            <span class="eyebrow">Your Decision Pattern</span>
+
+            <h2 id="resultTitle"></h2>
+
+            <p
+              class="result-lead"
+              id="resultDescription">
+            </p>
+
+            <div class="result-grid">
+
+              <div class="result-card">
+                <span class="result-label">Your Strength</span>
+                <p id="resultStrength"></p>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">Your Potential Trap</span>
+                <p id="resultTrap"></p>
+              </div>
+
+              <div class="result-card">
+                <span class="result-label">What to Strengthen</span>
+                <p id="resultNextMove"></p>
+              </div>
+
+            </div>
+
+            <!-- EMAIL CAPTURE -->
+
+            <div class="quiz-email-capture" id="quiz-email-capture">
+
+              <span class="eyebrow">Save Your Result</span>
+
+              <h3>Want to keep your result?</h3>
+
+              <p>
+                Enter your email to request that your
+                Creative Intelligence result be saved.
+              </p>
+
+              <form id="quiz-email-form">
+
+                <input
+                  type="email"
+                  id="quiz-email"
+                  placeholder="Your email address"
+                  required
+                  autocomplete="email"
+                  aria-label="Your email address"
+                />
+
+                <button
+                  type="submit"
+                  class="button button-secondary">
+                  Send My Result
+                </button>
+
+              </form>
+
+              <p class="quiz-email-note">
+                Optional — no email required.
+              </p>
+
+              <p
+                id="quiz-email-status"
+                role="status"
+                aria-live="polite">
+              </p>
+
+            </div>
+
+            <!-- CONTINUE TO THE COACH -->
+
+            <div class="quiz-companion-bridge">
+
+              <span class="eyebrow">
+                Put Your Insight to Work
+              </span>
+
+              <h3>What should I do next?</h3>
+
+              <p>
+                Bring one real goal, decision, or challenge
+                you're facing. Your Creative Intelligence
+                pattern can help you move beyond
+                understanding yourself and identify
+                your next achievable step.
+              </p>
+
+              <a
+                class="button button-primary"
+                href="personal-challenge.html">
+                Find My Next Achievable Step
+              </a>
+
+              <p class="quiz-bridge-note">
+                Continue with Your Creative Coach.
+              </p>
+
+            </div>
+
+            <button
+              type="button"
+              class="quiz-restart"
+              id="quizRestart">
+              Retake the Quiz
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
     <!-- DEMONSTRATION -->
 
     <section class="section section-white" id="platform">
@@ -1660,17 +1384,19 @@
         <div class="section-heading center">
 
           <span class="eyebrow">
-            See the adaptive platform in action
+            See the Adaptive Platform in Action
           </span>
 
           <h2>
-            From understanding the individual to adapting what comes next
+            From understanding the individual
+            to adapting what comes next.
           </h2>
 
           <p>
-            See how Creative Intelligence combines the InnerCube Framework,
-            Gemini, learner context, reflection, and automated follow-up to
-            create a continuing personalized learning relationship.
+            See a demonstration of how Creative Intelligence
+            combines the InnerCube Framework, Gemini,
+            learner context, reflection, and follow-up
+            to support personalized learning.
           </p>
 
         </div>
@@ -1681,7 +1407,7 @@
 
             <iframe
               src="https://www.youtube.com/embed/_tyepUwvSEM"
-              title="Creative Intelligence Companion Demonstration"
+              title="Creative Intelligence Platform Demonstration"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen>
@@ -1692,12 +1418,14 @@
           <div class="video-bottom">
 
             <div>
-              <h3>The Creative Intelligence Companion</h3>
+
+              <h3>The Creative Intelligence Coach</h3>
 
               <p>
-                A working demonstration of personalized, recursive,
+                A demonstration of personalized,
                 adaptive learning powered by Gemini.
               </p>
+
             </div>
 
             <a
@@ -1715,53 +1443,49 @@
       </div>
     </section>
 
-
-    <!-- WHY -->
+    <!-- WHY CREATIVE INTELLIGENCE -->
 
     <section class="section">
-      <div class="container statement-grid">
+      <div class="container">
 
-        <div class="statement-box">
-
-          <p>
-            A profile is only the beginning.
-            <span>What matters is what happens next.</span>
-          </p>
-
-        </div>
-
-        <div class="statement-copy">
+        <div class="section-heading">
 
           <span class="eyebrow">
-            From self-understanding to direction
+            From Understanding to Direction
           </span>
 
           <h2>
-            Learning changes because people change.
+            Insight becomes useful when it changes what we do.
           </h2>
 
           <p>
-            The Creative Intelligence Profile reveals how an individual
-            naturally imagines, observes, transforms, and moves toward
-            possibility.
+            A Creative Intelligence Profile explores how
+            you imagine, observe, transform, and move
+            toward possibility.
           </p>
 
           <p>
-            The Companion then connects that understanding with a real goal
-            and recommends a personalized action.
+            Your Creative Coach connects that understanding
+            with a real goal or challenge. It helps you
+            explore options and identify a practical next step.
           </p>
 
           <p>
-            After the individual acts and reflects on what happened, Gemini
-            uses that new experience together with the existing profile to
-            determine what may be most useful next.
+            After acting, you reflect on what happened
+            and use the experience to decide what
+            may be useful next.
+          </p>
+
+          <p>
+            For teams, the process begins by listening
+            to different perspectives before deciding
+            together what is worth trying.
           </p>
 
         </div>
 
       </div>
     </section>
-
 
     <!-- HOW IT WORKS -->
 
@@ -1770,17 +1494,16 @@
 
         <div class="section-heading center">
 
-          <span class="eyebrow">
-            How it works
-          </span>
+          <span class="eyebrow">How It Works</span>
 
-          <h2>
-            Discover. Act. Reflect. Adapt.
-          </h2>
+          <h2>Discover. Act. Reflect. Adapt.</h2>
 
           <p>
-            Creative Intelligence transforms personalization from a one-time
-            recommendation into a continuing learning cycle.
+            Creative Intelligence connects understanding
+            with a practical learning process.
+            You decide what to do, learn from experience,
+            and choose whether to continue,
+            change direction, or finish.
           </p>
 
         </div>
@@ -1794,9 +1517,9 @@
             <h3>Discover</h3>
 
             <p>
-              Complete the InnerCube experience and discover your individual
-              Creative Intelligence pattern across Dreamer, Observer,
-              Alchemist, and Visionary.
+              Explore your Creative Intelligence pattern
+              across Dreamer, Observer, Alchemist,
+              and Visionary.
             </p>
 
           </article>
@@ -1808,9 +1531,9 @@
             <h3>Act</h3>
 
             <p>
-              Bring the Coach a real goal or challenge. Gemini considers
-              your profile and determines a practical next action designed
-              for what you need now.
+              Bring a real goal or challenge.
+              Explore your options and choose
+              one achievable next step.
             </p>
 
           </article>
@@ -1822,9 +1545,9 @@
             <h3>Reflect</h3>
 
             <p>
-              Return and tell the Coach what happened — what worked,
-              what surprised you, what became difficult, and what you
-              discovered.
+              Consider what happened, what worked,
+              what surprised you, and what
+              the experience taught you.
             </p>
 
           </article>
@@ -1836,9 +1559,9 @@
             <h3>Adapt</h3>
 
             <p>
-              Gemini combines your new experience with what it already knows
-              about you and determines what creative mode and action may be
-              most useful next.
+              Use what you learned to decide
+              whether to continue, adjust,
+              try something different, or finish.
             </p>
 
           </article>
@@ -1846,12 +1569,12 @@
         </div>
 
         <div class="cycle-line">
-          Profile → Goal → Action → Experience → Reflection → Adaptation → Next Action
+          Understanding → Goal → Action → Experience
+          → Reflection → Next Decision
         </div>
 
       </div>
     </section>
-
 
     <!-- FRAMEWORK -->
 
@@ -1865,13 +1588,14 @@
           </span>
 
           <h2>
-            Four ways of participating in creativity
+            Four ways of participating in creativity.
           </h2>
 
           <p>
-            The framework does not place people into fixed categories.
-            It helps individuals recognize different capacities they can
-            develop and bring into relationship.
+            The framework does not place people into
+            fixed categories. It helps us recognize
+            capacities we can develop and bring
+            into relationship.
           </p>
 
         </div>
@@ -1879,54 +1603,62 @@
         <div class="four-grid">
 
           <article class="card">
+
             <div class="framework-symbol">✦</div>
 
             <h3>The Dreamer</h3>
 
             <p>
-              Imagines alternatives, explores possibilities, and gives form
-              to what does not yet exist.
+              Imagines alternatives, explores possibilities,
+              and gives form to what does not yet exist.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="framework-symbol">◉</div>
 
             <h3>The Observer</h3>
 
             <p>
-              Notices patterns, attends deeply, and creates the clarity from
-              which understanding can emerge.
+              Notices patterns, attends deeply,
+              and creates the clarity from which
+              understanding can emerge.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="framework-symbol">△</div>
 
             <h3>The Alchemist</h3>
 
             <p>
-              Works with uncertainty, integrates experience, and turns
-              difficulty into transformation.
+              Works with uncertainty, integrates experience,
+              and turns difficulty into transformation.
             </p>
+
           </article>
 
           <article class="card">
+
             <div class="framework-symbol">→</div>
 
             <h3>The Visionary</h3>
 
             <p>
-              Connects imagination with direction and helps possibility
-              become meaningful action.
+              Connects imagination with direction
+              and helps possibility become meaningful action.
             </p>
+
           </article>
 
         </div>
 
       </div>
     </section>
-
 
     <!-- APPLICATIONS -->
 
@@ -1936,17 +1668,17 @@
         <div class="section-heading center">
 
           <span class="eyebrow">
-            Beyond a single use
+            Where Creative Intelligence Can Help
           </span>
 
           <h2>
-            One adaptive architecture. Many human possibilities.
+            One framework. Many human possibilities.
           </h2>
 
           <p>
-            The Coach begins with creativity, but the same architecture
-            can support any context in which understanding the individual
-            improves the guidance.
+            Creative Intelligence begins with understanding
+            how people create and extends into situations
+            where perspective, direction, and learning matter.
           </p>
 
         </div>
@@ -1954,379 +1686,364 @@
         <div class="three-grid">
 
           <article class="card">
+
             <h3>Education</h3>
 
             <p>
-              Help learners understand how they approach possibility,
-              difficulty, reflection, and action while allowing guidance to
-              evolve with experience.
+              Help learners understand how they approach
+              possibility, difficulty, reflection, and action.
             </p>
+
           </article>
 
           <article class="card">
+
             <h3>Career Exploration</h3>
 
             <p>
-              Connect an individual's Creative Intelligence pattern with
-              career goals, experiments, discoveries, and changing
-              possibilities.
+              Connect personal goals with small experiments,
+              discoveries, and changing possibilities.
             </p>
+
           </article>
 
           <article class="card">
+
             <h3>Personal Development</h3>
 
             <p>
-              Turn reflection into practical action and allow subsequent
-              guidance to respond to what actually happens.
+              Turn reflection into action and learn
+              from what actually happens.
             </p>
+
           </article>
 
           <article class="card">
+
             <h3>Educator Development</h3>
 
             <p>
-              Help educators recognize different learner pathways while
-              using AI to deepen rather than replace human judgment.
+              Recognize different learner pathways
+              while keeping human judgment central.
             </p>
+
           </article>
 
           <article class="card">
+
             <h3>Teams & Leadership</h3>
 
             <p>
-              Explore how individuals and teams imagine, observe,
-              transform, and move possibilities into action.
+              Bring different perspectives into a shared
+              process for understanding, experimentation,
+              and decision-making.
             </p>
+
           </article>
 
           <article class="card">
+
             <h3>Lifelong Learning</h3>
 
             <p>
-              Create a continuing relationship in which guidance can evolve
-              as goals, circumstances, and the individual change.
+              Revisit goals as circumstances change
+              and use experience to inform
+              what comes next.
             </p>
+
           </article>
 
         </div>
 
+        <!-- TEAM EXPERIENCE -->
 
         <div class="pilot-panel">
 
           <div>
 
-          <span class="eyebrow">
-            For Business & Organizations
-          </span>
+            <span class="eyebrow">
+              Your Creative Coach for Teams
+            </span>
 
             <h3>
-              Begin with a focused pilot
+              Different perspectives.
+              Shared direction.
+              Meaningful action.
             </h3>
 
             <p>
-              Creative Intelligence can be piloted with a selected group of
-              learners, educators, founders, or professional-development
-              participants to explore how adaptive AI can support
-              individualized learning and development.
+              Bring one real challenge. Team members
+              contribute their perspectives independently.
+              Creative Intelligence helps organize
+              what they see, including agreements,
+              differences, and assumptions worth testing.
             </p>
+
+            <p>
+              The team then uses that understanding
+              to choose one practical experiment,
+              learn from the result, and decide
+              what comes next.
+            </p>
+
+            <div class="button-row" style="margin-top:26px;">
+
+              <a
+                class="button button-primary"
+                href="/team-challenge.html">
+                Explore the Team Challenge
+              </a>
+
+              <a
+                class="button button-secondary"
+                href="/business.html">
+                Learn About the Team Coach
+              </a>
+
+            </div>
 
           </div>
 
           <ul class="pilot-list">
-            <li>Creative Intelligence Profiles for a selected cohort</li>
-            <li>Gemini-powered personalized guidance</li>
-            <li>Adaptive Coach follow-up</li>
-            <li>Participant reflection and feedback</li>
-            <li>Implementation support</li>
-            <li>Organizational learning insights</li>
+
+            <li>
+              Start with one real organizational challenge
+            </li>
+
+            <li>
+              Hear independent team perspectives
+            </li>
+
+            <li>
+              Receive a Team Intelligence Brief
+            </li>
+
+            <li>
+              Surface agreements, differences, and assumptions
+            </li>
+
+            <li>
+              Choose one practical experiment together
+            </li>
+
+            <li>
+              Learn from outcomes and decide what comes next
+            </li>
+
           </ul>
-
-
-        <a class="button" href="business.html">
-        Explore Creative Intelligence for Business
-        </a>
 
         </div>
 
       </div>
     </section>
 
-<!-- FOUNDING MEMBERS -->
+   <!-- FOUNDING MEMBERS -->
 
-<section class="section section-white" id="partners">
-  <div class="container">
+    <section class="section section-white" id="partners">
+      <div class="container">
 
-    <div class="partner-panel">
+        <div class="partner-panel">
 
-      <span
-        class="eyebrow"
-        style="color:#eed598;">
-        Founding Member Offer
-      </span>
+          <span class="eyebrow" style="color:#eed598;">
+            Founding Member Offer
+          </span>
 
-      <h2>
-  Turn Insight Into Direction.
-</h2>
+          <h2>Turn Insight Into Direction.</h2>
 
-<p style="font-size:1.2rem; max-width:760px;">
-  Bring a real decision, goal, or challenge to your Creative Intelligence Companion.
-  It begins by understanding how you naturally create and decide, then helps you
-  identify a next step, reflect on what happens, and adapt as your goals change.
-</p>
+          <p>
+            Bring a real goal, decision, or challenge to Your Creative Coach.
+            Explore possibilities, choose an achievable next step,
+            and learn from experience.
+          </p>
 
+          <div class="companion-explainer">
 
-      <div class="companion-explainer">
+            <span class="eyebrow" style="color:#eed598;">
+              Why the Coach?
+            </span>
 
-  <span class="eyebrow">Why the Coach?</span>
+            <h3>What Your Creative Coach does</h3>
 
-  <h3>What the Creative Intelligence Coach actually does</h3>
+            <p>
+              <strong>
+                A goal is rarely achieved with one decision.
+                It usually involves a series of decisions.
+              </strong>
+            </p>
 
-  <p class="companion-lead">
-    <strong>
-      A goal is rarely achieved with one decision.
-      It is achieved through a series of decisions.
-    </strong>
-  </p>
+            <p>
+              Your Creative Coach helps you consider those decisions
+              while keeping your larger goal in view.
+            </p>
 
-  <p>
-    The Creative Intelligence Coach helps you develop the ability
-    to make those decisions while keeping your larger goal in view.
-  </p>
+            <p>
+              It begins by exploring how you naturally create and decide.
+              When you face a choice, challenge, or opportunity,
+              it helps you consider possible next steps.
+            </p>
 
-  <p>
-    It begins by understanding how you naturally create and decide.
-    Then, when you face a choice, challenge, or opportunity, it helps
-    you consider that decision in relation to where you want to go.
-  </p>
+            <div class="companion-process">
+              <strong>
+                Goal → Decision → Action → Reflection → Adaptation
+              </strong>
+            </div>
 
-  <div class="companion-process">
-    <strong>
-      Goal → Decision → Action → Reflection → Adaptation
-    </strong>
-  </div>
+            <p>
+              You choose what to try, reflect on what happens,
+              and decide whether to continue, adjust, or change direction.
+            </p>
 
-  <p>
-    You choose a next step, learn from what happens, and adapt
-    as you continue toward your goal.
-  </p>
+            <p>
+              <strong>For example:</strong> You want to change careers.
+              Along the way, you might consider taking a course,
+              contacting someone, applying for a position,
+              or building a new skill.
+            </p>
 
-  <div class="companion-example">
-    <strong>For example:</strong>
-    <p>
-      You want to change careers. Along the way you may need to decide
-      whether to take a course, contact someone, apply for a position,
-      build new skills, or pursue an unexpected opportunity.
-    </p>
+            <p>
+              Instead of treating each question as an isolated decision,
+              the Coach helps you consider it in relation
+              to your larger goal.
+            </p>
 
-    <p>
-      Ordinary AI can answer each question separately.
-      The Creative Intelligence Coach helps you consider each
-      decision in relation to your larger goal and how you naturally
-      approach decisions.
-    </p>
-  </div>
+            <p>
+              <strong>
+                The purpose isn't to make decisions for you.
+                It's to help you develop your own ability
+                to make decisions that move you forward.
+              </strong>
+            </p>
 
-  <p class="companion-difference">
-    <strong>
-      The purpose isn't to make decisions for you.
-      It's to help you become better at making the decisions
-      that move you toward your goal.
-    </strong>
-  </p>
+          </div>
 
-</div>
-      <div
-        <div
-  style="
-    margin:32px 0;
-    padding:30px;
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:20px;
-    background:rgba(255,255,255,.07);
-    max-width:760px;
-  "
->
-  <span class="eyebrow" style="color:#eed598;">
-    FREE FOR A LIMITED TIME
-  </span>
+          <div class="offer-box">
 
-  <h3 style="font-size:1.65rem; margin:12px 0 10px;">
-    Better than a chatbot. One real challenge.
-  </h3>
+            <span class="eyebrow" style="color:#eed598;">
+              Free Challenge
+            </span>
 
-  <p>
-    Bring something you genuinely want to move forward.
-    The Creative Intelligence Coach will help you turn it into
-    a next step, learn from what happens, and adapt.
-  </p>
+            <h3>Bring one real challenge.</h3>
 
-  <a href="personal-challenge.html" class="button">
-    Rise to the Challenge — Free
-  </a>
-     </div> 
-     <div style="
-          margin:32px 0;
-          padding:28px 30px;
-          border:1px solid rgba(255,255,255,.22);
-          border-radius:20px;
-          background:rgba(255,255,255,.07);
-          max-width:760px;">
+            <p>
+              Explore your situation, gain a new perspective,
+              and identify one achievable next step.
+            </p>
 
-        <h3
-          style="
-            color:#eed598;
-            font-size:1.65rem;
-            margin-bottom:10px;">
-          A lifetime of creative support.
-        </h3>
+            <a
+              class="button button-light"
+              href="personal-challenge.html"
+              style="margin-top:22px;">
+              Try One Challenge Free
+            </a>
 
-        <p
-          style="
-            color:rgba(255,255,255,.9);
-            font-size:1.05rem;
-            margin:0;">
-          One payment. Lifetime access. No subscription.
-        </p>
+          </div>
 
-      </div>
+          <div class="offer-box">
 
-      <div class="tag-row">
+            <h3 style="color:#eed598;">
+              A lifetime of creative support.
+            </h3>
 
-  <span class="tag">✓ Understand How You Decide</span>
+            <p>
+              One payment. Lifetime access. No subscription.
+              Experiment with as many goals as you like.
+            </p>
 
-  <span class="tag">✓ Personalized Next Steps</span>
+          </div>
 
-  <span class="tag">✓ Gemini-Powered Guidance</span>
+          <div class="tag-row">
 
-  <span class="tag">✓ Creative Intelligence Coach</span>
+            <span class="tag">✓ Understand How You Decide</span>
+            <span class="tag">✓ Personalized Next Steps</span>
+            <span class="tag">✓ Gemini-Powered Guidance</span>
+            <span class="tag">✓ Your Creative Coach</span>
+            <span class="tag">✓ Reflect & Adapt</span>
+            <span class="tag">✓ Support for New Goals</span>
+            <span class="tag">✓ Lifetime Access</span>
+            <span class="tag">✓ No Subscription</span>
 
-  <span class="tag">✓ Reflect & Adapt</span>
+          </div>
 
-  <span class="tag">✓ Support for New Goals</span>
+          <h3
+            style="
+              margin:35px 0 5px;
+              font-size:3.2rem;
+              color:#fff;
+              font-family:Georgia,serif;">
+            $10.95
+          </h3>
 
-  <span class="tag">✓ Lifetime Access</span>
+          <p
+            style="
+              color:#eed598;
+              font-weight:700;
+              margin-bottom:8px;">
+            Founding Member Special Price
+          </p>
 
-  <span class="tag">✓ No Subscription</span>
+          <p style="margin-bottom:30px;">
+            One payment • Lifetime access • No subscription
+          </p>
 
-</div>
+          <div class="button-row">
 
-      <h3
-        style="
-          margin:35px 0 5px;
-          font-size:3.2rem;
-          color:#fff;
-          font-family:Georgia,serif;">
-        $10.95
-      </h3>
+            <a
+              class="button button-light"
+              href="https://buy.stripe.com/28E9ATbic1UY2bBdBYd3i01"
+              target="_blank"
+              rel="noopener">
+              Become a Founding Member
+            </a>
 
-      <p
-        style="
-          color:#eed598;
-          font-size:1.08rem;
-          font-weight:700;
-          margin-bottom:8px;">
-        Founding Member Special Price
-      </p>
+            <a
+              class="button button-outline-light"
+              href="#platform">
+              Watch the Demonstration
+            </a>
 
-      <p
-        style="
-          color:rgba(255,255,255,.78);
-          margin-bottom:8px;">
-        One payment • Lifetime access • No subscription
-      </p>
+          </div>
 
-      <p
-        style="
-          color:rgba(255,255,255,.65);
-          margin-bottom:35px;
-          font-size:.92rem;">
-        Limited time offer
-      </p>
-
-      <div class="button-row">
-
-        <a
-          class="button button-light"
-          href="https://buy.stripe.com/28E9ATbic1UY2bBdBYd3i01"
-          target="_blank"
-          rel="noopener">
-          Become a Founding Member
-        </a>
-
-        <a
-          class="button button-outline-light"
-          href="#platform">
-          Watch the Demonstration
-        </a>
+        </div>
 
       </div>
-
-     <p
-  style="
-    margin-top:28px;
-    color:rgba(255,255,255,.84);
-    font-size:.98rem;
-    max-width:760px;"
->
-  Bring your Coach a real decision, goal, or challenge.
-  It uses what it understands about how you create and decide
-  to help you find a next step—then learn from what happens
-  and adapt as you move forward.
-</p>
-    </div>
-
-  </div>
-</section>
+    </section>
 
     <!-- VISION -->
 
     <section class="section section-soft">
-      <div class="container vision-grid">
+      <div class="container">
 
-        <div class="vision-circle">
-          <span>The individual at the center</span>
-        </div>
+        <div class="section-heading">
 
-        <div class="vision-copy">
-
-          <span class="eyebrow">
-            The broader vision
-          </span>
+          <span class="eyebrow">The Broader Vision</span>
 
           <h2>
             Understanding the individual is only the beginning.
           </h2>
 
           <p>
-            Creative Intelligence begins with creativity, but the underlying
-            architecture can extend to career exploration, science, language
-            learning, professional development, coaching, and lifelong
-            learning.
+            Creative Intelligence begins with creativity,
+            but the framework can extend into career exploration,
+            education, professional development, coaching,
+            and lifelong learning.
           </p>
 
           <p>
-            The same principle applies across domains: understand the
-            individual, understand their goal, observe what happens, and
-            adapt what comes next.
+            The same principle can support organizations:
+            understand the challenge, listen to different perspectives,
+            choose a practical action, and learn from what happens.
           </p>
 
           <p>
-            AI should not make learning less human. Used thoughtfully, it can
-            help us understand ourselves more clearly and participate more
-            consciously in our own development.
+            AI should not replace human judgment.
+            Used thoughtfully, it can help people understand
+            themselves and one another more clearly.
           </p>
-
-          <div class="vision-quote">
-            The future of personalized AI may begin with something
-            surprisingly human: knowing who it is talking to.
-          </div>
 
         </div>
 
       </div>
     </section>
-
 
     <!-- FOUNDER -->
 
@@ -2338,42 +2055,39 @@
           <img
             src="/images/angelo-speaker.jpg"
             alt="Angelo Segarra"
-          >
+          />
 
         </div>
 
         <div class="about-copy">
 
-          <span class="eyebrow">
-            Founder
-          </span>
+          <span class="eyebrow">Founder</span>
 
-          <h2>
-            Angelo Segarra
-          </h2>
+          <h2>Angelo Segarra</h2>
 
           <p>
             Angelo Segarra is the founder of Creative Intelligence World,
-            a Gemini-powered adaptive learning platform built on the
-            InnerCube Framework. As an author, educator, artist, and
-            whole-systems designer, he explores how artificial intelligence
-            can move beyond personalized content toward a deeper
-            understanding of the individual.
+            an AI-guided learning platform built on the InnerCube Framework.
+            As an author, educator, artist, and whole-systems designer,
+            he explores how artificial intelligence can support
+            creativity, learning, and human decision-making.
           </p>
 
           <p>
-            His experience includes more than a decade of teaching in China,
-            international education, sculpture and museum exhibitions,
-            creative facilitation, and the development of the InnerCube
-            Framework.
+            His experience includes more than a decade of teaching
+            in China, international education, sculpture and museum
+            exhibitions, creative facilitation, and the development
+            of the InnerCube Framework.
           </p>
 
           <p>
-            Creative Intelligence World brings these fields together around one central idea: 
-            better decisions begin with better understanding — AI understanding the individual, and teams understanding one another.
+            Creative Intelligence World brings these fields together
+            around one central idea: better decisions begin with
+            better understanding — individuals understanding themselves,
+            and teams understanding one another.
           </p>
 
-          <div class="button-row">
+          <div class="button-row" style="margin-top:26px;">
 
             <a
               class="button button-primary"
@@ -2396,7 +2110,6 @@
 
   </main>
 
-
   <!-- FOOTER -->
 
   <footer class="site-footer">
@@ -2412,7 +2125,7 @@
               <img
                 src="/images/spiral-icon.png"
                 alt="Creative Intelligence World Logo"
-              >
+              />
             </div>
 
             <div class="brand-copy">
@@ -2423,37 +2136,35 @@
           </div>
 
           <p>
-            Helping individuals discover how they imagine, understand,
-            transform, and contribute through human-centered adaptive AI.
+            Helping individuals and organizations turn
+            understanding into direction and meaningful action.
           </p>
 
         </div>
 
         <div>
 
-          <div class="footer-title">
-            Platform
-          </div>
+          <div class="footer-title">Platform</div>
 
           <ul class="footer-links">
             <li><a href="#platform">Demonstration</a></li>
             <li><a href="#how">How It Works</a></li>
             <li><a href="/profile.html">Creative Intelligence Profile</a></li>
-            <li><a href="#partners">Begin Your Journey</a></li>
+            <li><a href="#partners">Founding Members</a></li>
           </ul>
 
         </div>
 
         <div>
 
-          <div class="footer-title">
-            Explore
-          </div>
+          <div class="footer-title">Explore</div>
 
           <ul class="footer-links">
             <li><a href="/framework.html">InnerCube Framework</a></li>
-            <li><a href="/ideas">Ideas</a></li>
+            <li><a href="/team-challenge.html">Team Challenge</a></li>
+            <li><a href="/business.html">For Organizations</a></li>
             <li><a href="/education.html">Education</a></li>
+            <li><a href="/ideas">Ideas</a></li>
             <li><a href="/books.html">Books</a></li>
           </ul>
 
@@ -2461,9 +2172,7 @@
 
         <div>
 
-          <div class="footer-title">
-            Connect
-          </div>
+          <div class="footer-title">Connect</div>
 
           <ul class="footer-links">
 
@@ -2503,17 +2212,17 @@
           All rights reserved.
         </span>
 
-        <span>
-          Founded by Angelo Segarra
-        </span>
+        <span>Founded by Angelo Segarra</span>
 
       </div>
 
     </div>
   </footer>
 
-
   <script>
+
+    /* NAVIGATION */
+
     const menuButton = document.getElementById("menuButton");
     const navLinks = document.getElementById("navLinks");
 
@@ -2521,6 +2230,11 @@
       const isOpen = navLinks.classList.toggle("open");
 
       menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+      );
+
       menuButton.textContent = isOpen ? "✕" : "☰";
     });
 
@@ -2528,528 +2242,603 @@
       link.addEventListener("click", function () {
         navLinks.classList.remove("open");
         menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open navigation");
         menuButton.textContent = "☰";
       });
     });
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
- 
-// DECISION-MAKING QUIZ
 
-const quizQuestions = [
-  {
-    question:
-      "You have an important decision to make, but none of the choices feels quite right. What do you naturally do first?",
-    answers: [
+    /* DECISION-MAKING QUIZ */
+
+    const quizQuestions = [
       {
-        text: "Imagine other possibilities that have not been considered yet.",
-        type: "dreamer"
-      },
-      {
-        text: "Step back and gather more information before deciding.",
-        type: "observer"
-      },
-      {
-        text: "Try something small and see what happens.",
-        type: "alchemist"
-      },
-      {
-        text: "Ask which option best supports where I want to go.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "When you feel stuck between several possibilities, what is most likely to help you?",
-    answers: [
-      {
-        text: "Letting myself imagine without worrying about practicality.",
-        type: "dreamer"
-      },
-      {
-        text: "Understanding the situation more clearly.",
-        type: "observer"
-      },
-      {
-        text: "Changing something and learning from the result.",
-        type: "alchemist"
-      },
-      {
-        text: "Remembering the larger direction I want my life to take.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "A plan you were excited about suddenly stops working. What is your instinct?",
-    answers: [
-      {
-        text: "Imagine a completely different approach.",
-        type: "dreamer"
-      },
-      {
-        text: "Pause and understand what changed.",
-        type: "observer"
-      },
-      {
-        text: "Adapt the plan as I go.",
-        type: "alchemist"
-      },
-      {
-        text: "Revisit the goal and decide whether the plan still serves it.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "When someone asks you what you want to do next, which response feels most familiar?",
-    answers: [
-      {
-        text: "I have several possibilities in mind.",
-        type: "dreamer"
-      },
-      {
-        text: "I need more time to think about it.",
-        type: "observer"
-      },
-      {
-        text: "I will know once I start trying things.",
-        type: "alchemist"
-      },
-      {
-        text: "I usually know the direction, even if I do not know every step.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "Which situation is most likely to make a decision difficult for you?",
-    answers: [
-      {
-        text: "There are too many interesting possibilities.",
-        type: "dreamer"
-      },
-      {
-        text: "I do not feel I have enough information.",
-        type: "observer"
-      },
-      {
-        text: "I am unsure how things will change once I act.",
-        type: "alchemist"
-      },
-      {
-        text: "None of the options seems connected to where I want to go.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "What gives you the most confidence when making an important choice?",
-    answers: [
-      {
-        text: "Seeing a possibility that excites me.",
-        type: "dreamer"
-      },
-      {
-        text: "Feeling that I understand the situation clearly.",
-        type: "observer"
-      },
-      {
-        text: "Knowing I can adjust if things do not work.",
-        type: "alchemist"
-      },
-      {
-        text: "Knowing the choice moves me toward something meaningful.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "When you look back at your best decisions, what was usually present?",
-    answers: [
-      {
-        text: "I allowed myself to imagine something different.",
-        type: "dreamer"
-      },
-      {
-        text: "I noticed something important that I had previously missed.",
-        type: "observer"
-      },
-      {
-        text: "I learned by acting instead of waiting for certainty.",
-        type: "alchemist"
-      },
-      {
-        text: "I had a clear sense of where I wanted to go.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "You are offered an opportunity you did not expect. What is your first reaction?",
-    answers: [
-      {
-        text: "What else could this make possible?",
-        type: "dreamer"
-      },
-      {
-        text: "What do I need to understand before saying yes?",
-        type: "observer"
-      },
-      {
-        text: "Could I try it without committing completely?",
-        type: "alchemist"
-      },
-      {
-        text: "Does this fit the direction I want my life to take?",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "When you postpone a decision, what is usually happening?",
-    answers: [
-      {
-        text: "I keep imagining more possibilities.",
-        type: "dreamer"
-      },
-      {
-        text: "I keep looking for more clarity or certainty.",
-        type: "observer"
-      },
-      {
-        text: "I am waiting until I can test the situation more safely.",
-        type: "alchemist"
-      },
-      {
-        text: "I am unsure which choice really matters to me.",
-        type: "visionary"
-      }
-    ]
-  },
-
-  {
-    question:
-      "If you could strengthen one part of your decision-making, which would help most?",
-    answers: [
-      {
-        text: "Seeing possibilities I have not considered.",
-        type: "dreamer"
-      },
-      {
-        text: "Seeing the situation more clearly.",
-        type: "observer"
-      },
-      {
-        text: "Acting before I know exactly what will happen.",
-        type: "alchemist"
-      },
-      {
-        text: "Knowing which direction deserves my attention.",
-        type: "visionary"
-      }
-    ]
-  }
-];
-
-const quizResults = {
-  dreamer: {
-    title: "The Dreamer",
-    description:
-      "You tend to create direction by imagining what else might be possible. You are naturally drawn toward alternatives, new ideas, and paths that may not yet exist.",
-    strength:
-      "You can see possibilities that other people may overlook.",
-    trap:
-      "Too many possibilities can make choosing one direction difficult.",
-    nextMove:
-      "Borrow from the Visionary. Ask which possibility feels most worth moving toward now."
-  },
-
-  observer: {
-    title: "The Observer",
-    description:
-      "You tend to create direction through clarity and understanding. Before moving, you want to see what is really happening and make sense of the situation.",
-    strength:
-      "You notice patterns, details, and information others may miss.",
-    trap:
-      "You can wait for certainty long after you already know enough to begin.",
-    nextMove:
-      "Borrow from the Alchemist. Take one small action that will teach you something new."
-  },
-
-  alchemist: {
-    title: "The Alchemist",
-    description:
-      "You tend to discover direction through experience. Rather than needing the whole answer first, you learn by trying, adjusting, and transforming what happens.",
-    strength:
-      "You are adaptable and can turn experience into learning.",
-    trap:
-      "Constantly changing direction can make it difficult to build momentum.",
-    nextMove:
-      "Borrow from the Observer. Pause long enough to notice what your experiments are teaching you."
-  },
-
-  visionary: {
-    title: "The Visionary",
-    description:
-      "You tend to make decisions by connecting choices to a larger direction. You are naturally interested in where something is leading and why it matters.",
-    strength:
-      "You can turn possibility into purposeful movement.",
-    trap:
-      "A strong destination can sometimes make you overlook unexpected possibilities.",
-    nextMove:
-      "Borrow from the Dreamer. Ask what other possibilities might exist before committing to the path."
-  }
-};
-
-let quizIndex = 0;
-
-const quizScores = {
-  dreamer: 0,
-  observer: 0,
-  alchemist: 0,
-  visionary: 0
-};
-
-const quizQuestion = document.getElementById("quizQuestion");
-const quizOptions = document.getElementById("quizOptions");
-const quizQuestionArea = document.getElementById("quizQuestionArea");
-const quizResult = document.getElementById("quizResult");
-const quizStepLabel = document.getElementById("quizStepLabel");
-const quizPercent = document.getElementById("quizPercent");
-const quizProgressBar = document.getElementById("quizProgressBar");
-const quizRestart = document.getElementById("quizRestart");
-
-function renderQuizQuestion() {
-  const current = quizQuestions[quizIndex];
-
-  quizQuestion.textContent = current.question;
-  quizOptions.innerHTML = "";
-
-  const questionNumber = quizIndex + 1;
-  const percent = Math.round(
-    (questionNumber / quizQuestions.length) * 100
-  );
-
-  quizStepLabel.textContent =
-    `Question ${questionNumber} of ${quizQuestions.length}`;
-
-  quizPercent.textContent = `${percent}%`;
-  quizProgressBar.style.width = `${percent}%`;
-
-  current.answers.forEach(function(answer) {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "quiz-option";
-    button.textContent = answer.text;
-
-    button.addEventListener("click", function() {
-      quizScores[answer.type] += 1;
-      quizIndex += 1;
-
-      if (quizIndex < quizQuestions.length) {
-        renderQuizQuestion();
-      } else {
-        showQuizResult();
-      }
-    });
-
-    quizOptions.appendChild(button);
-  });
-}
-
-function showQuizResult() {
-  quizQuestionArea.hidden = true;
-  quizResult.hidden = false;
-
-  quizProgressBar.style.width = "100%";
-  quizPercent.textContent = "100%";
-  quizStepLabel.textContent = "Quiz complete";
-
-  const rankedTypes = Object.keys(quizScores).sort(function(a, b) {
-    return quizScores[b] - quizScores[a];
-  });
-
-  const primaryType = rankedTypes[0];
-  const secondaryType = rankedTypes[1];
-
-  
-  const primary = quizResults[primaryType];
-const secondary = quizResults[secondaryType];
-
-const primaryName = primary.title.replace("The ", "");
-const secondaryName = secondary.title.replace("The ", "");
-
-const scoreDifference =
-  quizScores[primaryType] - quizScores[secondaryType];
-
-const hasStrongSecondary = scoreDifference <= 1;
-
-window.quizPrimaryPattern = primaryName;
-window.quizSecondaryPattern = hasStrongSecondary ? secondaryName : "";
-
-let resultTitle = primary.title;
-let resultDescription = primary.description;
-let resultStrength = primary.strength;
-let resultTrap = primary.trap;
-let resultNextMove = primary.nextMove;
-
-if (hasStrongSecondary) {
-
-  resultTitle =
-    `${primary.title} with a strong ${secondaryName} influence`;
-
-  const combinationDescriptions = {
-
-    "dreamer-observer":
-      "You create direction by imagining what could be possible, while also needing to understand what is really happening. Your strongest decisions often emerge when imagination and clarity work together.",
-
-    "dreamer-alchemist":
-      "You create direction through possibility and experimentation. You are willing to imagine alternatives and then learn by trying them, turning ideas into experience.",
-
-    "dreamer-visionary":
-      "You combine imagination with a strong sense of direction. You can see possibilities beyond the obvious and are most effective when you choose the one that feels most worth pursuing.",
-
-    "observer-dreamer":
-      "You begin by trying to understand what is really happening, but your imagination also plays an important role. Your best decisions often come when clarity opens the door to possibilities you had not considered.",
-
-    "observer-alchemist":
-      "You create direction by understanding a situation and then learning through action. You tend to make your best decisions when reflection and experimentation reinforce one another.",
-
-    "observer-visionary":
-      "You create direction first by understanding what is really happening, while also needing to know where your choices are leading. Your best decisions often come when clarity and direction come together.",
-
-    "alchemist-dreamer":
-      "You discover direction through action, but imagination continually opens new possibilities for you. You learn by experimenting with ideas rather than waiting for certainty.",
-
-    "alchemist-observer":
-      "You learn by acting and adapting, while also paying close attention to what experience is teaching you. Your strongest decisions emerge when experimentation is followed by reflection.",
-
-    "alchemist-visionary":
-      "You discover direction through experience, but you also want your actions to lead somewhere meaningful. You are strongest when experimentation remains connected to a larger direction.",
-
-    "visionary-dreamer":
-      "You naturally look toward where you want to go, while imagination helps you see more than one possible route. Your strongest decisions combine purpose with possibility.",
-
-    "visionary-observer":
-      "You have a strong sense of direction, but you also want to understand the situation clearly before committing. Your best decisions bring purpose and careful observation together.",
-
-    "visionary-alchemist":
-      "You know the importance of direction, but you are also willing to learn by acting and adjusting. You are strongest when purpose guides experimentation without controlling it."
-  };
-
-  const combinationKey =
-    `${primaryType}-${secondaryType}`;
-
-  resultDescription =
-    combinationDescriptions[combinationKey] ||
-    primary.description;
-
-  resultStrength =
-  `You combine careful ${primaryName.toLowerCase()} awareness with a strong ${secondaryName.toLowerCase()} influence. You can understand what is happening while also considering where your choices may lead.`;
-
-resultTrap =
-  `You may keep looking for greater clarity even when you already have enough information to move forward.`;
-
-resultNextMove =
-  `Ask: “What do I understand clearly enough to act on now?” Then take one small step in the direction that matters.`;
-}
-
-document.getElementById("resultTitle").textContent =
-  resultTitle;
-
-document.getElementById("resultDescription").textContent =
-  resultDescription;
-
-document.getElementById("resultStrength").textContent =
-  resultStrength;
-
-document.getElementById("resultTrap").textContent =
-  resultTrap;
-
-document.getElementById("resultNextMove").textContent =
-  resultNextMove;
-}
-
-quizRestart.addEventListener("click", function() {
-  quizIndex = 0;
-
-  Object.keys(quizScores).forEach(function(type) {
-    quizScores[type] = 0;
-  });
-
-  quizResult.hidden = true;
-  quizQuestionArea.hidden = false;
-
-  renderQuizQuestion();
-
-  document
-    .getElementById("decision-quiz")
-    .scrollIntoView({ behavior: "smooth" });
-});
-
-renderQuizQuestion();
-   const quizEmailForm = document.getElementById("quiz-email-form");
-
-if (quizEmailForm) {
-  quizEmailForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    const emailInput = document.getElementById("quiz-email");
-    const status = document.getElementById("quiz-email-status");
-
-    const email = emailInput.value.trim();
-
-    if (!email) return;
-
-    status.textContent = "Saving your result...";
-
-    try {
-      await fetch(
-        "https://script.google.com/macros/s/AKfycbx1YdKtTtbXbBR4POKRi5vqw5CERX3Qnw7cjF8BSipZDiSI5-M8d6SRDvRSwDKUPgt0/exec",
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain"
+        question:
+          "You have an important decision to make, but none of the choices feels quite right. What do you naturally do first?",
+        answers: [
+          {
+            text: "Imagine other possibilities that have not been considered yet.",
+            type: "dreamer"
           },
-          body: JSON.stringify({
-            email: email,
-            primary: window.quizPrimaryPattern || "",
-            secondary: window.quizSecondaryPattern || "",
-            source: "Website Quiz"
-          })
-        }
+          {
+            text: "Step back and gather more information before deciding.",
+            type: "observer"
+          },
+          {
+            text: "Try something small and see what happens.",
+            type: "alchemist"
+          },
+          {
+            text: "Ask which option best supports where I want to go.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "When you feel stuck between several possibilities, what is most likely to help you?",
+        answers: [
+          {
+            text: "Letting myself imagine without worrying about practicality.",
+            type: "dreamer"
+          },
+          {
+            text: "Understanding the situation more clearly.",
+            type: "observer"
+          },
+          {
+            text: "Changing something and learning from the result.",
+            type: "alchemist"
+          },
+          {
+            text: "Remembering the larger direction I want my life to take.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "A plan you were excited about suddenly stops working. What is your instinct?",
+        answers: [
+          {
+            text: "Imagine a completely different approach.",
+            type: "dreamer"
+          },
+          {
+            text: "Pause and understand what changed.",
+            type: "observer"
+          },
+          {
+            text: "Adapt the plan as I go.",
+            type: "alchemist"
+          },
+          {
+            text: "Revisit the goal and decide whether the plan still serves it.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "When someone asks you what you want to do next, which response feels most familiar?",
+        answers: [
+          {
+            text: "I have several possibilities in mind.",
+            type: "dreamer"
+          },
+          {
+            text: "I need more time to think about it.",
+            type: "observer"
+          },
+          {
+            text: "I will know once I start trying things.",
+            type: "alchemist"
+          },
+          {
+            text: "I usually know the direction, even if I do not know every step.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "Which situation is most likely to make a decision difficult for you?",
+        answers: [
+          {
+            text: "There are too many interesting possibilities.",
+            type: "dreamer"
+          },
+          {
+            text: "I do not feel I have enough information.",
+            type: "observer"
+          },
+          {
+            text: "I am unsure how things will change once I act.",
+            type: "alchemist"
+          },
+          {
+            text: "None of the options seems connected to where I want to go.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "What gives you the most confidence when making an important choice?",
+        answers: [
+          {
+            text: "Seeing a possibility that excites me.",
+            type: "dreamer"
+          },
+          {
+            text: "Feeling that I understand the situation clearly.",
+            type: "observer"
+          },
+          {
+            text: "Knowing I can adjust if things do not work.",
+            type: "alchemist"
+          },
+          {
+            text: "Knowing the choice moves me toward something meaningful.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "When you look back at your best decisions, what was usually present?",
+        answers: [
+          {
+            text: "I allowed myself to imagine something different.",
+            type: "dreamer"
+          },
+          {
+            text: "I noticed something important that I had previously missed.",
+            type: "observer"
+          },
+          {
+            text: "I learned by acting instead of waiting for certainty.",
+            type: "alchemist"
+          },
+          {
+            text: "I had a clear sense of where I wanted to go.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "You are offered an opportunity you did not expect. What is your first reaction?",
+        answers: [
+          {
+            text: "What else could this make possible?",
+            type: "dreamer"
+          },
+          {
+            text: "What do I need to understand before saying yes?",
+            type: "observer"
+          },
+          {
+            text: "Could I try it without committing completely?",
+            type: "alchemist"
+          },
+          {
+            text: "Does this fit the direction I want my life to take?",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "When you postpone a decision, what is usually happening?",
+        answers: [
+          {
+            text: "I keep imagining more possibilities.",
+            type: "dreamer"
+          },
+          {
+            text: "I keep looking for more clarity or certainty.",
+            type: "observer"
+          },
+          {
+            text: "I am waiting until I can test the situation more safely.",
+            type: "alchemist"
+          },
+          {
+            text: "I am unsure which choice really matters to me.",
+            type: "visionary"
+          }
+        ]
+      },
+      {
+        question:
+          "If you could strengthen one part of your decision-making, which would help most?",
+        answers: [
+          {
+            text: "Seeing possibilities I have not considered.",
+            type: "dreamer"
+          },
+          {
+            text: "Seeing the situation more clearly.",
+            type: "observer"
+          },
+          {
+            text: "Acting before I know exactly what will happen.",
+            type: "alchemist"
+          },
+          {
+            text: "Knowing which direction deserves my attention.",
+            type: "visionary"
+          }
+        ]
+      }
+    ];
+
+    const quizResults = {
+      dreamer: {
+        title: "The Dreamer",
+        description:
+          "You tend to create direction by imagining what else might be possible. You are drawn toward alternatives, new ideas, and paths that may not yet exist.",
+        strength:
+          "You can see possibilities that other people may overlook.",
+        trap:
+          "Too many possibilities can make choosing one direction difficult.",
+        nextMove:
+          "Borrow from the Visionary. Ask which possibility feels most worth moving toward now."
+      },
+
+      observer: {
+        title: "The Observer",
+        description:
+          "You tend to create direction through clarity and understanding. Before moving, you want to see what is really happening and make sense of the situation.",
+        strength:
+          "You notice patterns, details, and information others may miss.",
+        trap:
+          "You can wait for certainty long after you already know enough to begin.",
+        nextMove:
+          "Borrow from the Alchemist. Take one small action that will teach you something new."
+      },
+
+      alchemist: {
+        title: "The Alchemist",
+        description:
+          "You tend to discover direction through experience. You learn by trying, adjusting, and transforming what happens.",
+        strength:
+          "You are adaptable and can turn experience into learning.",
+        trap:
+          "Constantly changing direction can make it difficult to build momentum.",
+        nextMove:
+          "Borrow from the Observer. Pause long enough to notice what your experiments are teaching you."
+      },
+
+      visionary: {
+        title: "The Visionary",
+        description:
+          "You tend to make decisions by connecting choices to a larger direction. You are interested in where something is leading and why it matters.",
+        strength:
+          "You can turn possibility into purposeful movement.",
+        trap:
+          "A strong destination can sometimes make you overlook unexpected possibilities.",
+        nextMove:
+          "Borrow from the Dreamer. Ask what other possibilities might exist before committing to the path."
+      }
+    };
+
+    const combinationDescriptions = {
+      "dreamer-observer":
+        "You imagine what could be possible while also seeking to understand what is happening. Your decisions can benefit when imagination and clarity work together.",
+
+      "dreamer-alchemist":
+        "You combine possibility with experimentation. You imagine alternatives and learn by trying them.",
+
+      "dreamer-visionary":
+        "You combine imagination with direction. You see possibilities and look for one worth pursuing.",
+
+      "observer-dreamer":
+        "You begin by understanding a situation, while imagination helps you notice possibilities you may have missed.",
+
+      "observer-alchemist":
+        "You combine understanding with experimentation. Reflection and action can reinforce one another.",
+
+      "observer-visionary":
+        "You seek clarity while keeping a larger direction in view. Understanding and purpose inform your decisions.",
+
+      "alchemist-dreamer":
+        "You learn through action while imagination opens new possibilities for experimentation.",
+
+      "alchemist-observer":
+        "You act and adapt while paying attention to what experience teaches you.",
+
+      "alchemist-visionary":
+        "You learn through experience while keeping your actions connected to a meaningful direction.",
+
+      "visionary-dreamer":
+        "You keep a larger direction in view while imagining different routes toward it.",
+
+      "visionary-observer":
+        "You connect purpose with careful observation before deciding how to proceed.",
+
+      "visionary-alchemist":
+        "You connect direction with experimentation, allowing experience to inform the route forward."
+    };
+
+    const quizTypes = [
+      "dreamer",
+      "observer",
+      "alchemist",
+      "visionary"
+    ];
+
+    let quizIndex = 0;
+
+    const quizScores = {
+      dreamer: 0,
+      observer: 0,
+      alchemist: 0,
+      visionary: 0
+    };
+
+    const quizQuestion =
+      document.getElementById("quizQuestion");
+
+    const quizOptions =
+      document.getElementById("quizOptions");
+
+    const quizQuestionArea =
+      document.getElementById("quizQuestionArea");
+
+    const quizResult =
+      document.getElementById("quizResult");
+
+    const quizStepLabel =
+      document.getElementById("quizStepLabel");
+
+    const quizPercent =
+      document.getElementById("quizPercent");
+
+    const quizProgressBar =
+      document.getElementById("quizProgressBar");
+
+    const quizRestart =
+      document.getElementById("quizRestart");
+
+    function renderQuizQuestion() {
+
+      const current = quizQuestions[quizIndex];
+
+      quizQuestion.textContent = current.question;
+      quizOptions.innerHTML = "";
+
+      const questionNumber = quizIndex + 1;
+
+      const percent = Math.round(
+        (questionNumber / quizQuestions.length) * 100
       );
 
-      status.textContent = "Your result has been saved.";
-      emailInput.value = "";
+      quizStepLabel.textContent =
+        `Question ${questionNumber} of ${quizQuestions.length}`;
 
-    } catch (error) {
-      status.textContent =
-        "Something went wrong. Please try again.";
+      quizPercent.textContent = `${percent}%`;
+      quizProgressBar.style.width = `${percent}%`;
+
+      current.answers.forEach(function (answer) {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "quiz-option";
+        button.textContent = answer.text;
+
+        button.addEventListener("click", function () {
+
+          quizScores[answer.type] += 1;
+          quizIndex += 1;
+
+          if (quizIndex < quizQuestions.length) {
+            renderQuizQuestion();
+          } else {
+            showQuizResult();
+          }
+
+        });
+
+        quizOptions.appendChild(button);
+
+      });
+
     }
-  });
-} 
+
+    function showQuizResult() {
+
+      quizQuestionArea.hidden = true;
+      quizResult.hidden = false;
+
+      quizProgressBar.style.width = "100%";
+      quizPercent.textContent = "100%";
+      quizStepLabel.textContent = "Quiz complete";
+
+      const rankedTypes = quizTypes.slice().sort(function (a, b) {
+
+        const difference = quizScores[b] - quizScores[a];
+
+        if (difference !== 0) {
+          return difference;
+        }
+
+        return quizTypes.indexOf(a) - quizTypes.indexOf(b);
+
+      });
+
+      const primaryType = rankedTypes[0];
+      const secondaryType = rankedTypes[1];
+
+      const primary = quizResults[primaryType];
+      const secondary = quizResults[secondaryType];
+
+      const primaryName = primary.title.replace("The ", "");
+      const secondaryName = secondary.title.replace("The ", "");
+
+      const scoreDifference =
+        quizScores[primaryType] - quizScores[secondaryType];
+
+      const hasStrongSecondary = scoreDifference <= 1;
+
+      window.quizPrimaryPattern = primaryName;
+
+      window.quizSecondaryPattern =
+        hasStrongSecondary ? secondaryName : "";
+
+      let resultTitle = primary.title;
+      let resultDescription = primary.description;
+      let resultStrength = primary.strength;
+      let resultTrap = primary.trap;
+      let resultNextMove = primary.nextMove;
+
+      if (hasStrongSecondary) {
+
+        resultTitle =
+          `${primary.title} with a strong ${secondaryName} influence`;
+
+        const combinationKey =
+          `${primaryType}-${secondaryType}`;
+
+        resultDescription =
+          combinationDescriptions[combinationKey] ||
+          primary.description;
+
+        resultStrength =
+          `${primary.strength} You also bring qualities associated with the ${secondaryName}.`;
+
+        resultTrap =
+          `${primary.trap} Your ${secondaryName.toLowerCase()} influence may add another consideration when you choose what to do.`;
+
+        resultNextMove =
+          `Consider both perspectives. ${primary.nextMove}`;
+
+      }
+
+      document.getElementById("resultTitle").textContent =
+        resultTitle;
+
+      document.getElementById("resultDescription").textContent =
+        resultDescription;
+
+      document.getElementById("resultStrength").textContent =
+        resultStrength;
+
+      document.getElementById("resultTrap").textContent =
+        resultTrap;
+
+      document.getElementById("resultNextMove").textContent =
+        resultNextMove;
+
+    }
+
+    quizRestart.addEventListener("click", function () {
+
+      quizIndex = 0;
+
+      quizTypes.forEach(function (type) {
+        quizScores[type] = 0;
+      });
+
+      window.quizPrimaryPattern = "";
+      window.quizSecondaryPattern = "";
+
+      quizResult.hidden = true;
+      quizQuestionArea.hidden = false;
+
+      document.getElementById("quiz-email-status").textContent = "";
+
+      renderQuizQuestion();
+
+      document
+        .getElementById("decision-quiz")
+        .scrollIntoView({ behavior: "smooth" });
+
+    });
+
+    renderQuizQuestion();
+
+    /* EMAIL CAPTURE */
+
+    const quizEmailForm =
+      document.getElementById("quiz-email-form");
+
+    quizEmailForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+        const emailInput =
+          document.getElementById("quiz-email");
+
+        const status =
+          document.getElementById("quiz-email-status");
+
+        const submitButton =
+          quizEmailForm.querySelector('button[type="submit"]');
+
+        const email = emailInput.value.trim();
+
+        if (!email || !emailInput.checkValidity()) {
+          emailInput.reportValidity();
+          return;
+        }
+
+        status.textContent = "Submitting your result...";
+        submitButton.disabled = true;
+
+        try {
+
+          await fetch(
+            "https://script.google.com/macros/s/AKfycbx1YdKtTtbXbBR4POKRi5vqw5CERX3Qnw7cjF8BSipZDiSI5-M8d6SRDvRSwDKUPgt0/exec",
+            {
+              method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-Type": "text/plain"
+              },
+              body: JSON.stringify({
+                email: email,
+                primary: window.quizPrimaryPattern || "",
+                secondary: window.quizSecondaryPattern || "",
+                source: "Website Quiz"
+              })
+            }
+          );
+
+          /*
+            no-cors prevents the browser from reading
+            the server's response, so this confirms
+            submission was attempted, not that the
+            result was successfully saved.
+          */
+
+          status.textContent =
+            "Your request has been submitted. Please check your email or contact us if you don't receive your result.";
+
+          emailInput.value = "";
+
+        } catch (error) {
+
+          status.textContent =
+            "We couldn't submit your result. Please try again.";
+
+        } finally {
+
+          submitButton.disabled = false;
+
+        }
+
+      }
+    );
+
   </script>
 
 </body>
 </html>
+
+
