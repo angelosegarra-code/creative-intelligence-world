@@ -198,6 +198,68 @@
       border-color: rgba(255, 255, 255, 0.45);
     }
 
+
+    /* FEATURED RESEARCH */
+    .research-feature {
+      background:
+        radial-gradient(circle at top left, rgba(189, 145, 68, 0.13), transparent 34%),
+        var(--cream-dark);
+    }
+
+    .research-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .research-visual {
+      display: block;
+      min-height: 430px;
+      background: var(--teal-dark);
+    }
+
+    .research-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .research-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(36px, 5vw, 68px);
+    }
+
+    .research-copy h2 {
+      margin-bottom: 22px;
+      font-size: clamp(2.2rem, 4vw, 3.7rem);
+    }
+
+    .research-copy .lead {
+      margin-bottom: 18px;
+    }
+
+    .research-copy .button {
+      align-self: flex-start;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 860px) {
+      .research-card {
+        grid-template-columns: 1fr;
+      }
+
+      .research-visual {
+        min-height: 300px;
+      }
+    }
+
     /* HEADER */
 
     .site-header {
@@ -2047,6 +2109,43 @@
       </div>
     </section>
 
+
+  <section class="section research-feature" aria-labelledby="featured-research-title">
+    <div class="container">
+      <article class="research-card">
+        <a
+          class="research-visual"
+          href="/ideas/creative-learning-after-the-answer-machine.html"
+          aria-label="Read Creative Learning After the Answer Machine"
+        >
+          <img
+            src="/images/creative-learning-answer-machine.png"
+            alt="A team considering many AI-generated possibilities and choosing a purposeful path forward"
+          />
+        </a>
+
+        <div class="research-copy">
+          <span class="eyebrow">Featured Research</span>
+          <h2 id="featured-research-title">
+            Creative Learning After the Answer Machine
+          </h2>
+          <p class="lead">
+            When AI can produce answers instantly, the deeper question is whether people are developing the imagination, judgment, and adaptability to decide what to do with them.
+          </p>
+          <p>
+            Drawing on emerging research into AI-supported creativity and learning, this essay explains why effective AI should develop human capacity—not replace it.
+          </p>
+          <a
+            class="button button-primary"
+            href="/ideas/creative-learning-after-the-answer-machine.html"
+          >
+            Read the Research Essay →
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
     <!-- FOUNDER -->
 
     <section class="section section-white">
@@ -2842,5 +2941,3 @@
 
 </body>
 </html>
-
-
