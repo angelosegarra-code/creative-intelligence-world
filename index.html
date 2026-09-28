@@ -715,7 +715,21 @@
 
     /* VIDEO */
 
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .video-card {
+      display: flex;
+      flex-direction: column;
+    }
+
     .video-shell {
+      width: 100%;
       max-width: 1020px;
       margin: 0 auto;
       padding: 16px;
@@ -734,12 +748,17 @@
       background: #132629;
     }
 
-    .video-frame iframe {
+    .video-frame iframe,
+    .video-frame video {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       border: 0;
+    }
+
+    .video-frame video {
+      object-fit: cover;
     }
 
     .video-bottom {
@@ -752,6 +771,16 @@
 
     .video-bottom p {
       color: var(--muted);
+    }
+
+    .video-card .video-bottom {
+      align-items: flex-start;
+      flex-direction: column;
+      min-height: 210px;
+    }
+
+    .video-card .video-bottom .button {
+      margin-top: auto;
     }
 
     /* FRAMEWORK */
@@ -968,6 +997,10 @@
     }
 
     @media (max-width: 820px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
       .menu-button {
         display: grid;
         place-items: center;
@@ -1440,7 +1473,7 @@
       </div>
     </section>
 
-    <!-- DEMONSTRATION -->
+    <!-- CREATIVE INTELLIGENCE EXPERIENCES -->
 
     <section class="section section-white" id="platform">
       <div class="container">
@@ -1448,59 +1481,96 @@
         <div class="section-heading center">
 
           <span class="eyebrow">
-            See the Adaptive Platform in Action
+            See Creative Intelligence in Action
           </span>
 
           <h2>
-            From understanding the individual
-            to adapting what comes next.
+            Two ways to turn insight
+            into a meaningful next move.
           </h2>
 
           <p>
-            See a demonstration of how Creative Intelligence
-            combines the InnerCube Framework, Gemini,
-            learner context, reflection, and follow-up
-            to support personalized learning.
+            Begin with your own goal or bring a real challenge
+            to your team. In both experiences, AI supports
+            reflection and learning while people retain
+            the judgment to decide what happens next.
           </p>
 
         </div>
 
-        <div class="video-shell">
+        <div class="video-grid">
 
-          <div class="video-frame">
+          <article class="video-card">
+            <div class="video-shell">
+              <div class="video-frame">
+                <video
+                  controls
+                  playsinline
+                  preload="metadata"
+                  poster="/individual-video-poster.jpg"
+                  aria-label="How the Creative Intelligence Coach works for individuals">
+                  <source
+                    src="/individual-creative-intelligence-website.mp4"
+                    type="video/mp4" />
+                  Your browser does not support embedded video.
+                </video>
+              </div>
 
-            <iframe
-              src="https://www.youtube.com/embed/_tyepUwvSEM"
-              title="Creative Intelligence Platform Demonstration"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
+              <div class="video-bottom">
+                <div>
+                  <span class="eyebrow">For Individuals</span>
+                  <h3>Find Your Next Move</h3>
+                  <p>
+                    Discover your Creative Intelligence pattern,
+                    bring one real goal to your Coach, and learn
+                    from an achievable experiment.
+                  </p>
+                </div>
 
-          </div>
-
-          <div class="video-bottom">
-
-            <div>
-
-              <h3>The Creative Intelligence Coach</h3>
-
-              <p>
-                A demonstration of personalized,
-                adaptive learning powered by Gemini.
-              </p>
-
+                <a
+                  class="button button-primary"
+                  href="#decision-quiz">
+                  Start the Free Quiz
+                </a>
+              </div>
             </div>
+          </article>
 
-            <a
-              class="button button-primary"
-              href="https://youtu.be/_tyepUwvSEM"
-              target="_blank"
-              rel="noopener">
-              Watch on YouTube
-            </a>
+          <article class="video-card">
+            <div class="video-shell">
+              <div class="video-frame">
+                <video
+                  controls
+                  playsinline
+                  preload="metadata"
+                  poster="/team-video-poster.jpg"
+                  aria-label="How the Creative Intelligence Team Challenge works">
+                  <source
+                    src="/team-challenge-website.mp4"
+                    type="video/mp4" />
+                  Your browser does not support embedded video.
+                </video>
+              </div>
 
-          </div>
+              <div class="video-bottom">
+                <div>
+                  <span class="eyebrow">For Teams</span>
+                  <h3>Find Your Team’s Next Move</h3>
+                  <p>
+                    Bring one real challenge, hear independent
+                    perspectives, receive a Team Intelligence Brief,
+                    and choose one practical experiment together.
+                  </p>
+                </div>
+
+                <a
+                  class="button button-primary"
+                  href="/team-challenge.html">
+                  Explore the Team Challenge
+                </a>
+              </div>
+            </div>
+          </article>
 
         </div>
 
