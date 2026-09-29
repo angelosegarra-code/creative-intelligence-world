@@ -358,17 +358,17 @@
 
     .hero {
       position: relative;
-      min-height: 720px;
+      min-height: 800px;
       display: grid;
       align-items: center;
-      padding: 100px 0;
+      padding: 82px 0 92px;
       background:
         linear-gradient(
           90deg,
           rgba(248, 245, 238, 0.99) 0%,
-          rgba(248, 245, 238, 0.96) 38%,
-          rgba(248, 245, 238, 0.78) 52%,
-          rgba(248, 245, 238, 0.18) 72%,
+          rgba(248, 245, 238, 0.97) 40%,
+          rgba(248, 245, 238, 0.82) 54%,
+          rgba(248, 245, 238, 0.18) 73%,
           rgba(248, 245, 238, 0.02) 100%
         ),
         url("/images/creative-intelligence-hero-human.jpg")
@@ -378,11 +378,13 @@
     .hero-copy {
       position: relative;
       z-index: 1;
-      max-width: 680px;
+      max-width: 780px;
     }
 
     .hero h1 {
-      margin-bottom: 28px;
+      max-width: 760px;
+      margin-bottom: 24px;
+      font-size: clamp(3.8rem, 6.5vw, 6.7rem);
     }
 
     .hero h1 span {
@@ -390,29 +392,64 @@
     }
 
     .hero .lead {
-      margin-bottom: 22px;
+      max-width: 720px;
+      margin-bottom: 30px;
+      color: #43575c;
+      font-size: 1.17rem;
     }
 
-    .hero .button-row {
-      margin-top: 34px;
+    .hero-pathways {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 760px;
+      overflow: hidden;
+      border: 1px solid rgba(29, 98, 103, 0.17);
+      border-radius: 20px;
+      background: rgba(250, 248, 243, 0.88);
+      box-shadow: 0 20px 45px rgba(21, 55, 59, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    .hero-note {
+    .hero-path {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: 0.92rem;
+      min-height: 220px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 25px 28px;
     }
 
-    .hero-note::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      flex: 0 0 10px;
-      border-radius: 50%;
-      background: var(--gold);
+    .hero-path + .hero-path {
+      border-left: 1px solid rgba(29, 98, 103, 0.17);
+    }
+
+    .hero-path-label {
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .hero-path h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.35rem, 2vw, 1.72rem);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-path p {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    .hero-path .button {
+      width: 100%;
+      min-height: 46px;
+      margin-top: auto;
     }
 
     /* DEFINITION */
@@ -994,6 +1031,10 @@
           url("/images/creative-intelligence-hero-human.jpg")
             68% center / cover no-repeat;
       }
+
+      .hero-copy {
+        max-width: 720px;
+      }
     }
 
     @media (max-width: 820px) {
@@ -1045,8 +1086,8 @@
       }
 
       .hero {
-        min-height: 760px;
-        padding: 64px 0 300px;
+        min-height: 980px;
+        padding: 56px 0 300px;
         align-items: start;
         background:
           linear-gradient(
@@ -1061,7 +1102,26 @@
       }
 
       .hero h1 {
-        font-size: clamp(2.8rem, 14vw, 4.3rem);
+        max-width: 100%;
+        font-size: clamp(2.75rem, 13vw, 4.2rem);
+      }
+
+      .hero .lead {
+        font-size: 1.04rem;
+      }
+
+      .hero-pathways {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-path {
+        min-height: auto;
+        padding: 22px;
+      }
+
+      .hero-path + .hero-path {
+        border-top: 1px solid rgba(29, 98, 103, 0.17);
+        border-left: 0;
       }
 
       .experience-grid,
@@ -1159,43 +1219,43 @@
 
         <div class="hero-copy">
 
-          <span class="eyebrow">
-            A Creative Intelligence Coach for People and Organizations
-          </span>
-
           <h1>
-            Move forward with
-            <span>a new perspective.</span>
+            See what matters
+            <span>from a new perspective.</span>
           </h1>
 
           <p class="lead">
-            Whether you're pursuing a personal goal or navigating
-            a challenge with your team, Creative Intelligence helps
-            you see new possibilities, find direction, take action,
-            and learn from experience.
+            Creative Intelligence makes what matters visible—then helps
+            you turn that understanding into direction, action and
+            learning from experience.
           </p>
 
-          <p>
-            Your Creative Coach helps you explore what matters
-            and identify an achievable next step.
-            It doesn't make decisions for you.
-            You choose what to try and learn from what happens.
-          </p>
+          <div class="hero-pathways">
+            <article class="hero-path">
+              <span class="hero-path-label">For You</span>
+              <h2>
+                Turn self-understanding into a strategy aligned with
+                what you want to achieve.
+              </h2>
+              <a class="button button-primary" href="#decision-quiz">
+                Create Your Direction
+              </a>
+            </article>
 
-          <div class="button-row">
-
-            <a class="button button-primary" href="#decision-quiz">
-              Your Creative Coach
-            </a>
-
-            <a class="button button-secondary" href="/business.html">
-              Your Creative Coach for Teams
-            </a>
-
-          </div>
-
-          <div class="hero-note">
-            Bring one real challenge. Find a meaningful next step.
+            <article class="hero-path">
+              <span class="hero-path-label">For Teams</span>
+              <h2>
+                Make your team’s collective intelligence visible,
+                practical and repeatable.
+              </h2>
+              <p>
+                The coach makes thinking visible. The team sees a clear
+                path forward.
+              </p>
+              <a class="button button-secondary" href="/team-challenge.html">
+                Align Your Team
+              </a>
+            </article>
           </div>
 
         </div>
