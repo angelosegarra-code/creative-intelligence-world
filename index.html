@@ -452,6 +452,11 @@
       margin-top: auto;
     }
 
+    .hero-goals { padding-left: 20px; color: var(--muted); font-size: .98rem; line-height: 1.6; }
+    .hero-goals li + li { margin-top: 12px; }
+    .hero-goals li::marker { color: var(--teal); }
+    .hero .hero-coaching-intro { margin-top: 26px; margin-bottom: 22px; }
+
     .hero-chat-link { margin-top: 14px; color: var(--teal-dark); text-decoration: underline; text-underline-offset: 4px; font-weight: 700; font-size: .9rem; }
     .hero-note { max-width: 700px; margin-top: 20px; color: var(--muted); font-size: .9rem; }
     a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
@@ -1224,21 +1229,30 @@
       <div class="container"><div class="hero-copy">
         <span class="eyebrow">Creative Intelligence Coaching</span>
         <h1 id="hero-title">What would you like to <span>change?</span></h1>
-        <p class="lead">Explore a fresh perspective. Choose your next move. Learn through action—with Creative Intelligence Coaching for your life, work, or team.</p>
         <div class="hero-pathways">
-          <article class="hero-path">
-            <span class="hero-path-label">For Yourself</span>
-            <h2>Find a direction worth exploring.</h2>
-            <p>A career choice, a creative idea, or a change in your life. Start with how you see the situation and discover another way forward.</p>
-            <a class="button button-primary" href="#decision-quiz">Start Your Free Quiz</a>
+          <article class="hero-path" aria-labelledby="individual-goals-title">
+            <h2 id="individual-goals-title">For yourself</h2>
+            <ul class="hero-goals">
+              <li>Find a direction that feels meaningful.</li>
+              <li>Turn an idea into something real.</li>
+              <li>Take the first step toward a change.</li>
+            </ul>
           </article>
-          <article class="hero-path">
-            <span class="hero-path-label">For Your Team</span>
-            <h2>Turn different perspectives into a next move.</h2>
-            <p>Bring one real challenge. Hear what each person sees, choose an experiment, and learn together.</p>
-            <a class="button button-secondary" href="/team-challenge.html">Explore the Team Challenge</a>
-            <a class="hero-chat-link" href="#talk-with-angelo">Talk with Angelo · 30 minutes</a>
+          <article class="hero-path" aria-labelledby="team-goals-title">
+            <h2 id="team-goals-title">For your team</h2>
+            <ul class="hero-goals">
+              <li>Get clear on what matters most.</li>
+              <li>Hear perspectives you may be missing.</li>
+              <li>Turn recurring discussions into practical action.</li>
+            </ul>
           </article>
+        </div>
+        <p class="lead hero-coaching-intro">Explore a fresh perspective. Choose your next move.
+          Learn through action—with Creative Intelligence Coaching for your life, work, or team.</p>
+        <div class="button-row">
+          <a class="button button-primary" href="#decision-quiz">Start Your Free Quiz</a>
+          <a class="button button-secondary" href="/team-challenge.html">Explore the Team Challenge</a>
+          <a class="button button-secondary" href="#talk-with-angelo">Talk with Angelo · 30 minutes</a>
         </div>
         <p class="hero-note">Digital coaching helps you explore. You—and your team—make the choices.</p>
       </div></div>
