@@ -13,17 +13,17 @@
 
   <style>
     :root {
-      --cream: #f5f1e8;
-      --cream-dark: #ebe5d8;
+      --cream: #ffffff;
+      --cream-dark: #f6f7f7;
       --white: #ffffff;
-      --ink: #17272b;
-      --muted: #617076;
-      --teal: #1d6267;
-      --teal-dark: #15494d;
+      --ink: #111820;
+      --muted: #68727a;
+      --teal: #245f63;
+      --teal-dark: #171b1d;
       --gold: #bd9144;
-      --border: rgba(29, 98, 103, 0.16);
-      --shadow: 0 20px 55px rgba(21, 55, 59, 0.12);
-      --radius: 24px;
+      --border: #d9dde0;
+      --shadow: none;
+      --radius: 0;
       --max-width: 1180px;
     }
 
@@ -1168,6 +1168,87 @@
         display: none;
       }
     }
+
+    /* Editorial styling shared with the Team Challenge */
+    .container { width: min(1180px, calc(100% - 48px)); }
+    .site-header { background: #fff; backdrop-filter: none; }
+    .nav { min-height: 96px; gap: 28px; }
+    .brand-mark { border: 0; width: 40px; height: 40px; flex-basis: 40px; }
+    .brand-copy strong { font-weight: 400; letter-spacing: .03em; }
+    .brand-copy span { font-size: .6rem; letter-spacing: .12em; max-width: 270px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+    .nav-links .contact-link { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .hero { background: #fff; min-height: auto; padding: 56px 0 72px; }
+    .home-hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+    .hero-copy { max-width: none; min-width: 0; }
+    .hero h1 { font-size: clamp(3.3rem, 5.6vw, 5.1rem); font-weight: 400; line-height: .99; letter-spacing: -.045em; margin-bottom: 32px; }
+    .hero h1 span { color: #7f878d; }
+    .eyebrow { color: var(--muted); font-size: .68rem; font-weight: 500; letter-spacing: .22em; }
+    .home-hero-image { margin: 0; align-self: stretch; min-height: 670px; }
+    .home-hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+    .hero-pathways { background: transparent; border: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; backdrop-filter: none; }
+    .hero-path { min-height: auto; padding: 24px 20px 24px 0; }
+    .hero-path + .hero-path { padding-left: 24px; border-color: var(--border); }
+    .hero-path h2 { font-size: 1.4rem; margin-bottom: 16px; }
+    .hero-goals { font-size: .9rem; line-height: 1.55; padding-left: 16px; }
+    .hero-goals li + li { margin-top: 10px; }
+    .hero .lead { font-size: 1.05rem; line-height: 1.6; color: #465159; }
+    .hero .button-row { gap: 10px; }
+    .hero .button { min-height: 44px; padding: 10px 17px; font-size: .78rem; }
+    .hero-note { font-size: .8rem; }
+    .button { box-shadow: none; font-size: .82rem; }
+    .button-primary { background: var(--ink); }
+    .button-primary:hover { background: var(--teal); }
+    .button-secondary { background: transparent; border-color: var(--ink); color: var(--ink); }
+    .section { border-top: 1px solid var(--border); padding: 88px 0; }
+    h2, h3 { font-weight: 400; }
+    .section-heading h2 { font-size: clamp(2.3rem, 4.5vw, 3.8rem); }
+    .card { border: 0; border-top: 1px solid var(--border); border-radius: 0; padding: 28px 0; background: transparent; }
+    .three-grid, .four-grid { gap: 32px; }
+    .card-number { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 50%; }
+    .experience-card { border: 0; border-top: 1px solid var(--border); border-radius: 0; padding: 36px; box-shadow: none; background: var(--cream-dark); }
+    .experience-card.team { background: var(--ink); }
+    .quiz-shell { border-radius: 8px; background: var(--cream-dark); }
+    .quiz-option, .result-card, .quiz-email-capture, .quiz-companion-bridge { border-radius: 6px; }
+    .video-shell { border: 0; border-radius: 0; padding: 0; background: transparent; }
+    .video-frame { border-radius: 0; }
+    .pilot-panel { border-radius: 0; padding: 40px 0; border-left: 0; border-right: 0; }
+    .definition-section, .framework { background: var(--ink); }
+    .framework .card { border: 0; border-top: 1px solid #485054; border-radius: 0; background: transparent; }
+    .partner-panel { border-radius: 0; background: var(--ink); padding: 56px; }
+    .companion-explainer, .offer-box { border-radius: 0; background: transparent; }
+    .cycle-line { border-radius: 0; background: var(--cream-dark); }
+    .research-feature { background: var(--cream-dark); }
+    .research-card { border: 0; border-radius: 0; }
+    .about-photo img { border-radius: 0; }
+    .site-footer { background: var(--ink); }
+    @media (max-width: 1100px) {
+      .menu-button { display: grid; place-items: center; }
+      .nav { position: relative; }
+      .nav-links { position: absolute; top: 100%; left: 0; right: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 16px; background: #fff; border: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-links a { display: block; padding: 14px; }
+    }
+    @media (max-width: 900px) {
+      .home-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-copy { max-width: 720px; }
+      .home-hero-image { min-height: 0; height: 420px; }
+      .home-hero-image img { object-position: 72% 40%; }
+    }
+    @media (max-width: 640px) {
+      .container { width: calc(100% - 32px); }
+      .nav { min-height: 76px; }
+      .hero { min-height: auto; padding: 36px 0 48px; background: #fff; }
+      .hero h1 { font-size: clamp(2.9rem, 12vw, 4rem); }
+      .hero-path { padding: 22px 0; }
+      .hero-path + .hero-path { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); }
+      .hero .button-row { flex-direction: column; }
+      .home-hero-image { height: 320px; }
+      .section { padding: 60px 0; }
+      .partner-panel { padding: 32px 22px; }
+      .experience-card { padding: 28px 22px; }
+    }
   </style>
 </head>
 
@@ -1201,20 +1282,12 @@
 
       <nav>
         <ul class="nav-links" id="navLinks">
-          <li><a href="#platform">Platform</a></li>
+          <li><a href="#decision-quiz">For You</a></li>
+          <li><a href="/team-challenge.html">For Teams</a></li>
           <li><a href="#how">How It Works</a></li>
-          <li><a href="/framework.html">Framework</a></li>
-          <li><a href="/archetypes/">Archetype Learning</a></li>
-          <li><a href="/education.html">Education</a></li>
-          <li><a href="/business.html">For Organizations</a></li>
           <li><a href="/ideas">Ideas</a></li>
-          <li><a href="/books.html">Books</a></li>
           <li><a href="/about.html">About</a></li>
-          <li>
-            <a class="contact-link" href="/contact.html">
-              Contact
-            </a>
-          </li>
+          <li><a class="contact-link" href="/contact.html">Talk with Angelo</a></li>
         </ul>
       </nav>
 
@@ -1226,7 +1299,7 @@
     <!-- HERO -->
 
     <section class="hero" aria-labelledby="hero-title">
-      <div class="container"><div class="hero-copy">
+      <div class="container home-hero-grid"><div class="hero-copy">
         <span class="eyebrow">Creative Intelligence Coaching</span>
         <h1 id="hero-title">What would you like to <span>change?</span></h1>
         <div class="hero-pathways">
@@ -1255,7 +1328,9 @@
           <a class="button button-secondary" href="/contact.html">Talk with Angelo · 30 minutes</a>
         </div>
         <p class="hero-note">Digital coaching helps you explore. You—and your team—make the choices.</p>
-      </div></div>
+      </div>
+        <figure class="home-hero-image"><img src="/images/creative-intelligence-hero-human.jpg" alt="A woman looking toward the horizon" fetchpriority="high" /></figure>
+      </div>
     </section>
 
     <!-- DEFINITION -->
