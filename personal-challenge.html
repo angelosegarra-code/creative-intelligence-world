@@ -221,7 +221,7 @@
         <div class="eyebrow">Begin a Personal Challenge</div>
 
         <h1>
-          What do you want to move forward?
+          What would you like to change or explore?
         </h1>
 
         <p>
@@ -249,7 +249,16 @@
     <section>
       <div class="container">
 
-        <div class="card">
+        <div class="card" style="margin-bottom:28px;padding:28px;">
+  <label for="perspectiveSelect">Your Creative Intelligence perspective</label>
+  <select id="perspectiveSelect" style="font:inherit;padding:12px;max-width:100%;">
+    <option value="">Explore without a quiz result</option>
+    <option>Dreamer</option><option>Observer</option><option>Alchemist</option><option>Visionary</option>
+  </select>
+  <p id="perspectiveInsight"></p>
+  <p style="color:var(--muted);">This is a starting perspective, not a fixed identity. You can move between all four modes as you explore.</p>
+</div>
+      <div class="card">
 
           <h2>Your Challenge</h2>
 
@@ -272,7 +281,7 @@
 
             <div class="field">
               <label for="goal">
-                What do you want to move forward?
+                What would you like to change or explore?
               </label>
 
               <textarea
@@ -334,7 +343,38 @@
 
   </main>
 
-  <script>
+  
+<script>
+  const perspectiveModes = {
+    Dreamer: "Explore the possibilities that attract your curiosity. What could you imagine differently?",
+    Observer: "Notice what is happening before choosing a direction. What detail or assumption deserves a closer look?",
+    Alchemist: "Explore what could change through experimentation. What could you combine, reshape, or try differently?",
+    Visionary: "Explore the direction that matters to you. What possibility feels worth developing, and why?"
+  };
+  let perspective = { primary: "", secondary: "" };
+  try {
+    const stored = JSON.parse(localStorage.getItem("creativeIntelligencePerspective") || "null");
+    if (stored && perspectiveModes[stored.primary]) perspective = stored;
+  } catch (error) { /* A perspective can also be selected below. */ }
+  const perspectiveParams = new URLSearchParams(location.search);
+  const incomingPerspective = perspectiveParams.get("primary") || perspectiveParams.get("archetype") || perspectiveParams.get("pattern");
+  if (perspectiveModes[incomingPerspective]) {
+    perspective = { primary: incomingPerspective, secondary: perspectiveParams.get("secondary") || "" };
+  }
+  const perspectiveSelect = document.getElementById("perspectiveSelect");
+  function showPerspective() {
+    perspectiveSelect.value = perspective.primary || "";
+    document.getElementById("perspectiveInsight").textContent = perspectiveModes[perspective.primary] || "Choose a perspective from your quiz result, or explore without one.";
+    try { localStorage.setItem("creativeIntelligencePerspective", JSON.stringify(perspective)); } catch (error) {}
+  }
+  perspectiveSelect.addEventListener("change", function () {
+    perspective = { primary: this.value, secondary: "" };
+    showPerspective();
+  });
+  showPerspective();
+</script>
+
+<script>
     const form = document.getElementById("challengeForm");
 
     form.addEventListener("submit", function(event) {
@@ -342,6 +382,8 @@
 
       const challenge = {
         name: document.getElementById("name").value.trim(),
+        primary: perspective.primary,
+        secondary: perspective.secondary,
         goal: document.getElementById("goal").value.trim(),
         why: document.getElementById("why").value.trim(),
         uncertainty: document.getElementById("uncertainty").value.trim(),
