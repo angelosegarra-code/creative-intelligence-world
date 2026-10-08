@@ -302,7 +302,7 @@
 
       <p class="eyebrow">Your Creative Intelligence Coach</p>
 
-      <h1>Don't solve everything. Discover what to do next.</h1>
+      <h1>Explore a new direction. Discover what you can learn.</h1>
 
       <p class="lead">
         Creative Intelligence develops through experience.
@@ -328,6 +328,15 @@
   <section>
     <div class="container">
 
+      <div class="card" style="margin-bottom:28px;padding:28px;">
+  <label for="perspectiveSelect">Your Creative Intelligence perspective</label>
+  <select id="perspectiveSelect" style="font:inherit;padding:12px;max-width:100%;">
+    <option value="">Explore without a quiz result</option>
+    <option>Dreamer</option><option>Observer</option><option>Alchemist</option><option>Visionary</option>
+  </select>
+  <p id="perspectiveInsight"></p>
+  <p style="color:var(--muted);">This is a starting perspective, not a fixed identity. You can move between all four modes as you explore.</p>
+</div>
       <div class="challenge-card">
         <div class="challenge-label">What you want to move forward</div>
         <p class="challenge-text" id="challengeText">
@@ -393,9 +402,10 @@
           </div>
 
           <button type="submit">
-            Create My Experiment →
+            Create My Experiment
           </button>
 
+        <p id="coachStatus" role="status" aria-live="polite"></p>
         </form>
 
       </div>
@@ -443,11 +453,10 @@
           That is where the next cycle of Creative Intelligence begins.
         </p>
 <div style="margin:30px 0; padding:25px; border:1px solid #1d6267; border-radius:12px; text-align:center;">
-  <h2>Your creative journey continues.</h2>
+  <h2>Your experiment is just the beginning.</h2>
 
   <p>
-    Return with what happened, learn from your experience,
-    and discover your next step.
+    Try your experiment, then return with what you discover. Your Creative Intelligence Coach helps you reflect, explore different perspectives, and develop your next experiment.
   </p>
 
   <p>
@@ -457,7 +466,7 @@
   </p>
 
   <button type="button" id="purchaseButton">
-  Continue My Journey — $19.95
+  Continue My Creative Journey — $19.95
 </button>
 </div>
         <button type="button" id="editButton">
@@ -476,6 +485,37 @@
   </section>
 
 </main>
+
+
+<script>
+  const perspectiveModes = {
+    Dreamer: "Explore the possibilities that attract your curiosity. What could you imagine differently?",
+    Observer: "Notice what is happening before choosing a direction. What detail or assumption deserves a closer look?",
+    Alchemist: "Explore what could change through experimentation. What could you combine, reshape, or try differently?",
+    Visionary: "Explore the direction that matters to you. What possibility feels worth developing, and why?"
+  };
+  let perspective = { primary: "", secondary: "" };
+  try {
+    const stored = JSON.parse(localStorage.getItem("creativeIntelligencePerspective") || "null");
+    if (stored && perspectiveModes[stored.primary]) perspective = stored;
+  } catch (error) { /* A perspective can also be selected below. */ }
+  const perspectiveParams = new URLSearchParams(location.search);
+  const incomingPerspective = perspectiveParams.get("primary") || perspectiveParams.get("archetype") || perspectiveParams.get("pattern");
+  if (perspectiveModes[incomingPerspective]) {
+    perspective = { primary: incomingPerspective, secondary: perspectiveParams.get("secondary") || "" };
+  }
+  const perspectiveSelect = document.getElementById("perspectiveSelect");
+  function showPerspective() {
+    perspectiveSelect.value = perspective.primary || "";
+    document.getElementById("perspectiveInsight").textContent = perspectiveModes[perspective.primary] || "Choose a perspective from your quiz result, or explore without one.";
+    try { localStorage.setItem("creativeIntelligencePerspective", JSON.stringify(perspective)); } catch (error) {}
+  }
+  perspectiveSelect.addEventListener("change", function () {
+    perspective = { primary: this.value, secondary: "" };
+    showPerspective();
+  });
+  showPerspective();
+</script>
 
 <script>
 
@@ -516,6 +556,10 @@
 
     event.preventDefault();
 
+    const submitButton = experimentForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    document.getElementById("coachStatus").textContent = "Your Coach is exploring your experiment…";
+    try {
     const experiment = {
       possibility:
         document.getElementById("possibility").value.trim(),
@@ -535,15 +579,22 @@ const coachResponse = await fetch(COACH_URL, {
   body: new URLSearchParams({
     action: "personalCoach",
     goal: challenge && challenge.goal ? challenge.goal : "",
+    primary: perspective.primary,
+    secondary: perspective.secondary,
+    archetype: perspective.primary,
+    why: challenge && challenge.why ? challenge.why : "",
+    uncertainty: challenge && challenge.uncertainty ? challenge.uncertainty : "",
     possibility: experiment.possibility,
     next_action: experiment.action,
     learning: experiment.notice
   })
 });
 
+if (!coachResponse.ok) throw new Error("Coach request failed");
 const coachData = await coachResponse.json();
+if (coachData.error || ![coachData.reflection, coachData.nextStep, coachData.whyThisStep, coachData.question].some(Boolean)) throw new Error("No coaching response");
 
-console.log("Creative Intelligence Coach:", coachData);
+
     document.getElementById("coachReflection").textContent =
   coachData.reflection || "";
 
@@ -579,7 +630,12 @@ document.getElementById("coachQuestion").textContent =
       behavior: "smooth",
       block: "start"
     });
-
+    document.getElementById("coachStatus").textContent = "";
+    } catch (error) {
+      document.getElementById("coachStatus").textContent = "Your Coach couldn't respond just now. Your entries are still here. Please try again.";
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 
 
