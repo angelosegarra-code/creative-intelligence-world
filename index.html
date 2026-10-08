@@ -2980,6 +2980,13 @@
       window.quizSecondaryPattern =
         hasStrongSecondary ? secondaryName : "";
 
+      try {
+        localStorage.setItem("creativeIntelligencePerspective", JSON.stringify({
+          primary: primaryName,
+          secondary: window.quizSecondaryPattern
+        }));
+      } catch (error) { /* The quiz still works without browser storage. */ }
+
       let resultTitle = primary.title;
       let resultDescription = primary.description;
       let resultStrength = primary.strength;
