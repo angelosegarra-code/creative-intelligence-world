@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Creative Intelligence Systems Design | Creative Intelligence World</title>
+
+<meta name="description" content="Discover how your business ideas, products, people, and technology fit together through Whole Systems Design and Creative Intelligence.">
+
+<style>
+:root {
+  --ink:#18283b;
+  --muted:#586575;
+  --gold:#b58a3b;
+  --pale:#f8f7f3;
+  --line:#e5e5df;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff;
+  line-height:1.65;
+}
+
+header {
+  border-bottom:1px solid var(--line);
+  background:white;
+}
+
+nav {
+  max-width:1180px;
+  margin:auto;
+  padding:22px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand {
+  font-family:Georgia,serif;
+  font-size:24px;
+  line-height:1.05;
+}
+
+.brand small {
+  display:block;
+  font:10px Arial;
+  letter-spacing:2.8px;
+  color:#76818c;
+  margin-top:8px;
+}
+
+.links {
+  display:flex;
+  gap:27px;
+  align-items:center;
+  font-size:13px;
+}
+
+.links a {
+  color:var(--ink);
+  text-decoration:none;
+}
+
+.links a:hover {color:var(--gold)}
+
+.links span {color:#647181}
+
+.btn {
+  display:inline-block;
+  background:#18314b;
+  color:white !important;
+  text-decoration:none;
+  padding:14px 23px;
+  border-radius:3px;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.btn.alt {
+  background:#d6ae62;
+  color:#14283a !important;
+}
+
+.hero {
+  background:linear-gradient(125deg,#fff 55%,#f3f3ef);
+  padding:90px 28px 95px;
+}
+
+.wrap {
+  max-width:1120px;
+  margin:auto;
+}
+
+.eyebrow {
+  font-size:12px;
+  letter-spacing:3px;
+  font-weight:bold;
+  color:#a17b38;
+  text-transform:uppercase;
+}
+
+.hero h1 {
+  font:normal clamp(45px,6vw,78px)/1.12 Georgia,serif;
+  max-width:850px;
+  letter-spacing:-2px;
+  margin:24px 0;
+}
+
+.hero h1 em {
+  font-style:normal;
+  color:#a17b38;
+}
+
+.hero p {
+  font-size:20px;
+  max-width:680px;
+  color:#4d5b68;
+}
+
+.actions {
+  display:flex;
+  gap:15px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:34px;
+}
+
+.subtle {
+  font-size:13px;
+  color:#647181;
+}
+
+.section {padding:88px 28px}
+
+.section.soft {background:var(--pale)}
+
+h2 {
+  font:normal clamp(32px,4vw,48px)/1.18 Georgia,serif;
+  letter-spacing:-.8px;
+  margin:15px 0 22px;
+}
+
+p {color:#506071}
+
+.intro {
+  max-width:760px;
+  font-size:18px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:23px;
+  margin-top:40px;
+}
+
+.card {
+  background:white;
+  border:1px solid var(--line);
+  padding:29px;
+  min-height:190px;
+}
+
+.num {
+  color:var(--gold);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.card h3 {
+  font:normal 25px Georgia,serif;
+  margin:16px 0 8px;
+}
+
+.card p {
+  font-size:15px;
+  margin:0;
+}
+
+.split {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.diagram {
+  border:1px solid var(--line);
+  background:white;
+  padding:12px;
+}
+
+.diagram img {
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.caption {
+  font-size:12px;
+  color:#7b8792;
+  margin-top:9px;
+}
+
+.perspectives {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:35px;
+}
+
+.perspective {
+  padding:26px 20px;
+  border-top:4px solid #b58a3b;
+  background:#faf9f5;
+}
+
+.perspective:nth-child(2) {border-color:#7199aa}
+.perspective:nth-child(3) {border-color:#b97e85}
+.perspective:nth-child(4) {border-color:#80a184}
+
+.perspective strong {
+  display:block;
+  font:normal 23px Georgia,serif;
+  margin-bottom:8px;
+}
+
+.perspective p {
+  font-size:14px;
+  margin:0;
+}
+
+.tech {
+  background:#18314b;
+  color:#fff;
+}
+
+.tech h2,
+.tech p {color:white}
+
+.tech p {opacity:.84}
+
+.tech-list {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:35px;
+}
+
+.tech-list article {
+  border-top:1px solid #718193;
+  padding-top:20px;
+}
+
+.tech-list strong {font-size:17px}
+.tech-list p {font-size:14px}
+
+.deliverables {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-top:35px;
+}
+
+.deliverables article {
+  padding:26px 0;
+  border-top:2px solid var(--gold);
+}
+
+.deliverables h3 {
+  font:normal 25px Georgia,serif;
+}
+
+.example {
+  max-width:1000px;
+  margin:40px auto 0;
+  border:1px solid var(--line);
+  padding:16px;
+  background:white;
+}
+
+.example img {
+  width:100%;
+  display:block;
+}
+
+.cta {
+  text-align:center;
+  background:#f5f1e9;
+  padding:85px 28px;
+}
+
+.cta h2 {
+  max-width:720px;
+  margin:15px auto;
+}
+
+.cta p {
+  max-width:620px;
+  margin:0 auto 30px;
+}
+
+footer {
+  padding:30px 28px;
+  border-top:1px solid var(--line);
+  font-size:12px;
+  color:#647181;
+  text-align:center;
+}
+
+@media(max-width:800px) {
+  .links span {display:none}
+  .hero {padding:65px 22px}
+  .section {padding:60px 22px}
+  .split {grid-template-columns:1fr;gap:24px}
+  .grid,.tech-list,.deliverables {grid-template-columns:1fr}
+  .perspectives {grid-template-columns:repeat(2,1fr)}
+  .brand {font-size:20px}
+}
+
+@media(max-width:450px) {
+  .perspectives {grid-template-columns:1fr}
+  .hero h1 {letter-spacing:-1px}
+  .btn {width:100%;text-align:center}
+  .links .btn {display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+  <div class="brand">
+    Creative Intelligence World
+    <small>ART · DISCOVERY · NEW PERSPECTIVES</small>
+  </div>
+
+  <div class="links">
+    <a href="/">Home</a>
+    <a href="/individuals.html">Individuals</a>
+    <a href="/team-challenge.html">Teams</a>
+    <span>Systems Design</span>
+    <a class="btn" href="https://calendly.com/intinno/new-meeting">
+      Start a Conversation
+    </a>
+  </div>
+</nav>
+</header>
+
+<section class="hero">
+<div class="wrap">
+
+<div class="eyebrow">
+Whole Systems Design · Creative Intelligence · Technology
+</div>
+
+<h1>
+You may already have the pieces.<br>
+<em>Discover how they fit together.</em>
+</h1>
+
+<p>
+Developing several ideas, products, or services?
+Or leading a business whose parts could work better together?
+
+We help you see the whole system—and explore what becomes possible
+when its connections come into focus.
+</p>
+
+<div class="actions">
+<a class="btn" href="https://calendly.com/intinno/new-meeting">
+Explore Your Business Possibilities →
+</a>
+
+<span class="subtle">
+Start with a 30-minute discovery conversation
+</span>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="wrap split">
+
+<div>
+<div class="eyebrow">The opportunity</div>
+
+<h2>
+What if your business is more than the sum of its parts?
+</h2>
+
+<p class="intro">
+Marketing, products, customers, teams, technology, and partnerships
+are often developed separately.
+
+Yet the greatest opportunities may lie in the relationships between them.
+</p>
+
+<p>
+Whole Systems Design helps reveal those relationships,
+identify overlooked possibilities,
+and create a coherent direction for learning and growth.
+</p>
+</div>
+
+<div class="diagram">
+<img
+src="systems-design-diagram.png"
+alt="Creative Intelligence World Whole Systems Design diagram">
+
+<div class="caption">
+A visual representation of interconnected business opportunities.
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="section soft">
+<div class="wrap">
+
+<div class="eyebrow">Our approach</div>
+
+<h2>
+See the whole. Design the connections. Enable the system.
+</h2>
+
+<div class="grid">
+
+<article class="card">
+<div class="num">01 / DISCOVER</div>
+<h3>Map the whole system</h3>
+<p>
+Understand your products, people, customers, activities,
+and the relationships that connect them.
+</p>
+</article>
+
+<article class="card">
+<div class="num">02 / INTEGRATE</div>
+<h3>Find overlooked opportunities</h3>
+<p>
+Identify where ideas, teams, and services could reinforce
+one another rather than operate in isolation.
+</p>
+</article>
+
+<article class="card">
+<div class="num">03 / ADAPT</div>
+<h3>Design a learning loop</h3>
+<p>
+Develop practical experiments, meaningful feedback signals,
+and a direction that can evolve with experience.
+</p>
+</article>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="wrap">
+
+<div class="eyebrow">Four creative perspectives</div>
+
+<h2>Different ways of seeing the same system</h2>
+
+<p class="intro">
+We use four fluid perspectives to expand understanding—not to
+categorize people or prescribe answers.
+</p>
+
+<div class="perspectives">
+
+<div class="perspective">
+<strong>Dreamer</strong>
+<p>What might this organization become?</p>
+</div>
+
+<div class="perspective">
+<strong>Observer</strong>
+<p>What is happening across the system today?</p>
+</div>
+
+<div class="perspective">
+<strong>Alchemist</strong>
+<p>What connections could transform how it works?</p>
+</div>
+
+<div class="perspective">
+<strong>Visionary</strong>
+<p>What direction is emerging—and what could we try next?</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="section tech">
+<div class="wrap">
+
+<div class="eyebrow" style="color:#dfbd79">
+Today's possibilities
+</div>
+
+<h2>AI and automation can help the connections work.</h2>
+
+<p class="intro">
+We begin with your purpose, not with technology.
+
+Then we examine where automation, tracking, and AI assistance
+can support a more responsive organization—while keeping
+people responsible for decisions.
+</p>
+
+<div class="tech-list">
+
+<article>
+<strong>Connect information</strong>
+<p>
+Help relevant customer, sales, and operational signals
+reach the people who need them.
+</p>
+</article>
+
+<article>
+<strong>Reduce repetitive work</strong>
+<p>
+Explore practical automations that free time for judgment,
+creativity, and relationships.
+</p>
+</article>
+
+<article>
+<strong>Learn from results</strong>
+<p>
+Define useful measures, observe real outcomes,
+and adjust based on evidence.
+</p>
+</article>
+
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="wrap">
+
+<div class="eyebrow">What you take away</div>
+
+<h2>More than a diagram. A direction for action.</h2>
+
+<div class="deliverables">
+
+<article>
+<h3>Your Systems Map</h3>
+<p>
+A clear picture of the business, its relationships,
+and the opportunities they reveal.
+</p>
+</article>
+
+<article>
+<h3>Your Integration Priorities</h3>
+<p>
+A focused view of where coordination, automation,
+or information sharing may create value.
+</p>
+</article>
+
+<article>
+<h3>Your Adaptive Action Plan</h3>
+<p>
+Practical next experiments, responsibilities,
+and feedback signals to guide development.
+</p>
+</article>
+
+</div>
+</div>
+</section>
+
+<section class="section soft">
+<div class="wrap">
+
+<div class="eyebrow">An evolving example</div>
+
+<h2>Creative Intelligence World as a whole system</h2>
+
+<p class="intro">
+Our own work brings art, individual exploration,
+organizational learning, and creative partnerships
+into one evolving design.
+
+This map illustrates the intended relationships;
+real-world participation and feedback determine
+how the system develops.
+</p>
+
+<div class="example">
+<img
+src="systems-design-diagram.png"
+alt="Creative Intelligence World interconnected systems diagram">
+</div>
+
+<div class="caption">
+Creative Intelligence World — Whole Systems Design in practice.
+</div>
+
+</div>
+</section>
+
+<section class="cta" id="conversation">
+
+<div class="eyebrow">Begin with a conversation</div>
+
+<h2>
+What could your business become if its different parts worked together?
+</h2>
+
+<p>
+Whether you're starting something new or rethinking an existing
+organization, we can begin by exploring what you have—and
+what you might be overlooking.
+</p>
+
+<a class="btn alt" href="https://calendly.com/intinno/new-meeting">
+Schedule a 30-Minute Discovery Conversation →
+</a>
+
+<p class="subtle" style="margin-top:17px">
+Explore your possibilities. No obligation. Just a conversation.
+</p>
+
+</section>
+
+<footer>
+Creative Intelligence World · Whole Systems Design Consulting
+</footer>
+
+</body>
+</html>
