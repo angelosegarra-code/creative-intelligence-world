@@ -6,6 +6,11 @@ let coach=await login('coach@example.test'),client=await login('client@example.t
 const inv=await api('invitations','POST',{email:'client@example.test'},coach);assert.equal(inv.status,201);
 assert.equal((await api('invitations/accept','POST',{token:inv.data.invitationToken},client)).status,200);
 const clientId=(await api('clients','GET',null,coach)).data.clients[0].id;
+assert.equal((await api('perspectives','GET',null,coach)).data.perspectives.length,4);
+assert.equal((await api('challenge-drafts','POST',{focus:'a difficult decision',perspective:'observer'},client)).status,403);
+const draft=await api('challenge-drafts','POST',{focus:'a difficult decision',perspective:'observer'},coach);
+assert.equal(draft.status,200);assert.match(draft.data.draft,/What do you notice/);
+assert.deepEqual((await api('learning-loop','GET',null,client)).data.stages,['Discover','Explore','Challenge','Experiment','Learn']);
 assert.equal((await api('challenges','POST',{clientId,text:'Not allowed'},other)).status,403);
 const challenge=await api('challenges','POST',{clientId,text:'Reflect on change'},coach);assert.equal(challenge.status,201);
 assert.equal((await api('challenges/'+challenge.data.id+'/reflections','POST',{text:'I tried a new idea'},client)).status,201);
