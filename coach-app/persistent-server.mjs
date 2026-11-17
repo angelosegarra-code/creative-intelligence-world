@@ -45,4 +45,4 @@ if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){const b=a
 return reply(res,403,{error:'Forbidden'});
 }catch(e){return reply(res,400,{error:'Invalid request'})}});
 server.on('close',()=>db.close());return server}
-if(process.argv[1]===fileURLToPath(import.meta.url)){createPersistentServer().listen(Number(process.env.PORT||3100),'127.0.0.1',()=>console.log('Persistent coach pilot listening on localhost'))}
+if(process.argv[1]===fileURLToPath(import.meta.url)){createPersistentServer().listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',()=>console.log('Persistent coach pilot listening'))}
