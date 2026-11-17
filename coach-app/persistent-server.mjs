@@ -20,6 +20,20 @@ const user=req=>{const sid=cookie(req);if(!sid)return null;return q('SELECT u.id
 const active=(coach,client)=>!!q('SELECT 1 AS ok FROM relationships WHERE coach_id=? AND client_id=? AND revoked_at IS NULL',coach,client);
 const audit=(actor,event,kind,rid)=>run('INSERT INTO audit_events(id,actor_id,event_type,resource_type,resource_id) VALUES(?,?,?,?,?)',hex(),actor,event,kind,rid);
 const server=http.createServer(async(req,res)=>{try{
+// Private staging gate. Fail closed on Render unless credentials are configured.
+// Basic auth is only acceptable over HTTPS; Render terminates HTTPS for public endpoints.
+if(process.env.RENDER){
+const expectedUser=process.env.STAGING_ACCESS_USER,expectedPassword=process.env.STAGING_ACCESS_PASSWORD;
+if(!expectedUser||!expectedPassword||expectedPassword.length<20)return reply(res,503,{error:'Staging access not configured'});
+const authorization=req.headers.authorization||'';
+let candidate='';
+if(authorization.startsWith('Basic ')){try{candidate=Buffer.from(authorization.slice(6),'base64').toString('utf8')}catch{}}
+const expected=Buffer.from(expectedUser+':'+expectedPassword),actual=Buffer.from(candidate);
+if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){
+res.writeHead(401,{'WWW-Authenticate':'Basic realm="CI World Coach Studio Staging"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end('Private staging access required');
+}
+}
+
 const u=new URL(req.url,'http://localhost'),p=u.pathname,m=req.method;
 if(m==='GET'&&p==='/'){const b=await readFile(join(here,'index.html'));res.writeHead(200,{'Content-Type':'text/html','Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'self'",'Cache-Control':'no-store'});return res.end(b)}
 if(m==='GET'&&p==='/app.js'){res.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'no-store'});return res.end(await readFile(join(here,'app.js')))}
