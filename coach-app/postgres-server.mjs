@@ -1,6 +1,7 @@
 import http from 'node:http';
 import {createPostgresJourney,perspectives} from './postgres-journey.mjs';
 import {createPostgresAdapter} from './postgres-adapter.mjs';
+import {migratePostgres} from './postgres-store.mjs';
 import {randomBytes,scryptSync,timingSafeEqual,createHash,createHmac} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {dirname,join} from 'node:path';
@@ -158,7 +159,17 @@ if(p==='/api/journey'||p.startsWith('/api/journey/'))return await journey.route(
 if(m==='GET'&&p==='/api/me')return reply(res,200,actor);
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)await run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'})}
 if(m==='POST'&&p==='/api/invitations'&&actor.role==='coach'){const b=await input(req);if(!emailOk(b.email))return reply(res,400,{error:'Valid email required'});const token=hex();await run('INSERT INTO invitations(token_hash,coach_id,recipient_email,expires_at) VALUES(?,?,?,?)',sha(token),actor.id,b.email.trim().toLowerCase(),Date.now()+86400000);await audit(actor.id,'invitation_created','invitation',sha(token));return reply(res,201,{invitationToken:token,expiresInHours:24})}
-if(m==='POST'&&p==='/api/invitations/accept'&&actor.role==='client'){const b=await input(req),key=sha(String(b.token||'')),inv=await q('SELECT * FROM invitations WHERE token_hash=? AND accepted_at IS NULL',key);if(!inv||Number(inv.expires_at)<Date.now()||inv.recipient_email!==actor.email)return reply(res,403,{error:'Invalid invitation'});await db.transaction(async()=>{await run('INSERT INTO relationships(coach_id,client_id,revoked_at) VALUES(?,?,NULL) ON CONFLICT(coach_id,client_id) DO UPDATE SET consented_at=CURRENT_TIMESTAMP,revoked_at=NULL',inv.coach_id,actor.id);await run('UPDATE invitations SET accepted_at=CURRENT_TIMESTAMP WHERE token_hash=? AND accepted_at IS NULL',key);await audit(actor.id,'relationship_consented','relationship',inv.coach_id);});return reply(res,200,{ok:true})}
+if(m==='POST'&&p==='/api/invitations/accept'&&actor.role==='client'){
+  const b=await input(req),key=sha(String(b.token||''));
+  const accepted=await db.transaction(async()=>{
+    const invitation=await q('UPDATE invitations SET accepted_at=CURRENT_TIMESTAMP WHERE token_hash=? AND recipient_email=? AND accepted_at IS NULL AND expires_at>? RETURNING coach_id',key,actor.email,Date.now());
+    if(!invitation)return false;
+    await run('INSERT INTO relationships(coach_id,client_id,revoked_at) VALUES(?,?,NULL) ON CONFLICT(coach_id,client_id) DO UPDATE SET consented_at=CURRENT_TIMESTAMP,revoked_at=NULL',invitation.coach_id,actor.id);
+    await audit(actor.id,'relationship_consented','relationship',invitation.coach_id);
+    return true;
+  });
+  return accepted?reply(res,200,{ok:true}):reply(res,403,{error:'Invalid invitation'});
+}
 if(m==='GET'&&p==='/api/clients'&&actor.role==='coach')return reply(res,200,{clients:await all('SELECT u.id,u.email FROM relationships r JOIN users u ON u.id=r.client_id WHERE r.coach_id=? AND r.revoked_at IS NULL',actor.id)});
 if(m==='POST'&&p==='/api/challenges'&&actor.role==='coach'){const b=await input(req);if(typeof b.text!=='string'||!b.text.trim()||b.text.length>2000||!await active(actor.id,b.clientId))return reply(res,403,{error:'Not authorized or invalid challenge'});const id=hex();await run('INSERT INTO challenges(id,coach_id,client_id,text) VALUES(?,?,?,?)',id,actor.id,b.clientId,b.text.trim());await audit(actor.id,'challenge_assigned','challenge',id);return reply(res,201,{id,clientId:b.clientId,text:b.text.trim()})}
 if(m==='GET'&&p==='/api/perspectives')return reply(res,200,{perspectives});
@@ -181,4 +192,17 @@ if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){
 return reply(res,403,{error:'Forbidden'});
 }catch(e){console.error('Coach Studio PostgreSQL request failed:',e?.code||e?.name||'unknown');return reply(res,500,{error:'Request could not be completed'})}});
 server.on('close',()=>{void db.close()});return server}
-if(process.argv[1]===fileURLToPath(import.meta.url)){createPostgresServer().listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',()=>console.log('PostgreSQL coach pilot listening'))}
+if(process.argv[1]===fileURLToPath(import.meta.url)){
+  let adapter;
+  try{
+    adapter=createPostgresAdapter();
+    await migratePostgres(adapter.pool);
+    console.log('Coach Studio PostgreSQL schema verified.');
+    createPostgresServer(adapter).listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',
+      ()=>console.log('PostgreSQL coach pilot listening'));
+  }catch(error){
+    console.error('Coach Studio PostgreSQL startup failed:',error.code||error.name);
+    await adapter?.close();
+    process.exitCode=1;
+  }
+}

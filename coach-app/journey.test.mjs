@@ -3,15 +3,37 @@ import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { createPersistentServer } from './persistent-server.mjs';
 
-test('private Creative Intelligence journey keeps ownership, consent, history and legacy records', async t => {
+const postgresUrl = process.env.CI_COACH_TEST_POSTGRES_URL;
+const engines = postgresUrl ? ['sqlite', 'postgres'] : ['sqlite'];
+for (const engine of engines) test(engine + ' journey keeps ownership, consent, history and legacy records', async t => {
+  const suffix = randomUUID();
+  let makeServer;
+  if (engine === 'postgres') {
+    const url = new URL(postgresUrl);
+    assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(url.hostname), 'Tests require an isolated local PostgreSQL database');
+    const { createPostgresAdapter } = await import('./postgres-adapter.mjs');
+    const { createPostgresPool, migratePostgres } = await import('./postgres-store.mjs');
+    const { createPostgresServer } = await import('./postgres-server.mjs');
+    makeServer = async () => {
+      const pool = createPostgresPool({ connectionString: postgresUrl });
+      try {
+        await migratePostgres(pool);
+        return createPostgresServer(createPostgresAdapter(pool));
+      } catch (error) {
+        await pool.end();
+        throw error;
+      }
+    };
+  }
   const root = await mkdtemp(join(tmpdir(), 'ci-private-journey-'));
   const dbPath = join(root, 'journey.sqlite');
   let server;
   let base;
   async function start() {
-    server = createPersistentServer(dbPath);
+    server = makeServer ? await makeServer() : createPersistentServer(dbPath);
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     base = 'http://127.0.0.1:' + server.address().port;
   }
@@ -35,7 +57,7 @@ test('private Creative Intelligence journey keeps ownership, consent, history an
     return { ...data, cookie: response.headers.get('set-cookie')?.split(';')[0] };
   }
   async function account(name, role) {
-    const details = { email: name + '@example.test', role, password: 'fictional journey password' };
+    const details = { email: name + '-' + suffix + '@example.test', role, password: 'fictional journey password' };
     await api('register', 201, null, details);
     const { cookie } = await api('login', 200, null, details);
     return { ...details, cookie, id: (await api('me', 200, { cookie })).id };
@@ -78,7 +100,17 @@ test('private Creative Intelligence journey keeps ownership, consent, history an
   async function connect() {
     const invite = await api('invitations', 201, coach, { email: client.email });
     await api('invitations/accept', 403, unrelatedClient, { token: invite.invitationToken });
-    await api('invitations/accept', 200, client, { token: invite.invitationToken });
+    if (engine === 'postgres') {
+      const accept = () => fetch(base + '/api/invitations/accept', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Cookie: client.cookie },
+        body: JSON.stringify({ token: invite.invitationToken })
+      });
+      const results = await Promise.all([accept(), accept()]);
+      assert.deepEqual(results.map(result => result.status).sort(), [200, 403]);
+      await Promise.all(results.map(result => result.json()));
+    } else {
+      await api('invitations/accept', 200, client, { token: invite.invitationToken });
+    }
   }
   await connect();
   await api(path, 403, coach);

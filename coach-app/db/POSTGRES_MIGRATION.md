@@ -1,19 +1,11 @@
-# Free PostgreSQL pilot migration — preparation only
+# Coach Studio PostgreSQL development service
 
-A separate free Render PostgreSQL 18 database named `ci-world-coach-studio-pilot-db` was created on 2026-11-18 in Oregon. It is temporary and currently scheduled to expire on **2026-12-18**. Export pilot data or upgrade before then.
+Use the existing free Coach Studio database and its internal Render connection URL. Keep the existing staging access variables and leave external database access restricted. Use fictional accounts only. This rollout initializes the PostgreSQL schema and creates new fictional test accounts. It does not copy SQLite records.
 
-## Current state
-- The deployed Coach Studio starts `node persistent-server.mjs` and uses SQLite through `node:sqlite`. It does **not** yet connect to PostgreSQL.
-- `db/postgres-schema.sql` provides the equivalent relational tables and indexes, including private journeys and sharing permissions. It is not yet applied.
-- No SQLite data has been migrated; do not assume existing fictional accounts will appear in PostgreSQL.
-- Do not enter real client data during this pilot.
+Render root directory: coach-app
+Build command: npm ci --omit=dev
+Start command: npm run start:postgres
 
-## Safe cutover checklist
-1. Implement an asynchronous PostgreSQL data access layer (e.g. `pg`) and refactor **all** routes in `persistent-server.mjs` and `journey.mjs` to await queries and use database transactions. SQLite's synchronous `q/all/run` functions cannot be pointed at PostgreSQL.
-2. Apply `db/postgres-schema.sql` to the **pilot database only** and validate foreign keys, uniqueness, invitation replay protection, sharing/revocation, and journey access controls.
-3. Set a secret `DATABASE_URL` **in the Render Coach Studio service environment**, using the database's **internal** connection URL from the Render dashboard. Never commit or print credentials. Keep `STAGING_ACCESS_USER` and `STAGING_ACCESS_PASSWORD` unchanged.
-4. Run local and GitHub tests for registration, login, client consent, challenge, experiment, reflection, revocation and account isolation. Include a restart/redeploy persistence test.
-5. Only after all tests pass, switch the **development** service's start command to the PostgreSQL implementation; verify with fictional accounts. Do not modify `main` or the public website.
-6. Arrange an export/upgrade before the free database expiration.
+Startup applies the additive migration and checks that the expected tables exist before listening. A database or migration failure stops startup. Keep the connection URL in the service's DATABASE_URL secret.
 
-Do not set `DATABASE_URL` yet: the current server has no PostgreSQL support and doing so alone would not preserve records.
+To run the shared workflow suite against PostgreSQL as well as SQLite, set CI_COACH_TEST_POSTGRES_URL to an isolated local PostgreSQL database connection URL and run npm test. The test writes fictional records only. For a deployed smoke test, register fictional accounts, check consent and revocation, and check a saved journey after an app restart and a separate redeploy.

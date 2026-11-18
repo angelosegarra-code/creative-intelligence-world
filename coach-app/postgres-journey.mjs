@@ -153,7 +153,6 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
     if (path === '/api/journey/shares' && method === 'POST' && isClient) {
       const { coachId, goalId, shared } = body;
       if (typeof coachId !== 'string' || typeof shared !== 'boolean') return invalid(res);
-      if (!await active(coachId, actor.id)) return deny(res);
       const forProfile = body.scope === 'profile';
       if (!forProfile && body.scope !== 'goal') return invalid(res);
       if (!forProfile && (typeof goalId !== 'string' || !await q('SELECT 1 FROM journey_goals WHERE id=? AND client_id=?', goalId, actor.id))) return deny(res);
@@ -161,12 +160,16 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
       const table = forProfile ? 'journey_profile_shares' : 'journey_goal_shares';
       const subject = forProfile ? 'client_id' : 'goal_id';
       const id = forProfile ? actor.id : goalId;
-      await transaction(async () => {
+      const updated = await transaction(async () => {
+        const relationship = await q('SELECT 1 FROM relationships WHERE coach_id=? AND client_id=? AND revoked_at IS NULL FOR UPDATE',
+          coachId, actor.id);
+        if (!relationship) return false;
         if (shared) await run(`INSERT INTO ${table}(${subject},coach_id) VALUES (?,?) ON CONFLICT DO NOTHING`, id, coachId);
         else await run(`DELETE FROM ${table} WHERE ${subject}=? AND coach_id=?`, id, coachId);
         await audit(actor.id, shared ? 'journey_access_granted' : 'journey_access_revoked', forProfile ? 'profile' : 'goal', id);
+        return true;
       });
-      return reply(res, 200, { ok: true });
+      return updated ? reply(res, 200, { ok: true }) : deny(res);
     }
 
     const match = /^\/api\/journey\/goals\/([a-f0-9]{48})(?:\/(revision|explorations|challenges|experiments|reflections|learning))?$/.exec(path);

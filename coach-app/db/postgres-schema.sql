@@ -1,5 +1,5 @@
 -- PostgreSQL 18 schema for isolated CI World Coach Studio pilot.
--- DDL only: application currently uses SQLite; do not switch DATABASE_URL without an adapter.
+-- Additive schema for the PostgreSQL server.
 -- Run in a transaction on a new empty pilot database. No client data is transferred.
 BEGIN;
 CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,role TEXT NOT NULL CHECK(role IN ('coach','client')),password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,verified_at TIMESTAMPTZ,created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
