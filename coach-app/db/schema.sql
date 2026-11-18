@@ -10,3 +10,50 @@ CREATE INDEX IF NOT EXISTS idx_challenges_client ON challenges(client_id);
 CREATE INDEX IF NOT EXISTS idx_reflections_challenge ON reflections(challenge_id);
 CREATE INDEX IF NOT EXISTS idx_invitations_expiry ON invitations(expires_at);
 CREATE INDEX IF NOT EXISTS idx_sessions_expiry ON sessions(expires_at);
+
+-- Private journey tables extend the existing accounts, challenges, and reflections.
+CREATE TABLE IF NOT EXISTS journey_profiles (
+  id TEXT PRIMARY KEY, client_id TEXT NOT NULL REFERENCES users(id),
+  primary_mode TEXT NOT NULL, secondary_mode TEXT, summary TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS journey_profiles_owner ON journey_profiles(client_id);
+CREATE TABLE IF NOT EXISTS journey_goals (
+  id TEXT PRIMARY KEY, client_id TEXT NOT NULL REFERENCES users(id),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS journey_goals_owner ON journey_goals(client_id);
+CREATE TABLE IF NOT EXISTS journey_goal_revisions (
+  id TEXT PRIMARY KEY, goal_id TEXT NOT NULL REFERENCES journey_goals(id),
+  title TEXT NOT NULL, motivation TEXT NOT NULL, uncertainty TEXT NOT NULL,
+  status TEXT NOT NULL CHECK(status IN ('active','paused','complete')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS journey_goal_revisions_goal ON journey_goal_revisions(goal_id);
+CREATE TABLE IF NOT EXISTS journey_profile_shares (
+  client_id TEXT NOT NULL REFERENCES users(id), coach_id TEXT NOT NULL REFERENCES users(id),
+  PRIMARY KEY (client_id,coach_id)
+);
+CREATE TABLE IF NOT EXISTS journey_goal_shares (
+  goal_id TEXT NOT NULL REFERENCES journey_goals(id), coach_id TEXT NOT NULL REFERENCES users(id),
+  PRIMARY KEY (goal_id,coach_id)
+);
+CREATE TABLE IF NOT EXISTS journey_explorations (
+  id TEXT PRIMARY KEY, goal_id TEXT NOT NULL REFERENCES journey_goals(id),
+  perspective TEXT NOT NULL, note TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS journey_challenge_links (
+  challenge_id TEXT PRIMARY KEY REFERENCES challenges(id), goal_id TEXT NOT NULL REFERENCES journey_goals(id)
+);
+CREATE TABLE IF NOT EXISTS journey_experiments (
+  id TEXT PRIMARY KEY, challenge_id TEXT NOT NULL REFERENCES journey_challenge_links(challenge_id),
+  possibility TEXT NOT NULL, action TEXT NOT NULL, notice TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS journey_reflection_links (
+  reflection_id TEXT PRIMARY KEY REFERENCES reflections(id), experiment_id TEXT NOT NULL REFERENCES journey_experiments(id)
+);
+CREATE TABLE IF NOT EXISTS journey_learning (
+  id TEXT PRIMARY KEY, reflection_id TEXT NOT NULL REFERENCES journey_reflection_links(reflection_id),
+  changed TEXT NOT NULL, next_move TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {createJourney,perspectives} from './journey.mjs';
 import {randomBytes,scryptSync,timingSafeEqual,createHash,createHmac} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
@@ -83,12 +84,13 @@ async function input(req,form=false){
   return form?Object.fromEntries(new URLSearchParams(s)):JSON.parse(s||'{}');
 }
 const createDb=path=>{mkdirSync(dirname(path),{recursive:true});const db=new DatabaseSync(path);db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL;');db.exec(readFileSync(join(here,'db/schema.sql'),'utf8'));return db};
-export function createPersistentServer(dbPath=resolve(here,'../.local/coach.sqlite')){
+export function createPersistentServer(dbPath=process.env.CI_COACH_DB_PATH||resolve(here,'../.local/coach.sqlite')){
 const db=createDb(dbPath);
 const q=(sql,...args)=>db.prepare(sql).get(...args),all=(sql,...args)=>db.prepare(sql).all(...args),run=(sql,...args)=>db.prepare(sql).run(...args);
 const user=req=>{const sid=cookie(req);if(!sid)return null;return q('SELECT u.id,u.email,u.role FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=? AND s.expires_at>?',sha(sid),Date.now())};
 const active=(coach,client)=>!!q('SELECT 1 AS ok FROM relationships WHERE coach_id=? AND client_id=? AND revoked_at IS NULL',coach,client);
 const audit=(actor,event,kind,rid)=>run('INSERT INTO audit_events(id,actor_id,event_type,resource_type,resource_id) VALUES(?,?,?,?,?)',hex(),actor,event,kind,rid);
+const journey=createJourney({db,q,all,run,hex,active,audit,input,reply});
 const onRender=!!process.env.RENDER;
 const staging=onRender?stagingAccess(process.env.STAGING_ACCESS_USER,process.env.STAGING_ACCESS_PASSWORD):null;
 const server=http.createServer(async(req,res)=>{try{
@@ -127,7 +129,7 @@ if(m==='GET'&&p==='/'){
   res.writeHead(200,headers);
   return res.end(b);
 }
-if(m==='GET'&&p==='/app.js'){const js=await readFile(join(here,'app.js'));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
+if(m==='GET'&&['/app.js','/journey.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
 if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 // Browser writes must originate from this server. No wildcard CORS.
 const nativeRegistration=m==='POST'&&p==='/api/register'&&contentType===formContentType;
@@ -155,19 +157,29 @@ if(m==='POST'&&p==='/api/register'){
 if(m==='POST'&&p==='/api/login'){const b=await input(req),a=q('SELECT * FROM users WHERE email=?',String(b.email||'').trim().toLowerCase());if(!a||typeof b.password!=='string'||b.password.length>128)return reply(res,401,{error:'Invalid credentials'});const check=scryptSync(b.password,a.password_salt,64),stored=Buffer.from(a.password_hash,'hex');if(stored.length!==check.length||!timingSafeEqual(check,stored))return reply(res,401,{error:'Invalid credentials'});const token=hex();run('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)',sha(token),a.id,Date.now()+28800000);return reply(res,200,{role:a.role,email:a.email},{'Set-Cookie':'ci_coach_sid='+token+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 const actor=user(req);if(!actor)return reply(res,401,{error:'Sign in required'});
+if(p==='/api/journey'||p.startsWith('/api/journey/'))return await journey.route(req,res,p,m,actor);
 if(m==='GET'&&p==='/api/me')return reply(res,200,actor);
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'})}
 if(m==='POST'&&p==='/api/invitations'&&actor.role==='coach'){const b=await input(req);if(!emailOk(b.email))return reply(res,400,{error:'Valid email required'});const token=hex();run('INSERT INTO invitations(token_hash,coach_id,recipient_email,expires_at) VALUES(?,?,?,?)',sha(token),actor.id,b.email.trim().toLowerCase(),Date.now()+86400000);audit(actor.id,'invitation_created','invitation',sha(token));return reply(res,201,{invitationToken:token,expiresInHours:24})}
 if(m==='POST'&&p==='/api/invitations/accept'&&actor.role==='client'){const b=await input(req),key=sha(String(b.token||'')),inv=q('SELECT * FROM invitations WHERE token_hash=? AND accepted_at IS NULL',key);if(!inv||inv.expires_at<Date.now()||inv.recipient_email!==actor.email)return reply(res,403,{error:'Invalid invitation'});db.exec('BEGIN IMMEDIATE');try{run('INSERT INTO relationships(coach_id,client_id,revoked_at) VALUES(?,?,NULL) ON CONFLICT(coach_id,client_id) DO UPDATE SET consented_at=CURRENT_TIMESTAMP,revoked_at=NULL',inv.coach_id,actor.id);run('UPDATE invitations SET accepted_at=CURRENT_TIMESTAMP WHERE token_hash=? AND accepted_at IS NULL',key);audit(actor.id,'relationship_consented','relationship',inv.coach_id);db.exec('COMMIT')}catch(e){db.exec('ROLLBACK');throw e}return reply(res,200,{ok:true})}
 if(m==='GET'&&p==='/api/clients'&&actor.role==='coach')return reply(res,200,{clients:all('SELECT u.id,u.email FROM relationships r JOIN users u ON u.id=r.client_id WHERE r.coach_id=? AND r.revoked_at IS NULL',actor.id)});
 if(m==='POST'&&p==='/api/challenges'&&actor.role==='coach'){const b=await input(req);if(typeof b.text!=='string'||!b.text.trim()||b.text.length>2000||!active(actor.id,b.clientId))return reply(res,403,{error:'Not authorized or invalid challenge'});const id=hex();run('INSERT INTO challenges(id,coach_id,client_id,text) VALUES(?,?,?,?)',id,actor.id,b.clientId,b.text.trim());audit(actor.id,'challenge_assigned','challenge',id);return reply(res,201,{id,clientId:b.clientId,text:b.text.trim()})}
-if(m==='GET'&&p==='/api/perspectives'){return reply(res,200,{perspectives:[{id:'dreamer',name:'Dreamer',question:'What possibilities have not yet been imagined?'},{id:'observer',name:'Observer',question:'What do you notice, and what is assumption rather than evidence?'},{id:'alchemist',name:'Alchemist',question:'What could change if you challenged an assumption?'},{id:'visionary',name:'Visionary',question:'What future is worth moving toward?'}]})}
-if(m==='POST'&&p==='/api/challenge-drafts'&&actor.role==='coach'){const b=await input(req),lens=String(b.perspective||'').toLowerCase(),focus=String(b.focus||'').trim();const questions={dreamer:'What possibilities have not yet been imagined?',observer:'What do you notice, and what is assumption rather than evidence?',alchemist:'What could change if you challenged an assumption?',visionary:'What future is worth moving toward?'};if(!questions[lens]||!focus||focus.length>160)return reply(res,400,{error:'Valid focus and perspective required'});return reply(res,200,{perspective:lens,draft:'Explore '+focus+'. '+questions[lens]+' Choose one small, safe experiment. Record what you expected, what happened, and what surprised you.',note:'Draft only. Coach must review and explicitly assign; no AI service called.'})}
+if(m==='GET'&&p==='/api/perspectives')return reply(res,200,{perspectives});
+if(m==='POST'&&p==='/api/challenge-drafts'&&actor.role==='coach'){
+  const b=await input(req),lens=String(b.perspective||'').toLowerCase(),focus=String(b.focus||'').trim();
+  const perspective=perspectives.find(p=>p.id===lens);
+  if(!perspective||!focus||focus.length>160)return reply(res,400,{error:'Valid focus and perspective required'});
+  return reply(res,200,{perspective:lens,draft:'Explore '+focus+'. '+perspective.question+' Choose one small, safe experiment. Record what you expected, what happened, and what surprised you.',note:'Draft only. Coach must review and explicitly assign; no AI service called.'});
+}
 if(m==='GET'&&p==='/api/learning-loop')return reply(res,200,{stages:['Discover','Explore','Challenge','Experiment','Learn'],reflectionPrompts:['What did you expect?','What did you try?','What actually happened?','What surprised you?','What might you do differently next?']});
-if(m==='GET'&&p==='/api/challenges'){const rows=actor.role==='coach'?all('SELECT c.id,c.client_id AS clientId,c.text FROM challenges c JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.coach_id=? AND r.revoked_at IS NULL',actor.id):all('SELECT c.id,c.client_id AS clientId,c.text FROM challenges c JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.client_id=? AND r.revoked_at IS NULL',actor.id);return reply(res,200,{challenges:rows})}
-if(m==='POST'&&/^\/api\/challenges\/[a-f0-9]+\/reflections$/.test(p)&&actor.role==='client'){const cid=p.split('/')[3],c=q('SELECT * FROM challenges WHERE id=?',cid),b=await input(req);if(!c||c.client_id!==actor.id||!active(c.coach_id,actor.id))return reply(res,403,{error:'Not authorized'});if(typeof b.text!=='string'||!b.text.trim()||b.text.length>4000)return reply(res,400,{error:'Invalid reflection'});const id=hex();run('INSERT INTO reflections(id,challenge_id,client_id,text) VALUES(?,?,?,?)',id,cid,actor.id,b.text.trim());audit(actor.id,'reflection_submitted','reflection',id);return reply(res,201,{id,challengeId:cid,text:b.text.trim()})}
-if(m==='GET'&&p==='/api/reflections'){const rows=actor.role==='coach'?all('SELECT f.id,f.challenge_id AS challengeId,f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.coach_id=? AND r.revoked_at IS NULL',actor.id):all('SELECT f.id,f.challenge_id AS challengeId,f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE f.client_id=? AND r.revoked_at IS NULL',actor.id);return reply(res,200,{reflections:rows})}
-if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){const b=await input(req);run('UPDATE relationships SET revoked_at=CURRENT_TIMESTAMP WHERE coach_id=? AND client_id=? AND revoked_at IS NULL',String(b.coachId),actor.id);audit(actor.id,'relationship_revoked','relationship',String(b.coachId));return reply(res,200,{ok:true})}
+if(m==='GET'&&p==='/api/challenges'){const rows=actor.role==='coach'?all('SELECT c.id,c.client_id AS clientId,c.text FROM challenges c JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.coach_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id):all('SELECT c.id,c.client_id AS clientId,c.text FROM challenges c JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.client_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id);return reply(res,200,{challenges:rows})}
+if(m==='POST'&&/^\/api\/challenges\/[a-f0-9]+\/reflections$/.test(p)&&actor.role==='client'){const cid=p.split('/')[3],c=q('SELECT * FROM challenges WHERE id=?',cid),b=await input(req);if(!c||c.client_id!==actor.id||!active(c.coach_id,actor.id)||q('SELECT 1 FROM journey_challenge_links WHERE challenge_id=?',cid))return reply(res,403,{error:'Not authorized'});if(typeof b.text!=='string'||!b.text.trim()||b.text.length>4000)return reply(res,400,{error:'Invalid reflection'});const id=hex();run('INSERT INTO reflections(id,challenge_id,client_id,text) VALUES(?,?,?,?)',id,cid,actor.id,b.text.trim());audit(actor.id,'reflection_submitted','reflection',id);return reply(res,201,{id,challengeId:cid,text:b.text.trim()})}
+if(m==='GET'&&p==='/api/reflections'){const rows=actor.role==='coach'?all('SELECT f.id,f.challenge_id AS challengeId,f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.coach_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id):all('SELECT f.id,f.challenge_id AS challengeId,f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE f.client_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id);return reply(res,200,{reflections:rows})}
+if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){
+  const b=await input(req);
+  journey.revoke(String(b.coachId),actor.id);
+  return reply(res,200,{ok:true});
+}
 return reply(res,403,{error:'Forbidden'});
 }catch(e){return reply(res,400,{error:'Invalid request'})}});
 server.on('close',()=>db.close());return server}

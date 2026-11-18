@@ -1,7 +1,7 @@
 const $=id=>document.getElementById(id);
 let sessionView=0;
 
-async function call(path,method='GET',data){
+async function call(path,method='GET',data,showResult=true){
   const view=sessionView;
   try{
     const response=await fetch('/api/'+path,{
@@ -12,15 +12,16 @@ async function call(path,method='GET',data){
     if(view!==sessionView)return;
     let result;
     try{result=JSON.parse(raw)}catch{result={error:'Server returned a non-JSON response. Check staging access and refresh the page.'}}
-    $('result').textContent=JSON.stringify({status:response.status,...result},null,2);
+    if(showResult)$('result').textContent=JSON.stringify({status:response.status,...result},null,2);
     return {...result,_status:response.status};
   }catch(error){
-    if(view===sessionView)$('result').textContent='Request failed: '+error.message;
+    if(showResult&&view===sessionView)$('result').textContent='Request failed: '+error.message;
   }
 }
 
 function clearSessionView(){
   sessionView++;
+  document.dispatchEvent(new Event('coach-view-cleared'));
   $('registrationForm').reset();
   for(const id of ['email','password','clientEmail','clientId','focus','challenge','token','challengeId','reflection']){
     $(id).value='';
@@ -84,7 +85,7 @@ $('logout').onclick=()=>changeSession(async()=>{
   $('identity').textContent='Not signed in';
   $('result').textContent='Signed out.';
 });
-$('invite').onclick=()=>call('invitations','POST',{email:$('clientEmail').value});$('accept').onclick=()=>call('invitations/accept','POST',{token:$('token').value});$('clients').onclick=()=>call('clients');$('assign').onclick=()=>call('challenges','POST',{clientId:$('clientId').value,text:$('challenge').value});$('listChallenges').onclick=()=>call('challenges');$('reflect').onclick=()=>call('challenges/'+encodeURIComponent($('challengeId').value)+'/reflections','POST',{text:$('reflection').value});$('listReflections').onclick=()=>call('reflections');
+$('clients').onclick=()=>call('clients');$('assign').onclick=()=>call('challenges','POST',{clientId:$('clientId').value,text:$('challenge').value});$('listChallenges').onclick=()=>call('challenges');$('reflect').onclick=()=>call('challenges/'+encodeURIComponent($('challengeId').value)+'/reflections','POST',{text:$('reflection').value});$('listReflections').onclick=()=>call('reflections');
 $('draftChallenge').onclick=async()=>{const r=await call('challenge-drafts','POST',{focus:$('focus').value,perspective:$('perspective').value});if(r?.draft)$('challenge').value=r.draft};$('learningLoop').onclick=()=>call('learning-loop');
 
 async function showIdentity(){
@@ -92,5 +93,6 @@ async function showIdentity(){
   const result=await call('me');
   if(view!==sessionView)return;
   $('identity').textContent=result?.email?result.role+' · '+result.email:'Not signed in';
+  if(result?.email)document.dispatchEvent(new CustomEvent('coach-identity',{detail:result}));
 }
-showIdentity();
+document.addEventListener('DOMContentLoaded',showIdentity,{once:true});

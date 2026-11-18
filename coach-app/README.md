@@ -1,15 +1,15 @@
-# CI World Coach App — Local API Pilot
+# CI World Coach Studio
 
-Run with Node.js 20+:
+Run the private development workspace with Node.js 22.13 or later.
 
 ```sh
 cd coach-app
 npm test
-npm start
+npm run start:persistent
 ```
 
-Open http://127.0.0.1:3100 on the same computer. Create fictional coach and client accounts. The coach generates a token, the client signs in and accepts it, the coach assigns a challenge, and the client submits a reflection for review. Revoking the relationship blocks further coach access to reflections.
+Open http://127.0.0.1:3100. Use fictional accounts. A client can bring in a CI Profile summary and work through goals, perspectives, challenges, experiments, reflections and learning independently. The coach creates an invitation token, the client accepts it, and the client chooses which profile or goal to share. The original pilot tools remain available for existing challenge and reflection records.
 
-**Development only. Never expose this server to the public internet or enter real client data.** Data lives only in process memory and disappears on restart. There is no email verification, MFA, durable storage, password recovery, durable audit trail, or production deployment. CSRF/origin protection, stronger rate limiting, persistent storage and backups, secure email invitations, consent records, data deletion/export, and a security review are required before any real pilot.
+The persistent server uses SQLite. It reads `CI_COACH_DB_PATH` when set and defaults to `../.local/coach.sqlite`. A restart on the same disk preserves records. A deployment that replaces the filesystem can discard them. The Render development service requires staging sign-in and a separate app account.
 
-The existing CI World Apps Script / Sheets workflows are not yet integrated; client information must not be sent directly to those endpoints.
+See [Creative Intelligence integration](CREATIVE_INTELLIGENCE_INTEGRATION.md) for the production flow, consent boundaries and remaining work before real-client use. Private workspace content stays within Coach Studio. The existing public quiz opens separately and receives no workspace parameters.
