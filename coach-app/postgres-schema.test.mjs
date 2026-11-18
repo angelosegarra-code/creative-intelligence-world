@@ -27,7 +27,7 @@ test('PostgreSQL pilot schema retains consent, uniqueness and ownership constrai
 });
 
 test('PostgreSQL schema uses native timestamps and avoids SQLite-only directives',()=>{
-  assert.doesNotMatch(postgres,/\bPRAGMA\b/);
+  assert.doesNotMatch(postgres.replace(/^--.*$/gm,''),/\bPRAGMA\b/);
   assert.doesNotMatch(postgres,/\bAUTOINCREMENT\b/);
   assert.match(postgres,/TIMESTAMPTZ/);
   assert.match(postgres,/BEGIN;/);
