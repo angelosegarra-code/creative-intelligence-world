@@ -30,6 +30,7 @@ let candidate='';
 if(authorization.startsWith('Basic ')){try{candidate=Buffer.from(authorization.slice(6),'base64').toString('utf8')}catch{}}
 const expected=Buffer.from(expectedUser+':'+expectedPassword),actual=Buffer.from(candidate);
 if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){
+if(req.url?.startsWith('/api/'))return reply(res,401,{error:'Staging access denied. Reload the page and sign in with staging credentials.'});
 res.writeHead(401,{'WWW-Authenticate':'Basic realm="CI World Coach Studio Staging"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end('Private staging access required');
 }
 }
@@ -42,6 +43,7 @@ if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 if(m!=='GET'){const origin=req.headers.origin,host=req.headers.host;if(origin&&new URL(origin).host!==host)return reply(res,403,{error:'Origin rejected'});if(req.headers['content-type']!=='application/json')return reply(res,415,{error:'JSON required'})}
 if(m==='POST'&&p==='/api/register'){const b=await input(req);if(!emailOk(b.email)||!['coach','client'].includes(b.role)||typeof b.password!=='string'||b.password.length<14||b.password.length>128)return reply(res,400,{error:'Invalid registration'});const salt=hex(),pass=scryptSync(b.password,salt,64).toString('hex'),id=hex();try{run('INSERT INTO users(id,email,role,password_salt,password_hash) VALUES(?,?,?,?,?)',id,b.email.trim().toLowerCase(),b.role,salt,pass)}catch{return reply(res,409,{error:'Account exists'})}return reply(res,201,{ok:true})}
 if(m==='POST'&&p==='/api/login'){const b=await input(req),a=q('SELECT * FROM users WHERE email=?',String(b.email||'').trim().toLowerCase());if(!a||typeof b.password!=='string'||b.password.length>128)return reply(res,401,{error:'Invalid credentials'});const check=scryptSync(b.password,a.password_salt,64),stored=Buffer.from(a.password_hash,'hex');if(stored.length!==check.length||!timingSafeEqual(check,stored))return reply(res,401,{error:'Invalid credentials'});const token=hex();run('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)',sha(token),a.id,Date.now()+28800000);return reply(res,200,{role:a.role,email:a.email},{'Set-Cookie':'ci_coach_sid='+token+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
+if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 const actor=user(req);if(!actor)return reply(res,401,{error:'Sign in required'});
 if(m==='GET'&&p==='/api/me')return reply(res,200,actor);
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'})}
