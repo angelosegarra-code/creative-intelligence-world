@@ -27,13 +27,13 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
   const latestProfile = async (clientId) => await q(
     'SELECT id,primary_mode AS "primary",secondary_mode AS secondary,summary,created_at AS createdAt FROM journey_profiles WHERE client_id=? ORDER BY created_at DESC, id DESC LIMIT 1', clientId
   ) ?? null;
-  const goalRows = async ((where, ...params)) => await all(`
+  const goalRows = async (where, ...params) => await all(`
     SELECT g.id,g.client_id AS clientId,u.email AS clientEmail,v.title,v.motivation,v.uncertainty,v.status,v.created_at AS updatedAt
     FROM journey_goals g JOIN users u ON u.id=g.client_id
     JOIN journey_goal_revisions v ON v.id=(SELECT id FROM journey_goal_revisions WHERE goal_id=g.id ORDER BY created_at DESC, id DESC LIMIT 1)
     WHERE ${where} ORDER BY v.created_at DESC, v.id DESC`, ...params);
 
-  async function await goalDetails(goal) {
+  async function goalDetails(goal) {
     return {
       goal,
       revisions: await all('SELECT title,motivation,uncertainty,status,created_at AS createdAt FROM journey_goal_revisions WHERE goal_id=? ORDER BY created_at, id', goal.id),
@@ -55,7 +55,7 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
     };
   }
 
-  async function await appendRevision(goalId, body) {
+  async function appendRevision(goalId, body) {
     const title = field(body, 'title', 160);
     const motivation = field(body, 'motivation', 1000);
     const uncertainty = field(body, 'uncertainty', 1000, true);
@@ -66,7 +66,7 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
     return true;
   }
 
-  async function await clearShares(coachId, clientId) {
+  async function clearShares(coachId, clientId) {
     await run('DELETE FROM journey_profile_shares WHERE coach_id=? AND client_id=?', coachId, clientId);
     await run('DELETE FROM journey_goal_shares WHERE coach_id=? AND goal_id IN (SELECT id FROM journey_goals WHERE client_id=?)',
       coachId, clientId);
