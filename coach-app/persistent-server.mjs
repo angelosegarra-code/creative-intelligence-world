@@ -1,5 +1,5 @@
 import http from 'node:http';
-import {randomBytes,scryptSync,timingSafeEqual,createHash} from 'node:crypto';
+import {randomBytes,scryptSync,timingSafeEqual,createHash,createHmac} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
@@ -11,6 +11,37 @@ const hex=()=>randomBytes(24).toString('hex'),sha=s=>createHash('sha256').update
 const emailOk=s=>typeof s==='string'&&s.length<255&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 const reply=(res,status,obj,extra={})=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...extra});res.end(JSON.stringify(obj))};
 const cookie=req=>(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith('ci_coach_sid='))?.slice(13);
+const stagingCookieName='__Host-ci_coach_staging';
+const stagingSessionSeconds=8*60*60;
+const sameBytes=(actual,expected)=>actual.length===expected.length&&timingSafeEqual(actual,expected);
+
+function stagingAccess(username,password){
+  if(!username||!password||password.length<20)return null;
+  const credentials=Buffer.from(username+':'+password);
+  const sign=payload=>createHmac('sha256',credentials)
+    .update('ci-coach-staging-session:'+payload).digest('hex');
+  return {
+    hasCredentials(req){
+      const match=/^Basic ([A-Za-z0-9+/]+={0,2})$/i.exec(req.headers.authorization||'');
+      return !!match&&sameBytes(Buffer.from(match[1],'base64'),credentials);
+    },
+    hasSession(req){
+      const value=(req.headers.cookie||'').split(';').map(part=>part.trim())
+        .find(part=>part.startsWith(stagingCookieName+'='))?.slice(stagingCookieName.length+1);
+      const match=/^(\d{1,12}\.[a-f0-9]{48})\.([a-f0-9]{64})$/.exec(value||'');
+      if(!match)return false;
+      const [expires]=match[1].split('.');
+      return Number(expires)>Math.floor(Date.now()/1000)
+        &&sameBytes(Buffer.from(match[2],'hex'),Buffer.from(sign(match[1]),'hex'));
+    },
+    sessionCookie(){
+      const expires=Math.floor(Date.now()/1000)+stagingSessionSeconds;
+      const payload=expires+'.'+hex();
+      return stagingCookieName+'='+payload+'.'+sign(payload)
+        +'; Path=/; Max-Age='+stagingSessionSeconds+'; Secure; HttpOnly; SameSite=Strict';
+    }
+  };
+}
 async function input(req){let s='';for await(const x of req){s+=x;if(s.length>12000)throw Error('too large')}return JSON.parse(s||'{}')}
 const createDb=path=>{mkdirSync(dirname(path),{recursive:true});const db=new DatabaseSync(path);db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL;');db.exec(readFileSync(join(here,'db/schema.sql'),'utf8'));return db};
 export function createPersistentServer(dbPath=resolve(here,'../.local/coach.sqlite')){
@@ -19,24 +50,32 @@ const q=(sql,...args)=>db.prepare(sql).get(...args),all=(sql,...args)=>db.prepar
 const user=req=>{const sid=cookie(req);if(!sid)return null;return q('SELECT u.id,u.email,u.role FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=? AND s.expires_at>?',sha(sid),Date.now())};
 const active=(coach,client)=>!!q('SELECT 1 AS ok FROM relationships WHERE coach_id=? AND client_id=? AND revoked_at IS NULL',coach,client);
 const audit=(actor,event,kind,rid)=>run('INSERT INTO audit_events(id,actor_id,event_type,resource_type,resource_id) VALUES(?,?,?,?,?)',hex(),actor,event,kind,rid);
+const onRender=!!process.env.RENDER;
+const staging=onRender?stagingAccess(process.env.STAGING_ACCESS_USER,process.env.STAGING_ACCESS_PASSWORD):null;
 const server=http.createServer(async(req,res)=>{try{
 // Private staging gate. Fail closed on Render unless credentials are configured.
-// Basic auth is only acceptable over HTTPS; Render terminates HTTPS for public endpoints.
-if(process.env.RENDER){
-const expectedUser=process.env.STAGING_ACCESS_USER,expectedPassword=process.env.STAGING_ACCESS_PASSWORD;
-if(!expectedUser||!expectedPassword||expectedPassword.length<20)return reply(res,503,{error:'Staging access not configured'});
-const authorization=req.headers.authorization||'';
-let candidate='';
-if(authorization.startsWith('Basic ')){try{candidate=Buffer.from(authorization.slice(6),'base64').toString('utf8')}catch{}}
-const expected=Buffer.from(expectedUser+':'+expectedPassword),actual=Buffer.from(candidate);
-if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){
-if(req.url?.startsWith('/api/'))return reply(res,401,{error:'Staging access denied. Reload the page and sign in with staging credentials.'});
-res.writeHead(401,{'WWW-Authenticate':'Basic realm="CI World Coach Studio Staging"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end('Private staging access required');
-}
+// Render terminates HTTPS. A successful page sign-in grants a separate staging cookie.
+const u=new URL(req.url,'http://localhost'),p=u.pathname,m=req.method;
+let issueStagingCookie=false;
+if(onRender){
+  if(!staging)return reply(res,503,{error:'Staging access not configured'});
+  if(!staging.hasSession(req)){
+    if(!staging.hasCredentials(req)){
+      if(p.startsWith('/api/'))return reply(res,401,{error:'Staging access denied. Reload the page and sign in with staging credentials.'});
+      res.writeHead(401,{'WWW-Authenticate':'Basic realm="CI World Coach Studio Staging"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
+      return res.end('Private staging access required');
+    }
+    issueStagingCookie=m==='GET'&&p==='/';
+  }
 }
 
-const u=new URL(req.url,'http://localhost'),p=u.pathname,m=req.method;
-if(m==='GET'&&p==='/'){const b=await readFile(join(here,'index.html'));res.writeHead(200,{'Content-Type':'text/html','Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'self'",'Cache-Control':'no-store'});return res.end(b)}
+if(m==='GET'&&p==='/'){
+  const b=await readFile(join(here,'index.html'));
+  const headers={'Content-Type':'text/html','Content-Security-Policy':"default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'self'",'Cache-Control':'no-store'};
+  if(issueStagingCookie)headers['Set-Cookie']=staging.sessionCookie();
+  res.writeHead(200,headers);
+  return res.end(b);
+}
 if(m==='GET'&&p==='/app.js'){res.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'no-store'});return res.end(await readFile(join(here,'app.js')))}
 if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 // Browser writes must originate from this server. No wildcard CORS.

@@ -22,3 +22,98 @@ assert.equal((await api('relationships/revoke','POST',{coachId},client)).status,
 assert.equal((await api('reflections','GET',null,coach)).data.reflections.length,0);
 assert.equal((await api('challenges/'+challenge.data.id+'/reflections','POST',{text:'No longer shared'},client)).status,403);
 }finally{if(server.listening)await stop();rmSync(dir,{recursive:true,force:true})}});
+
+test('Render staging authenticates browser API calls without repeating Basic credentials',async t=>{
+  const dir=mkdtempSync(join(tmpdir(),'ci-coach-staging-'));
+  const previousEnv={
+    RENDER:process.env.RENDER,
+    STAGING_ACCESS_USER:process.env.STAGING_ACCESS_USER,
+    STAGING_ACCESS_PASSWORD:process.env.STAGING_ACCESS_PASSWORD
+  };
+  let server;
+  t.after(async()=>{
+    if(server?.listening)await new Promise(resolve=>server.close(resolve));
+    for(const [key,value] of Object.entries(previousEnv)){
+      if(value===undefined)delete process.env[key];
+      else process.env[key]=value;
+    }
+    rmSync(dir,{recursive:true,force:true});
+  });
+  const start=async()=>{
+    if(server?.listening)await new Promise(resolve=>server.close(resolve));
+    server=createPersistentServer(join(dir,'test.sqlite'));
+    await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+    return 'http://127.0.0.1:'+server.address().port;
+  };
+
+  process.env.RENDER='true';
+  delete process.env.STAGING_ACCESS_USER;
+  delete process.env.STAGING_ACCESS_PASSWORD;
+  let base=await start();
+  assert.equal((await fetch(base+'/')).status,503);
+  assert.equal((await fetch(base+'/api/me')).status,503);
+
+  process.env.STAGING_ACCESS_USER='fictional-staging-user';
+  process.env.STAGING_ACCESS_PASSWORD='fictional-staging-password';
+  base=await start();
+  const authorization='Basic '+Buffer.from(
+    process.env.STAGING_ACCESS_USER+':'+process.env.STAGING_ACCESS_PASSWORD
+  ).toString('base64');
+  const demoAccount={email:'staging-coach@example.test',role:'coach',password:'fictional-account-password'};
+  const post=(path,data,cookie='')=>fetch(base+'/api/'+path,{
+    method:'POST',headers:{'Content-Type':'application/json',cookie},body:JSON.stringify(data)
+  });
+  const lockedPage=await fetch(base+'/');
+  assert.equal(lockedPage.status,401);
+  assert.match(lockedPage.headers.get('www-authenticate'),/^Basic /);
+  assert.equal(lockedPage.headers.get('set-cookie'),null);
+  assert.equal((await fetch(base+'/app.js')).status,401);
+  const lockedApi=await post('register',demoAccount);
+  assert.equal(lockedApi.status,401);
+  assert.equal(lockedApi.headers.get('www-authenticate'),null);
+  assert.match((await lockedApi.json()).error,/Staging access denied/);
+  const invalid=await fetch(base+'/',{headers:{authorization:'Basic '+Buffer.from(
+    process.env.STAGING_ACCESS_USER+':fictional-staging-passwore'
+  ).toString('base64')}});
+  assert.equal(invalid.status,401);
+
+  const unlockedPage=await fetch(base+'/',{headers:{authorization}});
+  assert.equal(unlockedPage.status,200);
+  const setCookie=unlockedPage.headers.get('set-cookie');
+  assert.match(setCookie,/^__Host-ci_coach_staging=/);
+  for(const flag of ['Path=/','Max-Age=28800','Secure','HttpOnly','SameSite=Strict']){
+    assert.ok(setCookie.split('; ').includes(flag));
+  }
+  assert.doesNotMatch(setCookie,/Domain=/i);
+  const stagingCookie=setCookie.split(';')[0];
+  const staleSignature=stagingCookie.slice(0,-1)+(stagingCookie.endsWith('0')?'1':'0');
+  assert.equal((await post('register',demoAccount,staleSignature)).status,401);
+  assert.equal((await fetch(base+'/app.js',{headers:{cookie:stagingCookie}})).status,200);
+  const signedOut=await fetch(base+'/api/me',{headers:{cookie:stagingCookie}});
+  assert.equal(signedOut.status,401);
+  assert.equal((await signedOut.json()).error,'Sign in required');
+  assert.equal((await post('register',demoAccount,stagingCookie)).status,201);
+  const login=await post('login',demoAccount,stagingCookie);
+  assert.equal(login.status,200);
+  const accountCookie=login.headers.get('set-cookie').split(';')[0];
+  assert.match(await (await fetch(base+'/api/me',{headers:{cookie:accountCookie}})).text(),/Staging access denied/);
+  const combinedCookies=stagingCookie+'; '+accountCookie;
+  const me=await fetch(base+'/api/me',{headers:{cookie:combinedCookies}});
+  assert.equal(me.status,200);
+  assert.equal((await me.json()).email,demoAccount.email);
+  const logout=await post('logout',{},combinedCookies);
+  assert.equal(logout.status,200);
+  assert.match(logout.headers.get('set-cookie'),/^ci_coach_sid=;/);
+  assert.equal((await fetch(base+'/app.js',{headers:{cookie:stagingCookie}})).status,200);
+
+  const future=Date.now()+9*60*60*1000;
+  const clock=t.mock.method(Date,'now',()=>future);
+  try{
+    assert.equal((await fetch(base+'/app.js',{headers:{cookie:stagingCookie}})).status,401);
+  }finally{clock.mock.restore()}
+
+  process.env.STAGING_ACCESS_PASSWORD='rotated-fictional-staging-password';
+  base=await start();
+  assert.equal((await fetch(base+'/app.js',{headers:{cookie:stagingCookie}})).status,401);
+  assert.equal((await fetch(base+'/',{headers:{authorization}})).status,401);
+});
