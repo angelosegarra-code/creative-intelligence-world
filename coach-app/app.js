@@ -1,8 +1,49 @@
-const $=id=>document.getElementById(id);async function call(path,method='GET',data){try{const r=await fetch('/api/'+path,{method,credentials:'same-origin',headers:{'Content-Type':'application/json'},body:data?JSON.stringify(data):undefined});const raw=await r.text();let b;try{b=JSON.parse(raw)}catch{b={error:'Server returned a non-JSON response. Check staging access and refresh the page.'}}$('result').textContent=JSON.stringify({status:r.status,...b},null,2);return {...b,_status:r.status}}catch(e){$('result').textContent='Request failed: '+e.message}}
+const $=id=>document.getElementById(id);
+let sessionView=0;
+
+async function call(path,method='GET',data){
+  const view=sessionView;
+  try{
+    const response=await fetch('/api/'+path,{
+      method,credentials:'same-origin',headers:{'Content-Type':'application/json'},
+      body:data?JSON.stringify(data):undefined
+    });
+    const raw=await response.text();
+    if(view!==sessionView)return;
+    let result;
+    try{result=JSON.parse(raw)}catch{result={error:'Server returned a non-JSON response. Check staging access and refresh the page.'}}
+    $('result').textContent=JSON.stringify({status:response.status,...result},null,2);
+    return {...result,_status:response.status};
+  }catch(error){
+    if(view===sessionView)$('result').textContent='Request failed: '+error.message;
+  }
+}
+
+function clearSessionView(){
+  sessionView++;
+  $('registrationForm').reset();
+  for(const id of ['email','password','clientEmail','clientId','focus','challenge','token','challengeId','reflection']){
+    $(id).value='';
+  }
+  $('perspective').value='observer';
+  $('registrationStatus').textContent='';
+  $('restoreStagingAccess').hidden=true;
+  $('result').textContent='';
+}
+
+async function changeSession(action){
+  $('login').disabled=true;
+  $('logout').disabled=true;
+  try{await action()}finally{
+    $('login').disabled=false;
+    $('logout').disabled=false;
+  }
+}
+
 $('registrationForm').addEventListener('submit',async event=>{
   event.preventDefault();
   const button=$('register'),status=$('registrationStatus'),restoreAccess=$('restoreStagingAccess');
-  const email=$('regEmail').value.trim();
+  const email=$('regEmail').value.trim(),view=sessionView;
   button.disabled=true;
   restoreAccess.hidden=true;
   status.textContent='Creating demo account…';
@@ -10,6 +51,7 @@ $('registrationForm').addEventListener('submit',async event=>{
     const result=await call('register','POST',{
       email,password:$('regPass').value,role:$('regRole').value
     });
+    if(view!==sessionView)return;
     if(result?.ok&&result._status===201){
       $('email').value=email;
       $('regPass').value='';
@@ -22,7 +64,33 @@ $('registrationForm').addEventListener('submit',async event=>{
     button.disabled=false;
   }
 });
-$('login').onclick=async()=>{await call('login','POST',{email:$('email').value,password:$('password').value});const m=await call('me');$('identity').textContent=m.email?m.role+' · '+m.email:'Not signed in'};$('logout').onclick=async()=>{const r=await call('logout','POST',{});if(r?.ok){$('identity').textContent='Not signed in';$('email').value='';$('password').value=''}else{$('identity').textContent='Session could not be cleared. '+(r?.error||'Check staging access.')}};$('invite').onclick=()=>call('invitations','POST',{email:$('clientEmail').value});$('accept').onclick=()=>call('invitations/accept','POST',{token:$('token').value});$('clients').onclick=()=>call('clients');$('assign').onclick=()=>call('challenges','POST',{clientId:$('clientId').value,text:$('challenge').value});$('listChallenges').onclick=()=>call('challenges');$('reflect').onclick=()=>call('challenges/'+encodeURIComponent($('challengeId').value)+'/reflections','POST',{text:$('reflection').value});$('listReflections').onclick=()=>call('reflections');
+$('login').onclick=()=>changeSession(async()=>{
+  const result=await call('login','POST',{email:$('email').value,password:$('password').value});
+  if(result?._status!==200){
+    $('password').value='';
+    $('identity').textContent=result?.error||'Could not sign in. Try again.';
+    return;
+  }
+  clearSessionView();
+  await showIdentity();
+});
+$('logout').onclick=()=>changeSession(async()=>{
+  const result=await call('logout','POST',{});
+  if(!result?.ok){
+    $('identity').textContent='Session could not be cleared. '+(result?.error||'Check staging access.');
+    return;
+  }
+  clearSessionView();
+  $('identity').textContent='Not signed in';
+  $('result').textContent='Signed out.';
+});
+$('invite').onclick=()=>call('invitations','POST',{email:$('clientEmail').value});$('accept').onclick=()=>call('invitations/accept','POST',{token:$('token').value});$('clients').onclick=()=>call('clients');$('assign').onclick=()=>call('challenges','POST',{clientId:$('clientId').value,text:$('challenge').value});$('listChallenges').onclick=()=>call('challenges');$('reflect').onclick=()=>call('challenges/'+encodeURIComponent($('challengeId').value)+'/reflections','POST',{text:$('reflection').value});$('listReflections').onclick=()=>call('reflections');
 $('draftChallenge').onclick=async()=>{const r=await call('challenge-drafts','POST',{focus:$('focus').value,perspective:$('perspective').value});if(r?.draft)$('challenge').value=r.draft};$('learningLoop').onclick=()=>call('learning-loop');
 
-(async()=>{const m=await call('me');$('identity').textContent=m?.email?m.role+' · '+m.email:'Not signed in'})();
+async function showIdentity(){
+  const view=sessionView;
+  const result=await call('me');
+  if(view!==sessionView)return;
+  $('identity').textContent=result?.email?result.role+' · '+result.email:'Not signed in';
+}
+showIdentity();
