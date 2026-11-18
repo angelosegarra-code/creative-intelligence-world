@@ -178,6 +178,6 @@ if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){
   return reply(res,200,{ok:true});
 }
 return reply(res,403,{error:'Forbidden'});
-}catch(e){return reply(res,400,{error:'Invalid request'})}});
+}catch(e){console.error('Coach Studio PostgreSQL request failed:',e?.code||e?.name||'unknown');return reply(res,500,{error:'Request could not be completed'})}});
 server.on('close',()=>{void db.close()});return server}
 if(process.argv[1]===fileURLToPath(import.meta.url)){createPostgresServer().listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',()=>console.log('PostgreSQL coach pilot listening'))}
