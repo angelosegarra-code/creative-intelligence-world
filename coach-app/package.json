@@ -7,9 +7,13 @@
     "start": "node server.mjs",
     "test": "node --test",
     "start:persistent": "node persistent-server.mjs",
-    "test:persistent": "node --test persistent-server.test.mjs"
+    "test:persistent": "node --test persistent-server.test.mjs",
+    "db:migrate": "node db/migrate-postgres.mjs"
   },
   "engines": {
     "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "pg": "^8.13.3"
   }
 }
