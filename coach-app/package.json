@@ -8,7 +8,9 @@
     "test": "node --test",
     "start:persistent": "node persistent-server.mjs",
     "test:persistent": "node --test persistent-server.test.mjs",
-    "db:migrate": "node db/migrate-postgres.mjs"
+    "db:migrate": "node db/migrate-postgres.mjs",
+    "start:postgres": "node postgres-server.mjs",
+    "test:postgres": "node --test postgres-schema.test.mjs postgres-adapter.test.mjs"
   },
   "engines": {
     "node": ">=22.13.0"
