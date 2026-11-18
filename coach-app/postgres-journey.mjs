@@ -25,10 +25,10 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
   const transaction = async work => db.transaction(work);
 
   const latestProfile = async (clientId) => await q(
-    'SELECT id,primary_mode AS "primary",secondary_mode AS secondary,summary,created_at AS createdAt FROM journey_profiles WHERE client_id=? ORDER BY created_at DESC, id DESC LIMIT 1', clientId
+    'SELECT id,primary_mode AS "primary",secondary_mode AS secondary,summary,created_at AS "createdAt" FROM journey_profiles WHERE client_id=? ORDER BY created_at DESC, id DESC LIMIT 1', clientId
   ) ?? null;
   const goalRows = async (where, ...params) => await all(`
-    SELECT g.id,g.client_id AS clientId,u.email AS clientEmail,v.title,v.motivation,v.uncertainty,v.status,v.created_at AS updatedAt
+    SELECT g.id,g.client_id AS "clientId",u.email AS "clientEmail",v.title,v.motivation,v.uncertainty,v.status,v.created_at AS "updatedAt"
     FROM journey_goals g JOIN users u ON u.id=g.client_id
     JOIN journey_goal_revisions v ON v.id=(SELECT id FROM journey_goal_revisions WHERE goal_id=g.id ORDER BY created_at DESC, id DESC LIMIT 1)
     WHERE ${where} ORDER BY v.created_at DESC, v.id DESC`, ...params);
@@ -36,20 +36,20 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
   async function goalDetails(goal) {
     return {
       goal,
-      revisions: await all('SELECT title,motivation,uncertainty,status,created_at AS createdAt FROM journey_goal_revisions WHERE goal_id=? ORDER BY created_at, id', goal.id),
-      explorations: await all('SELECT id,perspective,note,created_at AS createdAt FROM journey_explorations WHERE goal_id=? ORDER BY created_at, id', goal.id),
+      revisions: await all('SELECT title,motivation,uncertainty,status,created_at AS "createdAt" FROM journey_goal_revisions WHERE goal_id=? ORDER BY created_at, id', goal.id),
+      explorations: await all('SELECT id,perspective,note,created_at AS "createdAt" FROM journey_explorations WHERE goal_id=? ORDER BY created_at, id', goal.id),
       challenges: await all(`
-        SELECT c.id,c.text,c.coach_id<>c.client_id AS fromCoach,c.created_at AS createdAt
+        SELECT c.id,c.text,c.coach_id<>c.client_id AS "fromCoach",c.created_at AS "createdAt"
         FROM challenges c JOIN journey_challenge_links j ON j.challenge_id=c.id WHERE j.goal_id=? ORDER BY c.created_at, c.id`, goal.id),
       experiments: await all(`
-        SELECT e.id,e.challenge_id AS challengeId,e.possibility,e.action,e.notice,e.created_at AS createdAt
+        SELECT e.id,e.challenge_id AS "challengeId",e.possibility,e.action,e.notice,e.created_at AS "createdAt"
         FROM journey_experiments e JOIN journey_challenge_links j ON j.challenge_id=e.challenge_id WHERE j.goal_id=? ORDER BY e.created_at, e.id`, goal.id),
       reflections: await all(`
-        SELECT r.id,r.challenge_id AS challengeId,l.experiment_id AS experimentId,r.text,r.created_at AS createdAt
+        SELECT r.id,r.challenge_id AS "challengeId",l.experiment_id AS "experimentId",r.text,r.created_at AS "createdAt"
         FROM reflections r JOIN journey_reflection_links l ON l.reflection_id=r.id
         JOIN journey_challenge_links j ON j.challenge_id=r.challenge_id WHERE j.goal_id=? ORDER BY r.created_at, r.id`, goal.id),
       learning: await all(`
-        SELECT n.id,n.reflection_id AS reflectionId,n.changed,n.next_move AS nextMove,n.created_at AS createdAt
+        SELECT n.id,n.reflection_id AS "reflectionId",n.changed,n.next_move AS "nextMove",n.created_at AS "createdAt"
         FROM journey_learning n JOIN reflections r ON r.id=n.reflection_id
         JOIN journey_challenge_links j ON j.challenge_id=r.challenge_id WHERE j.goal_id=? ORDER BY n.created_at, n.id`, goal.id)
     };
@@ -104,11 +104,11 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
             SELECT u.id,u.email FROM relationships r JOIN users u ON u.id=r.coach_id
             WHERE r.client_id=? AND r.revoked_at IS NULL`, actor.id),
           goalShares: await all(`
-            SELECT s.goal_id AS goalId,s.coach_id AS coachId FROM journey_goal_shares s
+            SELECT s.goal_id AS "goalId",s.coach_id AS "coachId" FROM journey_goal_shares s
             JOIN journey_goals g ON g.id=s.goal_id JOIN relationships r ON r.coach_id=s.coach_id AND r.client_id=g.client_id
             WHERE g.client_id=? AND r.revoked_at IS NULL`, actor.id),
           profileShares: await all(`
-            SELECT s.coach_id AS coachId FROM journey_profile_shares s
+            SELECT s.coach_id AS "coachId" FROM journey_profile_shares s
             JOIN relationships r ON r.coach_id=s.coach_id AND r.client_id=s.client_id
             WHERE s.client_id=? AND r.revoked_at IS NULL`, actor.id)
         });
@@ -117,7 +117,7 @@ export function createPostgresJourney({ db, q, all, run, hex, active, audit, inp
         goals: await goalRows(`EXISTS (SELECT 1 FROM journey_goal_shares s JOIN relationships r
           ON r.coach_id=s.coach_id AND r.client_id=g.client_id WHERE s.goal_id=g.id AND s.coach_id=? AND r.revoked_at IS NULL)`, actor.id),
         profiles: await all(`
-          SELECT u.id AS clientId,u.email FROM journey_profile_shares s JOIN users u ON u.id=s.client_id
+          SELECT u.id AS "clientId",u.email FROM journey_profile_shares s JOIN users u ON u.id=s.client_id
           JOIN relationships r ON r.coach_id=s.coach_id AND r.client_id=s.client_id
           WHERE s.coach_id=? AND r.revoked_at IS NULL`, actor.id)
       });
