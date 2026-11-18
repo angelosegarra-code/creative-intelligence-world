@@ -174,7 +174,7 @@ if(m==='POST'&&/^\/api\/challenges\/[a-f0-9]+\/reflections$/.test(p)&&actor.role
 if(m==='GET'&&p==='/api/reflections'){const rows=actor.role==='coach'?await all('SELECT f.id,f.challenge_id AS "challengeId",f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE c.coach_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id):await all('SELECT f.id,f.challenge_id AS "challengeId",f.text FROM reflections f JOIN challenges c ON c.id=f.challenge_id JOIN relationships r ON r.coach_id=c.coach_id AND r.client_id=c.client_id WHERE f.client_id=? AND r.revoked_at IS NULL AND NOT EXISTS (SELECT 1 FROM journey_challenge_links j WHERE j.challenge_id=c.id)',actor.id);return reply(res,200,{reflections:rows})}
 if(m==='POST'&&p==='/api/relationships/revoke'&&actor.role==='client'){
   const b=await input(req);
-  journey.revoke(String(b.coachId),actor.id);
+  await journey.revoke(String(b.coachId),actor.id);
   return reply(res,200,{ok:true});
 }
 return reply(res,403,{error:'Forbidden'});
