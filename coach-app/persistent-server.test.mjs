@@ -106,6 +106,40 @@ test('Render staging authenticates browser API calls without repeating Basic cre
   assert.match(logout.headers.get('set-cookie'),/^ci_coach_sid=;/);
   assert.equal((await fetch(base+'/app.js',{headers:{cookie:stagingCookie}})).status,200);
 
+  const stagingForm=await fetch(base+'/staging-access');
+  assert.equal(stagingForm.status,200);
+  assert.match(await stagingForm.text(),/Coach Pilot staging sign-in/);
+  assert.equal(stagingForm.headers.get('set-cookie'),null);
+  const browserOrigin=base.replace('http:','https:');
+  const formPost=(path,fields,origin,stagingCookie='')=>fetch(base+path,{
+    method:'POST',redirect:'manual',
+    headers:{origin,cookie:stagingCookie},body:new URLSearchParams(fields)
+  });
+  const credentials={username:process.env.STAGING_ACCESS_USER,password:process.env.STAGING_ACCESS_PASSWORD};
+  assert.equal((await formPost('/staging-access',credentials,'https://unrelated.example')).status,403);
+  const wrongPassword=await formPost('/staging-access',{...credentials,password:'wrong password'},browserOrigin);
+  assert.equal(wrongPassword.status,401);
+  assert.equal(wrongPassword.headers.get('set-cookie'),null);
+  const formLogin=await formPost('/staging-access',credentials,browserOrigin);
+  assert.equal(formLogin.status,303);
+  assert.equal(formLogin.headers.get('location'),'/');
+  const browserCookie=formLogin.headers.get('set-cookie').split(';')[0];
+  const page=await fetch(base+'/',{headers:{cookie:browserCookie}});
+  assert.equal(page.status,200);
+  assert.match(await page.text(),/<form id="registrationForm" action="\/api\/register" method="post">/);
+  const formAccount={...demoAccount,email:'native-form-coach@example.test'};
+  assert.equal((await formPost('/api/register',formAccount,'https://unrelated.example',browserCookie)).status,403);
+  const validation=await formPost('/api/register',{...formAccount,password:'short'},browserOrigin,browserCookie);
+  assert.equal(validation.status,400);
+  assert.match(await validation.text(),/14 to 128 characters/);
+  const freshAccount=await formPost('/api/register',formAccount,browserOrigin,browserCookie);
+  assert.equal(freshAccount.status,201);
+  assert.match(await freshAccount.text(),/Demo account created/);
+  const duplicate=await formPost('/api/register',formAccount,browserOrigin,browserCookie);
+  assert.equal(duplicate.status,409);
+  assert.match(await duplicate.text(),/already exists/);
+  assert.equal((await post('login',formAccount,browserCookie)).status,200);
+
   const future=Date.now()+9*60*60*1000;
   const clock=t.mock.method(Date,'now',()=>future);
   try{
