@@ -61,4 +61,12 @@ CREATE TABLE IF NOT EXISTS journey_learning (
   changed TEXT NOT NULL, next_move TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Invite-only fictional demonstrations. No coach or client data is stored here.
+CREATE TABLE IF NOT EXISTS coach_demo_invites (
+  id TEXT PRIMARY KEY, invite_hash TEXT NOT NULL UNIQUE,
+  session_hash TEXT UNIQUE, expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  redeemed_at TIMESTAMPTZ, completed_at TIMESTAMPTZ, revoked_at TIMESTAMPTZ
+);
+
 COMMIT;

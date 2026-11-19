@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coach Studio | Private demo</title>
+<link rel="stylesheet" href="/coach-demo/style.css">
+<script src="/coach-demo/app.js" defer></script>
+<main>
+  <p class="brand">Creative Intelligence World</p>
+  <h1>Coach Studio</h1>
+  <p id="access-message" role="status">Checking your private demo link…</p>
+  <button id="start-demo" type="button" hidden>Start private demo</button>
+  <div id="workspace" hidden>
+    <header>
+      <p class="intro">See what happens between coaching sessions.</p>
+      <p class="muted">Five-minute demo with fictional records. Please use only fictional details.</p>
+      <nav aria-label="Demo view">
+        <button id="coach-view" type="button" aria-pressed="true">Coach view</button>
+        <button id="client-view" type="button" aria-pressed="false" disabled>Fictional client view</button>
+      </nav>
+    </header>
+    <section class="goal">
+      <p class="muted">Jordan Lee · fictional client</p>
+      <h2>Delegate one recurring team decision</h2>
+      <p>Jordan wants the team to make a decision without waiting for another approval. The challenge is making the handoff clear.</p>
+    </section>
+    <section id="coach-panel">
+      <form id="challenge-form" class="card">
+        <h2>Assign a between-session challenge</h2>
+        <label for="challenge">Suggested challenge</label>
+        <textarea id="challenge" maxlength="600" required></textarea>
+        <button type="submit">Assign challenge</button>
+        <button id="try-client" type="button" class="secondary" hidden>Try the client view</button>
+      </form>
+      <section id="coach-review" class="card">
+        <h2>Prepare for the next session</h2>
+        <p id="coach-reflection">Jordan hasn’t shared a reflection yet.</p>
+        <p id="complete-message" class="success" hidden>You completed the demo. Reply to your invitation with one thing that would make this useful in your practice.</p>
+      </section>
+    </section>
+    <section id="client-panel" hidden>
+      <div class="card">
+        <h2>Your assigned challenge</h2>
+        <p id="assigned-challenge"></p>
+      </div>
+      <form id="reflection-form" class="card">
+        <h2>Reflect on what happened</h2>
+        <label for="reflection">Sample reflection you can edit</label>
+        <textarea id="reflection" maxlength="1000" required></textarea>
+        <div class="actions">
+          <button id="save-private" type="submit" class="secondary">Keep private</button>
+          <button id="share-reflection" type="submit">Share with coach</button>
+        </div>
+        <button id="return-to-coach" type="button" class="secondary" hidden>Return to coach view</button>
+      </form>
+    </section>
+    <p id="feedback" role="status" aria-live="polite"></p>
+  </div>
+</main>
+</html>

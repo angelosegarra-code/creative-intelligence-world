@@ -13,8 +13,7 @@ function tables(sql){
 }
 
 test('PostgreSQL pilot schema includes every existing SQLite table',()=>{
-  assert.deepEqual(tables(postgres),tables(sqlite));
-  assert.equal(tables(postgres).length,17);
+  assert.deepEqual(tables(postgres),[...tables(sqlite),'coach_demo_invites'].sort());
 });
 
 test('PostgreSQL pilot schema retains consent, uniqueness and ownership constraints',()=>{

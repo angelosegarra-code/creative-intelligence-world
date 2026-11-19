@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {createCoachDemo} from './coach-demo.mjs';
 import {createPostgresJourney,perspectives} from './postgres-journey.mjs';
 import {createPostgresAdapter} from './postgres-adapter.mjs';
 import {migratePostgres} from './postgres-store.mjs';
@@ -91,6 +92,7 @@ const audit=async(actor,event,kind,rid)=>await run('INSERT INTO audit_events(id,
 const journey=createPostgresJourney({db,q,all,run,hex,active,audit,input,reply});
 const onRender=!!process.env.RENDER;
 const staging=onRender?stagingAccess(process.env.STAGING_ACCESS_USER,process.env.STAGING_ACCESS_PASSWORD):null;
+const coachDemo=createCoachDemo({q,all,run,input,reply});
 const server=http.createServer(async(req,res)=>{try{
 // Private staging gate. Fail closed on Render unless credentials are configured.
 // Render terminates HTTPS. A successful page sign-in grants a separate staging cookie.
@@ -100,6 +102,13 @@ const browserOrigin=(onRender?'https://':'http://')+req.headers.host;
 let issueStagingCookie=false;
 if(onRender){
   if(!staging)return reply(res,503,{error:'Staging access not configured'});
+  if(p==='/coach-demo'||p.startsWith('/coach-demo/')){
+    return await coachDemo.publicRoute(req,res,p,browserOrigin);
+  }
+  if(p==='/demo-invites'&&m==='GET'&&!staging.hasSession(req)&&!staging.hasCredentials(req)){
+    res.writeHead(303,{Location:'/staging-access','Cache-Control':'no-store'});
+    return res.end();
+  }
   if(p==='/staging-access'){
     if(m==='GET')return stagingSignIn(res,200);
     if(m!=='POST')return reply(res,405,{error:'Method not allowed'},{Allow:'GET, POST'});
@@ -120,8 +129,10 @@ if(onRender){
   }
 }
 
+if(onRender&&p==='/demo-invites')return await coachDemo.adminRoute(req,res,browserOrigin);
+
 if(m==='GET'&&p==='/'){
-  const b=await readFile(join(here,'index.html'));
+  const b=(await readFile(join(here,'index.html'),'utf8')).replace('<!-- coach-demo-admin -->',onRender?'<p><a href="/demo-invites">Manage private coach demo links</a></p>':'');
   const headers={...htmlHeaders};
   if(issueStagingCookie)headers['Set-Cookie']=staging.sessionCookie();
   res.writeHead(200,headers);
