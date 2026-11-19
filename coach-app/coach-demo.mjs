@@ -100,7 +100,8 @@ export function createCoachDemo({q, all, run, input, reply}) {
       const revoke = invite.revoked_at || invite.expired ? '' : `<form method="post"><input type="hidden" name="id" value="${escapeHtml(invite.id)}"><button name="action" value="revoke">Revoke</button></form>`;
       return `<tr><td>${escapeHtml(invite.id.slice(0,8))}</td><td>${status}</td><td>${escapeHtml(new Date(invite.expires_at).toISOString().slice(0,10))} UTC</td><td>${revoke}</td></tr>`;
     }).join('');
-    res.writeHead(200, {...headers, 'Content-Type':'text/html; charset=utf-8'});
+    // Same-origin native POSTs need a non-opaque Origin. The invite URL lives only in the response body.
+    res.writeHead(200, {...headers, 'Referrer-Policy':'same-origin', 'Content-Type':'text/html; charset=utf-8'});
     return res.end(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Coach demo invitations</title><link rel="stylesheet" href="/coach-demo/style.css"><main>
       <a href="/">Back to Coach Studio</a><h1>Coach demo invitations</h1>
       <p>Create one link per tester. Each link opens one fictional workspace in the first browser that uses it and expires after seven days.</p>

@@ -40,6 +40,13 @@ test('private demo redemption isolates workspaces and never grants Studio access
   });
 
   assert.equal((await request('/demo-invites')).status,303);
+  const dashboard = await request('/demo-invites',{headers:{authorization:credentials}});
+  assert.equal(dashboard.status,200);
+  assert.equal(dashboard.headers.get('referrer-policy'),'same-origin');
+  assert.equal((await request('/demo-invites',{
+    method:'POST',headers:{authorization:credentials,origin:'null'},
+    body:new URLSearchParams({action:'create'})
+  })).status,403);
   assert.equal((await request('/demo-invites',{method:'POST',body:new URLSearchParams({action:'create'})})).status,401);
   assert.equal((await request('/coach-demo/session')).status,401);
   const page = await request('/coach-demo');
