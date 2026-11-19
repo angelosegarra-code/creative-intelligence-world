@@ -1,0 +1,20 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createServer} from './server.mjs';
+test('coach-client access boundaries',async()=>{const server=createServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;const api=async(path,method='GET',body,cookie='')=>{const r=await fetch(base+'/api/'+path,{method,headers:{'Content-Type':'application/json',cookie},body:body?JSON.stringify(body):undefined});return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]||''}};try{
+for(const [email,role] of [['coach@example.test','coach'],['other@example.test','coach'],['client@example.test','client']])assert.equal((await api('register','POST',{email,role,password:'long-demo-password-123'})).status,201);
+const login=async email=>(await api('login','POST',{email,password:'long-demo-password-123'})).cookie;
+const coach=await login('coach@example.test'),other=await login('other@example.test'),client=await login('client@example.test');
+assert.equal((await api('clients')).status,401);
+const inv=await api('invitations','POST',{email:'client@example.test'},coach);assert.equal(inv.status,201);
+assert.equal((await api('invitations/accept','POST',{token:inv.data.invitationToken},client)).status,200);
+assert.equal((await api('invitations/accept','POST',{token:inv.data.invitationToken},client)).status,403);
+const clientId=(await api('clients','GET',null,coach)).data.clients[0].id;
+assert.equal((await api('challenges','POST',{clientId,text:'Test'},other)).status,403);
+const c=await api('challenges','POST',{clientId,text:'Test'},coach);assert.equal(c.status,201);
+assert.equal((await api('challenges','GET',null,other)).data.challenges.length,0);
+assert.equal((await api('challenges/'+c.data.id+'/reflections','POST',{text:'A learning'},client)).status,201);
+assert.equal((await api('reflections','GET',null,other)).data.reflections.length,0);
+assert.equal((await api('reflections','GET',null,coach)).data.reflections.length,1);
+const coachId=(await api('me','GET',null,coach)).data.id;
+assert.equal((await api('relationships/revoke','POST',{coachId},client)).status,200);
+assert.equal((await api('reflections','GET',null,coach)).data.reflections.length,0);
+}finally{await new Promise(r=>server.close(r))}});

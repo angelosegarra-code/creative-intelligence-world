@@ -1,0 +1,12 @@
+import { DatabaseSync } from 'node:sqlite';
+import { readFileSync, mkdirSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const base=dirname(fileURLToPath(import.meta.url));
+const dbPath=resolve(process.env.CI_COACH_DB_PATH||resolve(base,'../../.local/coach.sqlite'));
+mkdirSync(dirname(dbPath),{recursive:true});
+const db=new DatabaseSync(dbPath);
+db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL;');
+db.exec(readFileSync(resolve(base,'schema.sql'),'utf8'));
+db.close();
+console.log('Coach database schema initialized at',dbPath);

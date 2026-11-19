@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CI World Coach Pilot</title><style>body{font:16px system-ui;background:#f3f6f1;color:#233e31;max-width:850px;margin:35px auto;padding:18px}section{background:white;border-radius:12px;padding:22px;margin:18px 0}input,select,textarea{display:block;width:100%;padding:10px;margin:8px 0 16px;box-sizing:border-box}button{padding:10px 15px;background:#28543d;color:white;border:0;border-radius:6px;cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere}.notice{background:#fff0d2;padding:15px}select{background:white;color:inherit}textarea{min-height:5rem}fieldset{border:1px solid #c8d9cd;border-radius:8px;margin:1rem 0;padding:1rem;min-width:0}summary{cursor:pointer;font-weight:650}
+.journey-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1rem}.journey-card{border:1px solid #d5e1d7;border-radius:8px;padding:1rem;overflow-wrap:anywhere}.journey-card h4{margin-top:0}.journey-card p{white-space:pre-wrap}.journey-stack>*+*{margin-top:1rem}.journey-card button+button{margin-left:.5rem}button:disabled{opacity:.6;cursor:default}.muted{color:#476352}.share-row{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin:.7rem 0}.share-row span{flex:1 1 14rem}.status-line{min-height:1.3em;font-weight:550}.profile-text{white-space:pre-wrap;overflow-wrap:anywhere}.journey-controls{margin-bottom:2rem}.token-result{overflow-wrap:anywhere}.token-result:empty{display:none}
+</style><h1>CI World · Coach Pilot</h1><p class="notice">Private development pilot. Use fictional profiles, goals, and reflections. Pilot records may be lost when the service restarts or is redeployed.</p><section><h2>Register</h2>
+<form id="registrationForm" action="/api/register" method="post">
+<label for="regEmail">Demo email</label>
+<input id="regEmail" name="email" type="email" autocomplete="username" maxlength="254" placeholder="coach@example.test" required>
+<label for="regPass">Demo password (14 or more characters)</label>
+<input id="regPass" name="password" type="password" autocomplete="new-password" minlength="14" maxlength="128" required>
+<label for="regRole">Role</label>
+<select id="regRole" name="role"><option value="coach">Coach</option><option value="client">Client</option></select>
+<button id="register" type="submit">Create demo account</button>
+<p id="registrationStatus" role="status"></p>
+<a id="restoreStagingAccess" href="/staging-access" hidden>Sign in to staging access</a>
+</form></section><section><h2 id="account-sign-in">Sign in</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button id="login">Sign in</button> <button id="logout">Sign out</button><p id="identity"></p></section><main id="journeyWorkspace" hidden>
+<section id="journeyOnboarding">
+<h2 id="journeyHeading">Learning journey</h2>
+<p id="journeyIntro"></p>
+<div id="inviteCoach" hidden><label for="clientEmail">Client demo email</label><input id="clientEmail" type="email" placeholder="client@example.test"><button id="invite">Create invitation</button><p class="muted">Share the token directly with your demo client. Studio does not send email.</p></div>
+<div id="inviteClient" hidden><label for="token">Invitation token</label><input id="token" autocomplete="off"><button id="accept">Accept invitation</button><p class="muted">After accepting, choose which profile or goals to share with this coach.</p></div>
+<p id="invitationStatus" role="status" class="token-result"></p>
+</section>
+<section id="journeyProfiles"></section>
+<section id="journeyGoals"></section>
+<p id="journeyStatus" class="status-line" role="status"></p>
+<section id="journeyDetail" hidden></section>
+</main>
+<!-- coach-demo-admin --><details><summary>Original pilot tools and records</summary>
+<section><h2>Coach actions</h2><input id="clientId" placeholder="Client ID from list"><textarea id="challenge" placeholder="Coach-approved challenge"></textarea><button id="clients">List my clients</button> <button id="assign">Assign challenge</button></section><section><h2>Creative Intelligence challenge studio</h2><p>Choose a perspective and prepare a draft. Review it before assigning it to a client.</p><label for="focus">Learning focus</label><input id="focus" placeholder="e.g. navigating an uncertain decision"><label for="perspective">Creative perspective</label><select id="perspective"><option value="observer">Observer</option><option value="dreamer">Dreamer</option><option value="alchemist">Alchemist</option><option value="visionary">Visionary</option></select><button id="draftChallenge">Generate coach-review draft</button> <button id="learningLoop">View learning loop</button><p>The draft is copied into the coach's challenge field. Assignment remains a separate, explicit action.</p></section><section><h2>Client actions</h2><input id="challengeId" placeholder="Challenge ID"><textarea id="reflection" placeholder="What happened? What surprised you? What changed?"></textarea><button id="reflect">Submit reflection</button></section><section><h2>Review</h2><button id="listChallenges">List my challenges</button> <button id="listReflections">List authorized reflections</button><pre id="result" aria-live="polite"></pre></section></details><script src="/app.js" defer></script><script src="/journey.js" defer></script></html>

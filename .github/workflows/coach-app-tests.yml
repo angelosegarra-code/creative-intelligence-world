@@ -1,0 +1,36 @@
+name: Coach app development tests
+on:
+  push:
+    branches:
+      - prototype/coach-dashboard-v1
+    paths:
+      - 'coach-app/**'
+      - '.github/workflows/coach-app-tests.yml'
+  pull_request:
+    paths:
+      - 'coach-app/**'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: coach-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Syntax check
+        run: |
+          node --check server.mjs
+          node --check persistent-server.mjs
+          node --check postgres-server.mjs
+          node --check postgres-journey.mjs
+          node --check app.js
+      - name: Run tests
+        run: npm test

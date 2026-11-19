@@ -1,0 +1,21 @@
+{
+  "name": "ci-world-coach-pilot",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "start:persistent": "node persistent-server.mjs",
+    "test:persistent": "node --test persistent-server.test.mjs",
+    "db:migrate": "node db/migrate-postgres.mjs",
+    "start:postgres": "node postgres-server.mjs",
+    "test:postgres": "node --test postgres-schema.test.mjs postgres-adapter.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "pg": "^8.13.3"
+  }
+}
