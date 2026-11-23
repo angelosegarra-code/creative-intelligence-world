@@ -59,3 +59,8 @@ CREATE TABLE IF NOT EXISTS organization_learning_notes (
  FOREIGN KEY(organization_id,participant_id) REFERENCES organization_participants(organization_id,participant_id)
 );
 CREATE INDEX IF NOT EXISTS idx_organization_learning_notes_owner ON organization_learning_notes(participant_id,organization_id,created_at);
+
+-- A participant may explicitly share a single note with their currently assigned professional.
+-- Revocation of enrollment makes shared notes unreadable without changing historical records.
+ALTER TABLE organization_learning_notes ADD COLUMN IF NOT EXISTS shared_at TIMESTAMPTZ;
+CREATE INDEX IF NOT EXISTS idx_organization_learning_shared ON organization_learning_notes(organization_id,participant_id) WHERE shared_at IS NOT NULL;
