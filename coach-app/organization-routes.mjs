@@ -20,7 +20,7 @@ export function createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply
    const rows=await all('SELECT o.id,o.name,m.role FROM organization_members m JOIN organizations o ON o.id=m.organization_id WHERE m.user_id=? ORDER BY o.created_at DESC',actor.id);
    return reply(res,200,{organizations:rows});
   }
-  const match=/^\/api\/organizations\/([a-f0-9]{48})(?:\/(members|invitations|invitations\/accept))?$/.exec(path);
+  const match=/^\/api\/organizations\/([a-f0-9]{48})(?:\/(members|overview|invitations|invitations\/accept))?$/.exec(path);
   if(!match)return reply(res,404,{error:'Not found'});
   const [,id,action]=match;
   if(!await member(actor,id))return reply(res,404,{error:'Organization not found'});
@@ -28,6 +28,19 @@ export function createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply
    const org=await q('SELECT id,name FROM organizations WHERE id=?',id);
    const membership=await q('SELECT role FROM organization_members WHERE organization_id=? AND user_id=?',id,actor.id);
    return reply(res,200,{organization:org,role:membership.role});
+  }
+  if(action==='overview'&&method==='GET'){
+   if(!await admin(actor,id))return reply(res,403,{error:'Administrator access required'});
+   // Counts only. Never return emails, participant identifiers, goals or reflections.
+   const counts=await q(`SELECT
+      (SELECT COUNT(*)::integer FROM organization_members WHERE organization_id=?) AS "professionals",
+      (SELECT COUNT(*)::integer FROM organization_participants WHERE organization_id=? AND revoked_at IS NULL) AS "enrolledParticipants",
+      (SELECT COUNT(*)::integer FROM organization_participants WHERE organization_id=? AND revoked_at IS NOT NULL) AS "revokedEnrollments"`,id,id,id);
+   return reply(res,200,{organizationId:id,summary:{
+     professionalAccounts:Math.max(0,Number(counts.professionals)-1),
+     activeParticipantEnrollments:Number(counts.enrolledParticipants),
+     revokedEnrollments:Number(counts.revokedEnrollments)
+   },privacy:'Counts only; no participant records or private coaching data.'});
   }
   if(action==='members'&&method==='GET'){
    if(!await admin(actor,id))return reply(res,403,{error:'Administrator access required'});
