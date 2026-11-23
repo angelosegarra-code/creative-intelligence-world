@@ -55,3 +55,6 @@ Private development route: `/organization-tour` on the feature branch. See `ORGA
 
 ## Participant-controlled goal sharing (development feature)
 A participant can now save a private perspective, goal and next action, then explicitly share or stop sharing **one note at a time** with the professional currently assigned to their institutional enrollment. Professional access requires an active enrollment, professional membership, and an active per-note share. Revoking enrollment immediately blocks the professional's shared-note view. The professional response excludes reflections, and administrator reporting remains counts-only. The feature is on the development branch, not a deployed institutional service.
+
+## Professional questions (development feature)
+A professional may submit a question or observation **only while a participant has explicitly shared that specific note and remains enrolled with that professional**. The participant can read the question in their own workspace; professionals cannot modify goals or next actions. Stopping sharing or revoking enrollment prevents new professional feedback. Historical feedback remains in the participant's private view while actively enrolled, subject to future retention and deletion policy. This is not an automated recommendation or clinical intervention.
