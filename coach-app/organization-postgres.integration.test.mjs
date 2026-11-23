@@ -57,6 +57,13 @@ test('PostgreSQL organization invitation lifecycle and isolation', {skip:!proces
   assert.equal(caseload.status,200);
   assert.equal(caseload.data.participants.length,1);
   assert.equal(caseload.data.participants[0].email,client.email);
+  const overview=await org({},{},'/api/organizations/'+orgId+'/overview','GET',admin);
+  assert.equal(overview.status,200);
+  assert.equal(overview.data.summary.professionalAccounts,1);
+  assert.equal(overview.data.summary.activeParticipantEnrollments,1);
+  assert.equal(JSON.stringify(overview.data).includes(client.email),false);
+  assert.equal((await org({},{},'/api/organizations/'+orgId+'/overview','GET',invited)).status,403);
+  assert.equal((await org({},{},'/api/organizations/'+orgId+'/overview','GET',stranger)).status,404);
   const adminCaseload=await participants({},{},'/api/organizations/'+orgId+'/participants','GET',admin);
   assert.equal(adminCaseload.data.participants.length,0);
   assert.equal((await participants({},{},'/api/organizations/'+orgId+'/participants','GET',stranger)).status,404);
@@ -65,5 +72,6 @@ test('PostgreSQL organization invitation lifecycle and isolation', {skip:!proces
   assert.equal((await participants({},{},'/api/organization-participants/'+orgId+'/revoke','POST',client)).status,200);
   assert.equal((await participants({},{},'/api/organization-participants/mine','GET',client)).data.enrollments.length,0);
   assert.equal((await participants({},{},'/api/organizations/'+orgId+'/participants','GET',invited)).data.participants.length,0);
+  assert.equal((await org({},{},'/api/organizations/'+orgId+'/overview','GET',admin)).data.summary.activeParticipantEnrollments,0);
  }finally{await db.close()}
 });
