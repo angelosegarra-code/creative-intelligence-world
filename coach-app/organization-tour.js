@@ -6,3 +6,11 @@ for(const button of buttons){
   for(const panel of document.querySelectorAll('[data-panel]'))panel.hidden=panel.dataset.panel!==button.dataset.view;
  });
 }
+
+const perspectiveButtons=[...document.querySelectorAll('[data-perspective]')];
+for(const button of perspectiveButtons){
+ button.addEventListener('click',()=>{
+  for(const option of perspectiveButtons)option.setAttribute('aria-pressed',String(option===button));
+  for(const panel of document.querySelectorAll('[data-perspective-panel]'))panel.hidden=panel.dataset.perspectivePanel!==button.dataset.perspective;
+ });
+}
