@@ -25,6 +25,9 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   assert.match(tourHtml,/Where the model could be piloted/);
   assert.match(tourHtml,/A focused pilot conversation/);
   assert.match(tourHtml,/A responsible first evaluation/);
+  assert.match(tourHtml,/Experience the Creative Intelligence learning process/);
+  for(const perspective of ['observer','dreamer','alchemist','visionary'])assert.match(tourHtml,new RegExp('data-perspective="'+perspective+'"'));
+  assert.match(tourHtml,/Casey.s choice, not the system.s decision/);
   assert.match(tourHtml,/no real participant records/);
   const tourScript=await fetch(origin+'/organization-tour.js');assert.equal(tourScript.status,200);
   assert.match(await tourScript.text(),/data-panel/);
