@@ -3,6 +3,17 @@ export function createOrganizationLearningRoutes({q,all,run,hex,audit,input,repl
  const idOk=s=>typeof s==='string'&&/^[a-f0-9]{48}$/.test(s);
  const owner=async(org,actor)=>!!await q('SELECT 1 FROM organization_participants WHERE organization_id=? AND participant_id=? AND revoked_at IS NULL',org,actor.id);
  return async(req,res,path,method,actor)=>{
+  const reflect=/^\/api\/organization-learning\/([a-f0-9]{48})\/notes\/([a-f0-9]{48})\/reflection$/.exec(path);
+  if(reflect&&method==='POST'){
+   const [,org,noteId]=reflect;
+   if(actor.role!=='client')return reply(res,403,{error:'Participant account required'});
+   const b=await input(req),reflection=typeof b.reflection==='string'?b.reflection.trim():null;
+   if(reflection===null||reflection.length>2000)return reply(res,400,{error:'Reflection must be text of at most 2000 characters'});
+   const result=await run('UPDATE organization_learning_notes n SET reflection=? WHERE n.id=? AND n.organization_id=? AND n.participant_id=? AND EXISTS (SELECT 1 FROM organization_participants p WHERE p.organization_id=n.organization_id AND p.participant_id=n.participant_id AND p.revoked_at IS NULL)',reflection,noteId,org,actor.id);
+   if(!result.changes)return reply(res,404,{error:'Active learning note not found'});
+   await audit(actor.id,'organization_learning_reflection_saved','organization',org);
+   return reply(res,200,{ok:true,privacy:'Reflection remains private even when the goal is shared.'});
+  }
   const feedback=/^\/api\/organization-learning\/([a-f0-9]{48})\/notes\/([a-f0-9]{48})\/feedback$/.exec(path);
   if(feedback){
    const [,org,noteId]=feedback;
