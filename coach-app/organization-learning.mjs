@@ -1,8 +1,34 @@
-// Participant-owned learning notes. No professional or administrator read route.
+// Participant-owned notes with explicit professional sharing and questions.
 export function createOrganizationLearningRoutes({q,all,run,hex,audit,input,reply}){
  const idOk=s=>typeof s==='string'&&/^[a-f0-9]{48}$/.test(s);
  const owner=async(org,actor)=>!!await q('SELECT 1 FROM organization_participants WHERE organization_id=? AND participant_id=? AND revoked_at IS NULL',org,actor.id);
  return async(req,res,path,method,actor)=>{
+  const feedback=/^\/api\/organization-learning\/([a-f0-9]{48})\/notes\/([a-f0-9]{48})\/feedback$/.exec(path);
+  if(feedback){
+   const [,org,noteId]=feedback;
+   if(actor.role==='coach'&&method==='POST'){
+    const access=await q(\`SELECT 1 FROM organization_learning_notes n
+      JOIN organization_participants p ON p.organization_id=n.organization_id AND p.participant_id=n.participant_id
+      JOIN organization_members m ON m.organization_id=p.organization_id AND m.user_id=p.professional_id
+      WHERE n.id=? AND n.organization_id=? AND n.shared_at IS NOT NULL
+        AND p.professional_id=? AND p.revoked_at IS NULL AND m.role='professional'\`,noteId,org,actor.id);
+    if(!access)return reply(res,404,{error:'Shared learning note not found'});
+    const body=await input(req),question=typeof body.question==='string'?body.question.trim():'';
+    if(!question||question.length>1000)return reply(res,400,{error:'Enter a question or observation (maximum 1000 characters)'});
+    const id=hex();
+    await run('INSERT INTO organization_learning_feedback(id,note_id,professional_id,question) VALUES(?,?,?,?)',id,noteId,actor.id,question);
+    await audit(actor.id,'organization_learning_feedback_created','organization',org);
+    return reply(res,201,{id,noteId,question,note:'Participant retains control of their goal and action.'});
+   }
+   if(actor.role==='client'&&method==='GET'){
+    if(!await owner(org,actor))return reply(res,404,{error:'Active enrollment not found'});
+    const note=await q('SELECT 1 FROM organization_learning_notes WHERE id=? AND organization_id=? AND participant_id=?',noteId,org,actor.id);
+    if(!note)return reply(res,404,{error:'Learning note not found'});
+    const feedback=await all('SELECT f.id,f.question,f.created_at AS "createdAt" FROM organization_learning_feedback f JOIN organization_learning_notes n ON n.id=f.note_id WHERE f.note_id=? AND n.participant_id=? ORDER BY f.created_at DESC LIMIT 50',noteId,actor.id);
+    return reply(res,200,{feedback});
+   }
+   return reply(res,403,{error:'Not authorized'});
+  }
   const shared=/^\/api\/organization-learning\/([a-f0-9]{48})\/shared$/.exec(path);
   if(shared&&method==='GET'){
    if(actor.role!=='coach')return reply(res,403,{error:'Professional account required'});
