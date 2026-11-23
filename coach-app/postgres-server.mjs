@@ -137,6 +137,10 @@ if(onRender){
 
 if(onRender&&p==='/demo-invites')return await coachDemo.adminRoute(req,res,browserOrigin);
 
+if(m==='GET'&&p==='/organization-tour'){
+  res.writeHead(200,htmlHeaders);
+  return res.end(await readFile(join(here,'organization-tour.html'),'utf8'));
+}
 if(m==='GET'&&p==='/'){
   const b=(await readFile(join(here,'index.html'),'utf8')).replace('<!-- coach-demo-admin -->',onRender?'<p><a href="/demo-invites">Manage private coach demo links</a></p>':'');
   const headers={...htmlHeaders};
@@ -144,7 +148,7 @@ if(m==='GET'&&p==='/'){
   res.writeHead(200,headers);
   return res.end(b);
 }
-if(m==='GET'&&['/app.js','/journey.js','/organizations.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
+if(m==='GET'&&['/app.js','/journey.js','/organizations.js','/organization-tour.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
 if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 // Browser writes must originate from this server. No wildcard CORS.
 const nativeRegistration=m==='POST'&&p==='/api/register'&&contentType===formContentType;
