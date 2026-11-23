@@ -5,6 +5,7 @@ import {createPostgresPool,migratePostgres} from './postgres-store.mjs';
 import {createPostgresAdapter} from './postgres-adapter.mjs';
 import {createOrganizationRoutes} from './organization-routes.mjs';
 import {acceptOrganizationInvitation} from './organization-accept.mjs';
+import {createOrganizationParticipantRoutes} from './organization-participants.mjs';
 
 test('PostgreSQL organization invitation lifecycle and isolation', {skip:!process.env.CI_ORGANIZATION_TEST_DATABASE_URL},async()=>{
  const pool=createPostgresPool({connectionString:process.env.CI_ORGANIZATION_TEST_DATABASE_URL});
@@ -45,5 +46,24 @@ test('PostgreSQL organization invitation lifecycle and isolation', {skip:!proces
   const members=await org({},{},'/api/organizations/'+orgId+'/members','GET',admin);
   assert.equal(members.data.members.length,2);
   assert.equal(members.data.members.some(m=>m.email===invited.email),true);
+  const participants=createOrganizationParticipantRoutes(opts);
+  const enrollInvite=await participants({body:{email:client.email}},{},'/api/organizations/'+orgId+'/participants/invitations','POST',invited);
+  assert.equal(enrollInvite.status,201);
+  const enrollmentToken=enrollInvite.data.invitationToken;
+  assert.equal((await participants({body:{token:enrollmentToken}},{},'/api/organization-participants/invitations/accept','POST',stranger)).status,403);
+  assert.equal((await participants({body:{token:enrollmentToken}},{},'/api/organization-participants/invitations/accept','POST',client)).status,200);
+  assert.equal((await participants({body:{token:enrollmentToken}},{},'/api/organization-participants/invitations/accept','POST',client)).status,403);
+  const caseload=await participants({},{},'/api/organizations/'+orgId+'/participants','GET',invited);
+  assert.equal(caseload.status,200);
+  assert.equal(caseload.data.participants.length,1);
+  assert.equal(caseload.data.participants[0].email,client.email);
+  const adminCaseload=await participants({},{},'/api/organizations/'+orgId+'/participants','GET',admin);
+  assert.equal(adminCaseload.data.participants.length,0);
+  assert.equal((await participants({},{},'/api/organizations/'+orgId+'/participants','GET',stranger)).status,404);
+  const own=await participants({},{},'/api/organization-participants/mine','GET',client);
+  assert.equal(own.data.enrollments.length,1);
+  assert.equal((await participants({},{},'/api/organization-participants/'+orgId+'/revoke','POST',client)).status,200);
+  assert.equal((await participants({},{},'/api/organization-participants/mine','GET',client)).data.enrollments.length,0);
+  assert.equal((await participants({},{},'/api/organizations/'+orgId+'/participants','GET',invited)).data.participants.length,0);
  }finally{await db.close()}
 });
