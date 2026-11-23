@@ -77,7 +77,13 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   assert.equal((await adminCaseload.json()).participants.length,0);
   const ownEnrollments=await fetch(origin+'/api/organization-participants/mine',{headers:{Cookie:participantCookie}});assert.equal(ownEnrollments.status,200);
   assert.equal((await ownEnrollments.json()).enrollments.length,1);
+  const privateNote=await post('/api/organization-learning/'+org.id+'/notes',{perspective:'observer',goal:'Explore a new skill',nextAction:'Try one small learning experiment'},participantCookie);assert.equal(privateNote.status,201);
+  const ownNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:participantCookie}});assert.equal(ownNotes.status,200);
+  assert.equal((await ownNotes.json()).notes[0].goal,'Explore a new skill');
+  const coachNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:professionalCookie}});assert.equal(coachNotes.status,403);
+  const adminNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:cookie}});assert.equal(adminNotes.status,403);
   const revoke=await post('/api/organization-participants/'+org.id+'/revoke',{},participantCookie);assert.equal(revoke.status,200);
+  const revokedNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:participantCookie}});assert.equal(revokedNotes.status,404);
   const revokedOverview=await fetch(origin+'/api/organizations/'+org.id+'/overview',{headers:{Cookie:cookie}});assert.equal(revokedOverview.status,200);
   assert.equal((await revokedOverview.json()).summary.activeParticipantEnrollments,0);
   const logout=await post('/api/logout',{},cookie);assert.equal(logout.status,200);
