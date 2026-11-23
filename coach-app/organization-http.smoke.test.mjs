@@ -31,6 +31,19 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   const list=await listing.json();assert.ok(list.organizations.some(o=>o.id===org.id));
   const invite=await post('/api/organizations/'+org.id+'/invitations',{email:'fictional-advisor-'+nonce+'@example.test'},cookie);assert.equal(invite.status,201);
   const token=(await invite.json()).invitationToken;assert.match(token,/^[a-f0-9]{48}$/);
+  const professionalEmail='fictional-advisor-'+nonce+'@example.test';
+  const professionalPassword='advisor-password-'+nonce+'-long';
+  const professionalRegistration=await post('/api/register',{email:professionalEmail,password:professionalPassword,role:'coach'});assert.equal(professionalRegistration.status,201);
+  const professionalLogin=await post('/api/login',{email:professionalEmail,password:professionalPassword});assert.equal(professionalLogin.status,200);
+  const professionalCookie=professionalLogin.headers.get('set-cookie')?.split(';')[0];assert.ok(professionalCookie);
+  const denied=await fetch(origin+'/api/organizations/'+org.id+'/members',{headers:{Cookie:professionalCookie}});assert.equal(denied.status,404);
+  const accepted=await post('/api/organizations/invitations/accept',{token},professionalCookie);assert.equal(accepted.status,200);
+  const duplicate=await post('/api/organizations/invitations/accept',{token},professionalCookie);assert.equal(duplicate.status,403);
+  const professionalOrganizations=await fetch(origin+'/api/organizations',{headers:{Cookie:professionalCookie}});assert.equal(professionalOrganizations.status,200);
+  assert.equal((await professionalOrganizations.json()).organizations.find(o=>o.id===org.id)?.role,'professional');
+  const membersDenied=await fetch(origin+'/api/organizations/'+org.id+'/members',{headers:{Cookie:professionalCookie}});assert.equal(membersDenied.status,403);
+  const membersAllowed=await fetch(origin+'/api/organizations/'+org.id+'/members',{headers:{Cookie:cookie}});assert.equal(membersAllowed.status,200);
+  assert.equal((await membersAllowed.json()).members.length,2);
   const logout=await post('/api/logout',{},cookie);assert.equal(logout.status,200);
   const after=await fetch(origin+'/api/organizations',{headers:{Cookie:cookie}});assert.equal(after.status,401);
  }finally{child.kill('SIGTERM');await delay(100)}
