@@ -24,6 +24,8 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   assert.match(tourHtml,/What the institution gains/);
   assert.match(tourHtml,/Where the model could be piloted/);
   assert.match(tourHtml,/A focused pilot conversation/);
+  assert.match(tourHtml,/A responsible first evaluation/);
+  assert.match(tourHtml,/no real participant records/);
   const tourScript=await fetch(origin+'/organization-tour.js');assert.equal(tourScript.status,200);
   assert.match(await tourScript.text(),/data-panel/);
   const script=await fetch(origin+'/organizations.js');assert.equal(script.status,200);assert.match(await script.text(),/organizationCreate/);
