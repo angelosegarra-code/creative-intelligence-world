@@ -64,3 +64,13 @@ CREATE INDEX IF NOT EXISTS idx_organization_learning_notes_owner ON organization
 -- Revocation of enrollment makes shared notes unreadable without changing historical records.
 ALTER TABLE organization_learning_notes ADD COLUMN IF NOT EXISTS shared_at TIMESTAMPTZ;
 CREATE INDEX IF NOT EXISTS idx_organization_learning_shared ON organization_learning_notes(organization_id,participant_id) WHERE shared_at IS NOT NULL;
+
+-- Professional questions on explicitly shared notes. Participants retain goal ownership.
+CREATE TABLE IF NOT EXISTS organization_learning_feedback (
+ id TEXT PRIMARY KEY,
+ note_id TEXT NOT NULL REFERENCES organization_learning_notes(id) ON DELETE CASCADE,
+ professional_id TEXT NOT NULL REFERENCES users(id),
+ question TEXT NOT NULL CHECK(length(question) BETWEEN 1 AND 1000),
+ created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_organization_learning_feedback_note ON organization_learning_feedback(note_id,created_at);
