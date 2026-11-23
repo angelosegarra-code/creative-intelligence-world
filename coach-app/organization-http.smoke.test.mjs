@@ -87,6 +87,14 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   const feedbackPost=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{question:'What did you notice when you tried this?'},professionalCookie);assert.equal(feedbackPost.status,201);
   const adminFeedback=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{question:'Unauthorized'},cookie);assert.equal(adminFeedback.status,404);
   const participantFeedback=await fetch(origin+'/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{headers:{Cookie:participantCookie}});assert.equal(participantFeedback.status,200);assert.equal((await participantFeedback.json()).feedback[0].question,'What did you notice when you tried this?');
+  const reflectionPath='/api/organization-learning/'+org.id+'/notes/'+noteId+'/reflection';
+  assert.equal((await post(reflectionPath,{reflection:'I discovered a new possibility.'},participantCookie)).status,200);
+  assert.equal((await post(reflectionPath,{reflection:'Unauthorized edit'},professionalCookie)).status,403);
+  assert.equal((await post(reflectionPath,{reflection:'Unauthorized edit'},cookie)).status,403);
+  const reflected=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:participantCookie}});
+  assert.equal((await reflected.json()).notes[0].reflection,'I discovered a new possibility.');
+  const stillShared=await fetch(origin+'/api/organization-learning/'+org.id+'/shared',{headers:{Cookie:professionalCookie}});
+  assert.equal(JSON.stringify(await stillShared.json()).includes('I discovered a new possibility.'),false);
   const unshare=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/unshare',{},participantCookie);assert.equal(unshare.status,200);
   const afterUnshareFeedback=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{question:'Not permitted'},professionalCookie);assert.equal(afterUnshareFeedback.status,404);
   const afterUnshare=await fetch(origin+'/api/organization-learning/'+org.id+'/shared',{headers:{Cookie:professionalCookie}});assert.equal((await afterUnshare.json()).notes.length,0);
@@ -97,6 +105,7 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   const adminNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:cookie}});assert.equal(adminNotes.status,403);
   const revoke=await post('/api/organization-participants/'+org.id+'/revoke',{},participantCookie);assert.equal(revoke.status,200);
   const afterRevocationFeedback=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{question:'Not permitted'},professionalCookie);assert.equal(afterRevocationFeedback.status,404);
+  assert.equal((await post(reflectionPath,{reflection:'After revocation'},participantCookie)).status,404);
   const revokedShared=await fetch(origin+'/api/organization-learning/'+org.id+'/shared',{headers:{Cookie:professionalCookie}});assert.equal((await revokedShared.json()).notes.length,0);
   const revokedNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:participantCookie}});assert.equal(revokedNotes.status,404);
   const revokedOverview=await fetch(origin+'/api/organizations/'+org.id+'/overview',{headers:{Cookie:cookie}});assert.equal(revokedOverview.status,200);
