@@ -52,3 +52,6 @@ This is a **discovery and fictional-prototype evaluation**, not a production lic
 
 ## Technical reference
 Private development route: `/organization-tour` on the feature branch. See `ORGANIZATION_PREVIEW_RELEASE.md` for release gates. The public static fictional demonstration may be used for orientation, but should not be represented as a live institutional platform.
+
+## Participant-controlled goal sharing (development feature)
+A participant can now save a private perspective, goal and next action, then explicitly share or stop sharing **one note at a time** with the professional currently assigned to their institutional enrollment. Professional access requires an active enrollment, professional membership, and an active per-note share. Revoking enrollment immediately blocks the professional's shared-note view. The professional response excludes reflections, and administrator reporting remains counts-only. The feature is on the development branch, not a deployed institutional service.
