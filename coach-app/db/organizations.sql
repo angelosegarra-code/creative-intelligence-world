@@ -45,3 +45,17 @@ CREATE TABLE IF NOT EXISTS organization_participant_invitations (
  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY(organization_id,professional_id) REFERENCES organization_members(organization_id,user_id)
 );
+
+-- Participant-owned institutional learning notes. Enrollment alone never shares content.
+CREATE TABLE IF NOT EXISTS organization_learning_notes (
+ id TEXT PRIMARY KEY,
+ organization_id TEXT NOT NULL,
+ participant_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ perspective TEXT NOT NULL CHECK(perspective IN ('observer','dreamer','alchemist','visionary')),
+ goal TEXT NOT NULL CHECK(length(goal) BETWEEN 1 AND 500),
+ next_action TEXT NOT NULL CHECK(length(next_action) BETWEEN 1 AND 500),
+ reflection TEXT NOT NULL DEFAULT '' CHECK(length(reflection)<=2000),
+ created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY(organization_id,participant_id) REFERENCES organization_participants(organization_id,participant_id)
+);
+CREATE INDEX IF NOT EXISTS idx_organization_learning_notes_owner ON organization_learning_notes(participant_id,organization_id,created_at);
