@@ -142,7 +142,7 @@ if(m==='GET'&&p==='/'){
   res.writeHead(200,headers);
   return res.end(b);
 }
-if(m==='GET'&&['/app.js','/journey.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
+if(m==='GET'&&['/app.js','/journey.js','/organizations.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
 if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 // Browser writes must originate from this server. No wildcard CORS.
 const nativeRegistration=m==='POST'&&p==='/api/register'&&contentType===formContentType;
