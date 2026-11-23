@@ -33,11 +33,11 @@ export function createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply
    if(!await admin(actor,id))return reply(res,403,{error:'Administrator access required'});
    // Counts only. Never return emails, participant identifiers, goals or reflections.
    const counts=await q(`SELECT
-      (SELECT COUNT(*)::integer FROM organization_members WHERE organization_id=?) AS "professionals",
+      (SELECT COUNT(*)::integer FROM organization_members WHERE organization_id=? AND role='professional') AS "professionals",
       (SELECT COUNT(*)::integer FROM organization_participants WHERE organization_id=? AND revoked_at IS NULL) AS "enrolledParticipants",
       (SELECT COUNT(*)::integer FROM organization_participants WHERE organization_id=? AND revoked_at IS NOT NULL) AS "revokedEnrollments"`,id,id,id);
    return reply(res,200,{organizationId:id,summary:{
-     professionalAccounts:Math.max(0,Number(counts.professionals)-1),
+     professionalAccounts:Number(counts.professionals),
      activeParticipantEnrollments:Number(counts.enrolledParticipants),
      revokedEnrollments:Number(counts.revokedEnrollments)
    },privacy:'Counts only; no participant records or private coaching data.'});
