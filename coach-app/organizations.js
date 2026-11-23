@@ -23,8 +23,8 @@ async function open(id){
  const info=await request('organizations/'+id);state.selected=id;
  by('organizationSelected').textContent=info.organization.name+' · '+info.role;
  const isAdmin=info.role==='admin';by('organizationAdmin').hidden=!isAdmin;
- by('organizationToken').textContent='';by('organizationParticipantToken').textContent='';by('organizationMembers').replaceChildren();by('organizationProfessional').hidden=false;await refreshParticipants();
- if(isAdmin){const members=await request('organizations/'+id+'/members');for(const m of members.members)by('organizationMembers').append(item('li',m.email+' · '+m.role));}
+ by('organizationToken').textContent='';by('organizationParticipantToken').textContent='';by('organizationMembers').replaceChildren();by('organizationOverview').replaceChildren();by('organizationProfessional').hidden=false;await refreshParticipants();
+ if(isAdmin){const overview=await request('organizations/'+id+'/overview');const summary=overview.summary;const box=by('organizationOverview');for(const [label,value] of [['Professional accounts (excluding administrator)',summary.professionalAccounts],['Active participant enrollments',summary.activeParticipantEnrollments],['Revoked enrollments',summary.revokedEnrollments]])box.append(item('p',label+': '+value));const members=await request('organizations/'+id+'/members');for(const m of members.members)by('organizationMembers').append(item('li',m.email+' · '+m.role));}
  status('Workspace opened. This pilot workspace does not expose participant records or aggregate reporting.');
  }catch(e){status(e.message)}
 }
