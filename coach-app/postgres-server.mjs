@@ -1,5 +1,7 @@
 import http from 'node:http';
 import {createCoachDemo} from './coach-demo.mjs';
+import {createOrganizationRoutes} from './organization-routes.mjs';
+import {acceptOrganizationInvitation} from './organization-accept.mjs';
 import {createPostgresJourney,perspectives} from './postgres-journey.mjs';
 import {createPostgresAdapter} from './postgres-adapter.mjs';
 import {migratePostgres} from './postgres-store.mjs';
@@ -93,6 +95,8 @@ const journey=createPostgresJourney({db,q,all,run,hex,active,audit,input,reply})
 const onRender=!!process.env.RENDER;
 const staging=onRender?stagingAccess(process.env.STAGING_ACCESS_USER,process.env.STAGING_ACCESS_PASSWORD):null;
 const coachDemo=createCoachDemo({q,all,run,input,reply});
+const organizationRoutes=createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk});
+const acceptOrganization=acceptOrganizationInvitation({db,q,run,sha,audit,input,reply});
 const server=http.createServer(async(req,res)=>{try{
 // Private staging gate. Fail closed on Render unless credentials are configured.
 // Render terminates HTTPS. A successful page sign-in grants a separate staging cookie.
@@ -166,6 +170,8 @@ if(m==='POST'&&p==='/api/register'){
 if(m==='POST'&&p==='/api/login'){const b=await input(req),a=await q('SELECT * FROM users WHERE email=?',String(b.email||'').trim().toLowerCase());if(!a||typeof b.password!=='string'||b.password.length>128)return reply(res,401,{error:'Invalid credentials'});const check=scryptSync(b.password,a.password_salt,64),stored=Buffer.from(a.password_hash,'hex');if(stored.length!==check.length||!timingSafeEqual(check,stored))return reply(res,401,{error:'Invalid credentials'});const token=hex();await run('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)',sha(token),a.id,Date.now()+28800000);return reply(res,200,{role:a.role,email:a.email},{'Set-Cookie':'ci_coach_sid='+token+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)await run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 const actor=await user(req);if(!actor)return reply(res,401,{error:'Sign in required'});
+if(p==='/api/organizations/invitations/accept'&&m==='POST')return await acceptOrganization(req,res,actor);
+if(p==='/api/organizations'||p.startsWith('/api/organizations/'))return await organizationRoutes(req,res,p,m,actor);
 if(p==='/api/journey'||p.startsWith('/api/journey/'))return await journey.route(req,res,p,m,actor);
 if(m==='GET'&&p==='/api/me')return reply(res,200,actor);
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)await run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'})}
