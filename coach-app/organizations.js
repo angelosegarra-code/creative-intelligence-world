@@ -78,6 +78,8 @@ async function refreshLearningNotes(){
  const view=by('organizationLearningNotes');view.replaceChildren();const org=by('organizationLearningOrg').value;if(!org)return;
  const data=await request('organization-learning/'+org+'/notes');
  for(const n of data.notes){const row=document.createElement('div');row.className='share-row';row.append(item('span',n.perspective+' · '+n.goal+' — '+n.nextAction+' · '+(n.sharedAt?'Shared with my professional':'Private')));row.append(button(n.sharedAt?'Stop sharing':'Share with my professional',async()=>{try{await request('organization-learning/'+org+'/notes/'+n.id+'/'+(n.sharedAt?'unshare':'share'),'POST',{});await refreshLearningNotes();by('organizationLearningStatus').textContent=n.sharedAt?'Sharing revoked.':'Goal shared with your assigned professional.'}catch(e){by('organizationLearningStatus').textContent=e.message}}));view.append(row);
+  const reflection=document.createElement('textarea');reflection.maxLength=2000;reflection.value=n.reflection||'';reflection.setAttribute('aria-label','Private reflection');reflection.placeholder='What did you expect? What happened? What surprised you? What will you choose next?';
+  view.append(item('p','My private reflection'),reflection,button('Save reflection privately',async()=>{try{await request('organization-learning/'+org+'/notes/'+n.id+'/reflection','POST',{reflection:reflection.value});by('organizationLearningStatus').textContent='Reflection saved privately.'}catch(e){by('organizationLearningStatus').textContent=e.message}}));
   const feedback=await request('organization-learning/'+org+'/notes/'+n.id+'/feedback');
   for(const f of feedback.feedback)view.append(item('p','Professional question: '+f.question));
  }
