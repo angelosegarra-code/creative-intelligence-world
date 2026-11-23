@@ -46,3 +46,7 @@ jobs:
         env:
           CI_ORGANIZATION_TEST_DATABASE_URL: postgresql://coach_test:coach_test_password@127.0.0.1:5432/coach_test
         run: node --test organization-postgres.integration.test.mjs
+      - name: HTTP smoke test against running Coach Studio
+        env:
+          CI_ORGANIZATION_TEST_DATABASE_URL: postgresql://coach_test:coach_test_password@127.0.0.1:5432/coach_test
+        run: node --test organization-http.smoke.test.mjs
