@@ -7,7 +7,8 @@ Status: development branch only. This is not a public institutional offering.
 - Private Coach Studio Node app: `coach-app/postgres-server.mjs` on Render.
 - Organization endpoints: `coach-app/organization-routes.mjs` and `organization-accept.mjs`.
 - Additive PostgreSQL schema: `coach-app/db/organizations.sql` loaded by `migratePostgres`.
-- All institutional records currently share the private pilot database with existing coach accounts. Organization membership is not yet connected to participant relationships.
+- The institutional feature branch is not deployed. When deployed, it requires a separate preview database and service to protect the existing pilot.
+- Institutional participant enrollment and professional-specific caseloads are implemented as separate, consent-bound records. They do not automatically create private coach-client relationships.
 
 ## Verified by automated CI
 - SQL migration, creation, and invitation lifecycle using disposable PostgreSQL.
@@ -22,7 +23,7 @@ Status: development branch only. This is not a public institutional offering.
 4. Configure unique `STAGING_ACCESS_USER` and a strong `STAGING_ACCESS_PASSWORD` (minimum 20 characters). The server fails closed on Render if these are absent.
 5. Configure `NODE_ENV=production` for secure session cookies. Verify TLS, account registration, session isolation, staging access, and no sensitive values in logs.
 6. Use only fictional accounts. Never collect protected health, educational, or veterans' case records in this pilot.
-7. Manually run the administrator/professional two-browser walkthrough. Check that professional access never reveals admin-only membership and private participant data is absent.
+7. Manually run the administrator/professional/participant three-browser walkthrough. Check that professional access never reveals admin-only membership and private participant data is absent.
 8. Confirm database lifecycle and backup strategy before inviting outside testers. The current free Render pilot database has a scheduled expiration date.
 9. Obtain explicit approval before promoting the feature branch into the existing Coach Studio deployment.
 
@@ -38,8 +39,8 @@ Status: development branch only. This is not a public institutional offering.
 
 ## Not yet implemented
 - Automatic invitation email delivery, password reset and account verification.
-- Participant-to-organization enrollment and scoped caseloads.
-- Aggregate program reports with privacy thresholds and consent controls.
+- Broader aggregate program reports with privacy thresholds, explicit evaluation consent and suppression of small cohorts. The current admin overview only provides basic enrollment counts.
+- Institutional program outcomes and any participant-approved reporting.
 - Tenant isolation for all existing coaching and journey endpoints.
 - Clinical compliance, institutional procurement/security review, production support.
 
@@ -59,3 +60,6 @@ Do not call this a live institutional platform until these limitations are addre
 **Sales demonstration wording:** “Organizations can invite professionals and track enrollment counts. Participants choose whether to enroll and may revoke that enrollment. Private coaching content is not included in institutional reporting.”
 
 **Limitations:** This is a fictional proof of concept, not a compliance-certified production service. Institutional enrollment does not automatically establish an individual coach-client relationship or share a Creative Intelligence profile or goal. Those remain separate, explicit actions.
+
+## Partner-facing walkthrough
+The private `/organization-tour` page is a fictional, no-account guided presentation. It explains the organizational problem, the three roles, limited participation reporting, example settings and a controlled pilot discussion. It is **not** a live product demo and contains no personal data, API calls or persistence. The route remains behind the existing Render staging gate when deployed. Never suggest that the static sample counts are measured outcomes.
