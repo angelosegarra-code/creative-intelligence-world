@@ -18,6 +18,11 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   const html=await ready();
   assert.match(html,/id="organizationStudio"/);
   assert.match(html,/organizations\.js/);
+  const tour=await fetch(origin+'/organization-tour');assert.equal(tour.status,200);
+  const tourHtml=await tour.text();assert.match(tourHtml,/Jordan · Administrator/);assert.match(tourHtml,/Morgan · Professional/);assert.match(tourHtml,/Casey · Participant/);
+  assert.match(tourHtml,/Illustrative walkthrough, not a live account/);
+  const tourScript=await fetch(origin+'/organization-tour.js');assert.equal(tourScript.status,200);
+  assert.match(await tourScript.text(),/data-panel/);
   const script=await fetch(origin+'/organizations.js');assert.equal(script.status,200);assert.match(await script.text(),/organizationCreate/);
   const nonce=Math.random().toString(36).slice(2);
   const email='org-admin-'+nonce+'@example.test';
