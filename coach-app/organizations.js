@@ -63,7 +63,18 @@ async function refreshOwnEnrollments(){
     button('Revoke enrollment',async()=>{if(!confirm('Revoke this fictional institutional enrollment?'))return;try{await request('organization-participants/'+e.organizationId+'/revoke','POST',{});await refreshOwnEnrollments();by('organizationParticipantStatus').textContent='Enrollment revoked.'}catch(err){by('organizationParticipantStatus').textContent=err.message}}));
   view.append(row);
  }
+ const select=by('organizationLearningOrg');select.replaceChildren();for(const e of data.enrollments){const option=document.createElement('option');option.value=e.organizationId;option.textContent=e.organizationName;select.append(option)}
+ await refreshLearningNotes();
 }
+async function refreshLearningNotes(){
+ const view=by('organizationLearningNotes');view.replaceChildren();const org=by('organizationLearningOrg').value;if(!org)return;
+ const data=await request('organization-learning/'+org+'/notes');
+ for(const n of data.notes)view.append(item('p',n.perspective+' · '+n.goal+' — '+n.nextAction));
+}
+by('organizationLearningOrg').addEventListener('change',()=>refreshLearningNotes().catch(e=>by('organizationLearningStatus').textContent=e.message));
+by('organizationLearningSave').addEventListener('click',async()=>{
+ try{const org=by('organizationLearningOrg').value;if(!org)throw Error('Accept an institutional enrollment first.');await request('organization-learning/'+org+'/notes','POST',{perspective:by('organizationLearningPerspective').value,goal:by('organizationLearningGoal').value,nextAction:by('organizationLearningAction').value});by('organizationLearningGoal').value='';by('organizationLearningAction').value='';await refreshLearningNotes();by('organizationLearningStatus').textContent='Saved privately. Not shared with your professional or institution.'}catch(e){by('organizationLearningStatus').textContent=e.message}
+});
 by('organizationInviteParticipant').addEventListener('click',async()=>{
  if(!state.selected)return status('Open an organization first.');
  try{const data=await request('organizations/'+state.selected+'/participants/invitations','POST',{email:by('organizationParticipantEmail').value});by('organizationParticipantToken').textContent=data.invitationToken;status('Participant invitation created. Share privately with the fictional participant.')}catch(err){status(err.message)}
