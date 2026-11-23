@@ -54,7 +54,12 @@ async function refreshParticipants(){
  for(const p of data.participants)list.append(item('li',p.email));
  const shared=await request('organization-learning/'+state.selected+'/shared');const view=by('organizationSharedNotes');view.replaceChildren();
  if(!shared.notes.length)view.append(item('p','No goals shared with you yet.'));
- for(const note of shared.notes)view.append(item('p',note.participantEmail+' · '+note.perspective+' · '+note.goal+' — '+note.nextAction));
+ for(const note of shared.notes){
+  const row=document.createElement('div');row.className='journey-card';
+  row.append(item('p',note.participantEmail+' · '+note.perspective+' · '+note.goal+' — '+note.nextAction));
+  const field=document.createElement('textarea');field.maxLength=1000;field.placeholder='Offer a question or observation (not a decision)';field.setAttribute('aria-label','Question for '+note.participantEmail);row.append(field);
+  row.append(button('Send question',async()=>{try{await request('organization-learning/'+state.selected+'/notes/'+note.id+'/feedback','POST',{question:field.value});field.value='';status('Question sent to participant. Their goal remains unchanged.')}catch(e){status(e.message)}}));view.append(row);
+ }
 }
 async function refreshOwnEnrollments(){
  const data=await request('organization-participants/mine');
@@ -72,7 +77,10 @@ async function refreshOwnEnrollments(){
 async function refreshLearningNotes(){
  const view=by('organizationLearningNotes');view.replaceChildren();const org=by('organizationLearningOrg').value;if(!org)return;
  const data=await request('organization-learning/'+org+'/notes');
- for(const n of data.notes){const row=document.createElement('div');row.className='share-row';row.append(item('span',n.perspective+' · '+n.goal+' — '+n.nextAction+' · '+(n.sharedAt?'Shared with my professional':'Private')));row.append(button(n.sharedAt?'Stop sharing':'Share with my professional',async()=>{try{await request('organization-learning/'+org+'/notes/'+n.id+'/'+(n.sharedAt?'unshare':'share'),'POST',{});await refreshLearningNotes();by('organizationLearningStatus').textContent=n.sharedAt?'Sharing revoked.':'Goal shared with your assigned professional.'}catch(e){by('organizationLearningStatus').textContent=e.message}}));view.append(row)}
+ for(const n of data.notes){const row=document.createElement('div');row.className='share-row';row.append(item('span',n.perspective+' · '+n.goal+' — '+n.nextAction+' · '+(n.sharedAt?'Shared with my professional':'Private')));row.append(button(n.sharedAt?'Stop sharing':'Share with my professional',async()=>{try{await request('organization-learning/'+org+'/notes/'+n.id+'/'+(n.sharedAt?'unshare':'share'),'POST',{});await refreshLearningNotes();by('organizationLearningStatus').textContent=n.sharedAt?'Sharing revoked.':'Goal shared with your assigned professional.'}catch(e){by('organizationLearningStatus').textContent=e.message}}));view.append(row);
+  const feedback=await request('organization-learning/'+org+'/notes/'+n.id+'/feedback');
+  for(const f of feedback.feedback)view.append(item('p','Professional question: '+f.question));
+ }
 }
 by('organizationLearningOrg').addEventListener('change',()=>refreshLearningNotes().catch(e=>by('organizationLearningStatus').textContent=e.message));
 by('organizationLearningSave').addEventListener('click',async()=>{
