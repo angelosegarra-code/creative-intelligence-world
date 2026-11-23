@@ -29,8 +29,11 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   for(const perspective of ['observer','dreamer','alchemist','visionary'])assert.match(tourHtml,new RegExp('data-perspective="'+perspective+'"'));
   assert.match(tourHtml,/Casey.s choice, not the system.s decision/);
   assert.match(tourHtml,/no real participant records/);
+  assert.match(tourHtml,/From a personal goal to independent learning/);
+  for(const stage of ['goal','share','question','reflect','adapt','withdraw']){assert.ok(tourHtml.includes('data-exchange="'+stage+'"'));assert.ok(tourHtml.includes('data-exchange-panel="'+stage+'"'));}
+  assert.match(tourHtml,/Previously seen information cannot be recalled/);
   const tourScript=await fetch(origin+'/organization-tour.js');assert.equal(tourScript.status,200);
-  assert.match(await tourScript.text(),/data-panel/);
+  const tourJs=await tourScript.text();assert.match(tourJs,/data-panel/);assert.match(tourJs,/data-exchange-panel/);
   const script=await fetch(origin+'/organizations.js');assert.equal(script.status,200);assert.match(await script.text(),/organizationCreate/);
   const nonce=Math.random().toString(36).slice(2);
   const email='org-admin-'+nonce+'@example.test';
