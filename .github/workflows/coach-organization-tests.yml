@@ -39,6 +39,7 @@ jobs:
           node --check postgres-server.mjs
           node --check organization-routes.mjs
           node --check organization-accept.mjs
+          node --check organization-participants.mjs
           node --check organizations.js
       - name: Unit tests
         run: node --test postgres-schema.test.mjs postgres-adapter.test.mjs organization-routes.test.mjs
