@@ -20,6 +20,8 @@ export async function migratePostgres(pool){
   const sql=await readFile(join(here,'db/postgres-schema.sql'),'utf8');
   // Schema is a single transaction; do not run on an unrelated database.
   await pool.query(sql);
+  const organizations=await readFile(join(here,'db/organizations.sql'),'utf8');
+  await pool.query(organizations);
   const result=await pool.query("SELECT to_regclass('public.users') AS users, to_regclass('public.journey_goals') AS goals");
   if(!result.rows[0]?.users||!result.rows[0]?.goals)throw new Error('PostgreSQL schema verification failed');
   return true;
