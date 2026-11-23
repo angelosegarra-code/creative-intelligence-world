@@ -44,3 +44,18 @@ Status: development branch only. This is not a public institutional offering.
 - Clinical compliance, institutional procurement/security review, production support.
 
 Do not call this a live institutional platform until these limitations are addressed.
+
+## Three-role guided institutional walkthrough (fictional)
+**Institution:** Creative Learning Center. **Administrator:** Jordan (operations lead). **Professional:** Morgan (learning advisor). **Participant:** Casey (adult learner). All emails and data must be fictional.
+
+1. Jordan registers a demo coach account and creates Creative Learning Center. Jordan sees the organization overview (initially zero professional accounts and zero participants).
+2. Jordan invites Morgan's demo coach email using the one-time token. Morgan signs in and accepts. Jordan's overview now shows one professional account.
+3. Morgan opens Creative Learning Center, invites Casey's fictional client email and shares the one-time token. Jordan cannot see Morgan's participant list.
+4. Casey signs in as a client, reviews the institutional enrollment notice, and explicitly accepts. Casey sees Creative Learning Center and Morgan's demo email in My institutional enrollment.
+5. Morgan's caseload shows Casey's fictional email. Jordan's overview shows one active enrollment but **not Casey's identity or personal work**.
+6. Casey revokes enrollment. Morgan's caseload no longer shows Casey, and Jordan's active count returns to zero. No organization route grants access to private goals, profiles or reflections.
+7. Repeat with another professional to verify that each sees only their own enrolled participants. The same participant cannot be silently reassigned between professionals.
+
+**Sales demonstration wording:** “Organizations can invite professionals and track enrollment counts. Participants choose whether to enroll and may revoke that enrollment. Private coaching content is not included in institutional reporting.”
+
+**Limitations:** This is a fictional proof of concept, not a compliance-certified production service. Institutional enrollment does not automatically establish an individual coach-client relationship or share a Creative Intelligence profile or goal. Those remain separate, explicit actions.
