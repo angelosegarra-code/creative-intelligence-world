@@ -7,7 +7,7 @@ async function request(path,method='GET',body){
  const data=await r.json();if(!r.ok)throw Error(data.error||'Request failed');return data;
 }
 function status(message){by('organizationStatus').textContent=message}
-function clear(){state.user=null;state.organizations=[];state.selected=null;by('organizationStudio').hidden=true;by('organizationList').replaceChildren();by('organizationMembers').replaceChildren();by('organizationToken').textContent='';by('organizationSelected').textContent='';by('organizationAdmin').hidden=true;by('organizationProfessional').hidden=true;by('organizationParticipants').replaceChildren();by('organizationParticipantToken').textContent='';by('organizationParticipantStudio').hidden=true;by('organizationMyEnrollments').replaceChildren();by('organizationParticipantStatus').textContent='';by('organizationParticipantAcceptToken').value='';by('organizationName').value='';by('organizationInviteEmail').value='';by('organizationAcceptToken').value='';status('');}
+function clear(){state.user=null;state.organizations=[];state.selected=null;by('organizationStudio').hidden=true;by('organizationList').replaceChildren();by('organizationMembers').replaceChildren();by('organizationToken').textContent='';by('organizationSelected').textContent='';by('organizationAdmin').hidden=true;by('organizationProfessional').hidden=true;by('organizationParticipants').replaceChildren();by('organizationSharedNotes').replaceChildren();by('organizationParticipantToken').textContent='';by('organizationParticipantStudio').hidden=true;by('organizationMyEnrollments').replaceChildren();by('organizationParticipantStatus').textContent='';by('organizationParticipantAcceptToken').value='';by('organizationName').value='';by('organizationInviteEmail').value='';by('organizationAcceptToken').value='';status('');}
 function item(tag,text){const node=document.createElement(tag);node.textContent=text;return node;}
 function button(label,handler){const node=item('button',label);node.type='button';node.addEventListener('click',handler);return node;}
 async function refresh(){
@@ -25,7 +25,7 @@ async function open(id){
  const isAdmin=info.role==='admin';by('organizationAdmin').hidden=!isAdmin;
  by('organizationToken').textContent='';by('organizationParticipantToken').textContent='';by('organizationMembers').replaceChildren();by('organizationOverview').replaceChildren();by('organizationProfessional').hidden=false;await refreshParticipants();
  if(isAdmin){const overview=await request('organizations/'+id+'/overview');const summary=overview.summary;const box=by('organizationOverview');for(const [label,value] of [['Professional accounts (excluding administrator)',summary.professionalAccounts],['Active participant enrollments',summary.activeParticipantEnrollments],['Revoked enrollments',summary.revokedEnrollments]])box.append(item('p',label+': '+value));const members=await request('organizations/'+id+'/members');for(const m of members.members)by('organizationMembers').append(item('li',m.email+' · '+m.role));}
- status('Workspace opened. This pilot workspace does not expose participant records or aggregate reporting.');
+ status('Workspace opened. Shared goals require participant permission; administrators see only participation counts.');
  }catch(e){status(e.message)}
 }
 document.addEventListener('coach-identity',async e=>{
@@ -52,6 +52,9 @@ async function refreshParticipants(){
  const data=await request('organizations/'+state.selected+'/participants');
  if(!data.participants.length)list.append(item('li','No enrolled fictional participants yet.'));
  for(const p of data.participants)list.append(item('li',p.email));
+ const shared=await request('organization-learning/'+state.selected+'/shared');const view=by('organizationSharedNotes');view.replaceChildren();
+ if(!shared.notes.length)view.append(item('p','No goals shared with you yet.'));
+ for(const note of shared.notes)view.append(item('p',note.participantEmail+' · '+note.perspective+' · '+note.goal+' — '+note.nextAction));
 }
 async function refreshOwnEnrollments(){
  const data=await request('organization-participants/mine');
@@ -69,7 +72,7 @@ async function refreshOwnEnrollments(){
 async function refreshLearningNotes(){
  const view=by('organizationLearningNotes');view.replaceChildren();const org=by('organizationLearningOrg').value;if(!org)return;
  const data=await request('organization-learning/'+org+'/notes');
- for(const n of data.notes)view.append(item('p',n.perspective+' · '+n.goal+' — '+n.nextAction));
+ for(const n of data.notes){const row=document.createElement('div');row.className='share-row';row.append(item('span',n.perspective+' · '+n.goal+' — '+n.nextAction+' · '+(n.sharedAt?'Shared with my professional':'Private')));row.append(button(n.sharedAt?'Stop sharing':'Share with my professional',async()=>{try{await request('organization-learning/'+org+'/notes/'+n.id+'/'+(n.sharedAt?'unshare':'share'),'POST',{});await refreshLearningNotes();by('organizationLearningStatus').textContent=n.sharedAt?'Sharing revoked.':'Goal shared with your assigned professional.'}catch(e){by('organizationLearningStatus').textContent=e.message}}));view.append(row)}
 }
 by('organizationLearningOrg').addEventListener('change',()=>refreshLearningNotes().catch(e=>by('organizationLearningStatus').textContent=e.message));
 by('organizationLearningSave').addEventListener('click',async()=>{
