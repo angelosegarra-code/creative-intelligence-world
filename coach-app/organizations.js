@@ -7,7 +7,7 @@ async function request(path,method='GET',body){
  const data=await r.json();if(!r.ok)throw Error(data.error||'Request failed');return data;
 }
 function status(message){by('organizationStatus').textContent=message}
-function clear(){state.user=null;state.organizations=[];state.selected=null;by('organizationStudio').hidden=true;by('organizationList').replaceChildren();by('organizationMembers').replaceChildren();by('organizationToken').textContent='';by('organizationName').value='';by('organizationInviteEmail').value='';by('organizationAcceptToken').value='';status('');}
+function clear(){state.user=null;state.organizations=[];state.selected=null;by('organizationStudio').hidden=true;by('organizationList').replaceChildren();by('organizationMembers').replaceChildren();by('organizationToken').textContent='';by('organizationSelected').textContent='';by('organizationAdmin').hidden=true;by('organizationName').value='';by('organizationInviteEmail').value='';by('organizationAcceptToken').value='';status('');}
 function item(tag,text){const node=document.createElement(tag);node.textContent=text;return node;}
 function button(label,handler){const node=item('button',label);node.type='button';node.addEventListener('click',handler);return node;}
 async function refresh(){
@@ -16,7 +16,7 @@ async function refresh(){
  if(!result.organizations.length)list.append(item('p','No organizations yet. Create a fictional pilot organization or accept an invitation.'));
  for(const org of result.organizations){const row=document.createElement('div');row.className='share-row';row.append(item('span',org.name+' · '+org.role),button('Open',()=>open(org.id)));list.append(row);}
  if(state.selected&&!result.organizations.some(o=>o.id===state.selected))state.selected=null;
- if(!state.selected)by('organizationAdmin').hidden=true;
+ if(!state.selected){by('organizationAdmin').hidden=true;by('organizationSelected').textContent='';}
 }
 async function open(id){
  try{
