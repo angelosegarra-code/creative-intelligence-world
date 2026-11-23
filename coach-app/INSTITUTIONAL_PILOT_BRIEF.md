@@ -13,6 +13,9 @@ Organizations rely on counselors, advisors, facilitators and coaches to help peo
 - Private individual coaching relationships, profiles and goals are **separate** from institutional enrollment. Organization enrollment does not grant access to those records.
 - Automated unit, disposable PostgreSQL integration and three-role HTTP tests have passed. This is not equivalent to a production security review.
 
+## Learning experience shown in the fictional tour
+Casey explores a self-chosen learning question through four flexible perspectives: **Observer** (notice evidence), **Dreamer** (imagine possibilities), **Alchemist** (test assumptions), and **Visionary** (choose direction). Casey—not the technology or professional—chooses whether and how to act. The example is static and does not collect answers. This demonstrates the educational approach, not a production institutional goal workflow.
+
 ## What is not included
 No real participant data, protected health information, student records, veterans' case information, clinical use, regulated decision-making, automated invitation email, institutional SSO, production SLA, formal compliance certification or institution-wide personal coaching analytics. The feature branch has not been deployed. A live isolated pilot requires separate hosting/database approval, operational controls and a privacy review.
 
