@@ -18,11 +18,16 @@ export function createPostgresPool({connectionString=process.env.DATABASE_URL}={
 
 export async function migratePostgres(pool){
   const sql=await readFile(join(here,'db/postgres-schema.sql'),'utf8');
-  // Schema is a single transaction; do not run on an unrelated database.
-  await pool.query(sql);
-  const result=await pool.query("SELECT to_regclass('public.users') AS users, to_regclass('public.journey_goals') AS goals");
-  if(!result.rows[0]?.users||!result.rows[0]?.goals)throw new Error('PostgreSQL schema verification failed');
-  return true;
+  const organizations=await readFile(join(here,'db/organizations.sql'),'utf8');
+  return withTransaction(pool,async client=>{
+    // Serialize schema initialization by app instances using the same database.
+    await client.query('SELECT pg_advisory_xact_lock(184320947, 1)');
+    await client.query(sql);
+    await client.query(organizations);
+    const result=await client.query("SELECT to_regclass('public.users') AS users, to_regclass('public.journey_goals') AS goals, to_regclass('public.organization_learning_feedback') AS feedback");
+    if(!result.rows[0]?.users||!result.rows[0]?.goals||!result.rows[0]?.feedback)throw new Error('PostgreSQL schema verification failed');
+    return true;
+  });
 }
 
 export async function withTransaction(pool,work){

@@ -1,5 +1,10 @@
 import http from 'node:http';
+import {once} from 'node:events';
 import {createCoachDemo} from './coach-demo.mjs';
+import {createOrganizationRoutes} from './organization-routes.mjs';
+import {acceptOrganizationInvitation} from './organization-accept.mjs';
+import {createOrganizationParticipantRoutes} from './organization-participants.mjs';
+import {createOrganizationLearningRoutes} from './organization-learning.mjs';
 import {createPostgresJourney,perspectives} from './postgres-journey.mjs';
 import {createPostgresAdapter} from './postgres-adapter.mjs';
 import {migratePostgres} from './postgres-store.mjs';
@@ -93,6 +98,10 @@ const journey=createPostgresJourney({db,q,all,run,hex,active,audit,input,reply})
 const onRender=!!process.env.RENDER;
 const staging=onRender?stagingAccess(process.env.STAGING_ACCESS_USER,process.env.STAGING_ACCESS_PASSWORD):null;
 const coachDemo=createCoachDemo({q,all,run,input,reply});
+const organizationRoutes=createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk});
+const acceptOrganization=acceptOrganizationInvitation({db,q,run,sha,audit,input,reply});
+const organizationParticipants=createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk});
+const organizationLearning=createOrganizationLearningRoutes({db,q,all,run,hex,audit,input,reply});
 const server=http.createServer(async(req,res)=>{try{
 // Private staging gate. Fail closed on Render unless credentials are configured.
 // Render terminates HTTPS. A successful page sign-in grants a separate staging cookie.
@@ -131,6 +140,10 @@ if(onRender){
 
 if(onRender&&p==='/demo-invites')return await coachDemo.adminRoute(req,res,browserOrigin);
 
+if(m==='GET'&&p==='/organization-tour'){
+  res.writeHead(200,htmlHeaders);
+  return res.end(await readFile(join(here,'organization-tour.html'),'utf8'));
+}
 if(m==='GET'&&p==='/'){
   const b=(await readFile(join(here,'index.html'),'utf8')).replace('<!-- coach-demo-admin -->',onRender?'<p><a href="/demo-invites">Manage private coach demo links</a></p>':'');
   const headers={...htmlHeaders};
@@ -138,7 +151,7 @@ if(m==='GET'&&p==='/'){
   res.writeHead(200,headers);
   return res.end(b);
 }
-if(m==='GET'&&['/app.js','/journey.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
+if(m==='GET'&&['/app.js','/journey.js','/organizations.js','/organization-tour.js'].includes(p)){const js=await readFile(join(here,p.slice(1)));res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(js)}
 if(!p.startsWith('/api/'))return reply(res,404,{error:'Not found'});
 // Browser writes must originate from this server. No wildcard CORS.
 const nativeRegistration=m==='POST'&&p==='/api/register'&&contentType===formContentType;
@@ -166,6 +179,10 @@ if(m==='POST'&&p==='/api/register'){
 if(m==='POST'&&p==='/api/login'){const b=await input(req),a=await q('SELECT * FROM users WHERE email=?',String(b.email||'').trim().toLowerCase());if(!a||typeof b.password!=='string'||b.password.length>128)return reply(res,401,{error:'Invalid credentials'});const check=scryptSync(b.password,a.password_salt,64),stored=Buffer.from(a.password_hash,'hex');if(stored.length!==check.length||!timingSafeEqual(check,stored))return reply(res,401,{error:'Invalid credentials'});const token=hex();await run('INSERT INTO sessions(token_hash,user_id,expires_at) VALUES(?,?,?)',sha(token),a.id,Date.now()+28800000);return reply(res,200,{role:a.role,email:a.email},{'Set-Cookie':'ci_coach_sid='+token+'; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)await run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'+(process.env.NODE_ENV==='production'?'; Secure':'')})}
 const actor=await user(req);if(!actor)return reply(res,401,{error:'Sign in required'});
+if(p.startsWith('/api/organization-learning/'))return await organizationLearning(req,res,p,m,actor);
+if(p.startsWith('/api/organization-participants/')||/^\/api\/organizations\/[a-f0-9]{48}\/participants(?:\/invitations)?$/.test(p))return await organizationParticipants(req,res,p,m,actor);
+if(p==='/api/organizations/invitations/accept'&&m==='POST')return await acceptOrganization(req,res,actor);
+if(p==='/api/organizations'||p.startsWith('/api/organizations/'))return await organizationRoutes(req,res,p,m,actor);
 if(p==='/api/journey'||p.startsWith('/api/journey/'))return await journey.route(req,res,p,m,actor);
 if(m==='GET'&&p==='/api/me')return reply(res,200,actor);
 if(m==='POST'&&p==='/api/logout'){const sid=cookie(req);if(sid)await run('DELETE FROM sessions WHERE token_hash=?',sha(sid));return reply(res,200,{ok:true},{'Set-Cookie':'ci_coach_sid=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'})}
@@ -205,14 +222,20 @@ return reply(res,403,{error:'Forbidden'});
 server.on('close',()=>{void db.close()});return server}
 if(process.argv[1]===fileURLToPath(import.meta.url)){
   let adapter;
+  let phase='configuration';
   try{
     adapter=createPostgresAdapter();
+    phase='migration';
     await migratePostgres(adapter.pool);
     console.log('Coach Studio PostgreSQL schema verified.');
-    createPostgresServer(adapter).listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',
-      ()=>console.log('PostgreSQL coach pilot listening'));
+    phase='listen';
+    const server=createPostgresServer(adapter);
+    server.listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1');
+    await once(server,'listening');
+    console.log('PostgreSQL coach pilot listening on port '+server.address().port);
   }catch(error){
-    console.error('Coach Studio PostgreSQL startup failed:',error.code||error.name);
+    const code=typeof error.code==='string'&&/^[A-Z0-9_]{2,32}$/.test(error.code)?error.code:'UNKNOWN';
+    console.error('Coach Studio PostgreSQL startup failed ('+phase+'): '+code);
     await adapter?.close();
     process.exitCode=1;
   }

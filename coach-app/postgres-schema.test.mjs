@@ -29,6 +29,5 @@ test('PostgreSQL schema uses native timestamps and avoids SQLite-only directives
   assert.doesNotMatch(postgres.replace(/^--.*$/gm,''),/\bPRAGMA\b/);
   assert.doesNotMatch(postgres,/\bAUTOINCREMENT\b/);
   assert.match(postgres,/TIMESTAMPTZ/);
-  assert.match(postgres,/BEGIN;/);
-  assert.match(postgres,/COMMIT;/);
+  assert.doesNotMatch(postgres,/^\s*(?:BEGIN|COMMIT);/m);
 });
