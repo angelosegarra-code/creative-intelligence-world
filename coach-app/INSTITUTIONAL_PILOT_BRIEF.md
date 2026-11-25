@@ -37,8 +37,18 @@ No real participant data, protected health information, student records, veteran
 
 **Evidence:** Qualitative structured feedback from fictional walkthrough participants; completion of scripted tasks; a prioritized list of product and governance gaps. Do not claim improved learner outcomes or therapeutic benefit based on this exercise.
 
-## Commercial conversation
-This is a **discovery and fictional-prototype evaluation**, not a production license. Pricing, pilot duration, hosting and responsibilities should be agreed only after scope and safeguards are understood. No additional Render infrastructure has been purchased for this branch.
+## Institutional Founding Pilot
+
+**Proposed offer.** $495 USD for one institution and one 30-day pilot, with one administrator, up to three advisors and up to 15 participants. The pilot supports voluntary, non-clinical learning. Discovery and the fictional walkthrough can happen before enrollment.
+
+For the first institution, manage payment, the cohort roster and the start and end dates manually. Confirm payment through the agreed invoice or checkout before inviting users. The application does not collect payment, enforce these seat limits or expire access automatically.
+
+- Before kickoff, confirm isolated hosting and database availability through closeout, verify the deployed institutional workflow with fictional users, and agree on a data retention and closeout process with the sponsor. Confirm the account recovery contact and approved data types before issuing invitations.
+- At kickoff, establish the 30-day window and verify the sponsor's limited administrator view. Give advisors and participants their separate, single-use invitations through a private channel. Enrollment alone leaves profiles, journey progress and reflections private.
+- During the pilot, check seat counts against the agreed roster. Use the administrator's counts to monitor enrollments. Advisors review goals that participants explicitly share. Participants can review their own progress and withdraw sharing or enrollment.
+- At closeout, reconcile participation counts and collect voluntary feedback. End access and handle retention or deletion under the agreement before considering an extension.
+
+The current build is limited to fictional data. No live pilot service, checkout link or institutional database is configured. Production onboarding remains gated on the live verification and data handling decisions above.
 
 ## Suggested 15-minute demonstration
 - **0–2 min:** Problem and why preserving human judgment matters

@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {once} from 'node:events';
 import {createCoachDemo} from './coach-demo.mjs';
 import {createOrganizationRoutes} from './organization-routes.mjs';
 import {acceptOrganizationInvitation} from './organization-accept.mjs';
@@ -100,7 +101,7 @@ const coachDemo=createCoachDemo({q,all,run,input,reply});
 const organizationRoutes=createOrganizationRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk});
 const acceptOrganization=acceptOrganizationInvitation({db,q,run,sha,audit,input,reply});
 const organizationParticipants=createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk});
-const organizationLearning=createOrganizationLearningRoutes({q,all,run,hex,audit,input,reply});
+const organizationLearning=createOrganizationLearningRoutes({db,q,all,run,hex,audit,input,reply});
 const server=http.createServer(async(req,res)=>{try{
 // Private staging gate. Fail closed on Render unless credentials are configured.
 // Render terminates HTTPS. A successful page sign-in grants a separate staging cookie.
@@ -221,14 +222,20 @@ return reply(res,403,{error:'Forbidden'});
 server.on('close',()=>{void db.close()});return server}
 if(process.argv[1]===fileURLToPath(import.meta.url)){
   let adapter;
+  let phase='configuration';
   try{
     adapter=createPostgresAdapter();
+    phase='migration';
     await migratePostgres(adapter.pool);
     console.log('Coach Studio PostgreSQL schema verified.');
-    createPostgresServer(adapter).listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1',
-      ()=>console.log('PostgreSQL coach pilot listening'));
+    phase='listen';
+    const server=createPostgresServer(adapter);
+    server.listen(Number(process.env.PORT||3100),process.env.RENDER?'0.0.0.0':'127.0.0.1');
+    await once(server,'listening');
+    console.log('PostgreSQL coach pilot listening on port '+server.address().port);
   }catch(error){
-    console.error('Coach Studio PostgreSQL startup failed:',error.code||error.name);
+    const code=typeof error.code==='string'&&/^[A-Z0-9_]{2,32}$/.test(error.code)?error.code:'UNKNOWN';
+    console.error('Coach Studio PostgreSQL startup failed ('+phase+'): '+code);
     await adapter?.close();
     process.exitCode=1;
   }

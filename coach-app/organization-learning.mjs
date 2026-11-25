@@ -1,5 +1,5 @@
 // Participant-owned notes with explicit professional sharing and questions.
-export function createOrganizationLearningRoutes({q,all,run,hex,audit,input,reply}){
+export function createOrganizationLearningRoutes({db,q,all,run,hex,audit,input,reply}){
  const idOk=s=>typeof s==='string'&&/^[a-f0-9]{48}$/.test(s);
  const owner=async(org,actor)=>!!await q('SELECT 1 FROM organization_participants WHERE organization_id=? AND participant_id=? AND revoked_at IS NULL',org,actor.id);
  return async(req,res,path,method,actor)=>{
@@ -18,17 +18,24 @@ export function createOrganizationLearningRoutes({q,all,run,hex,audit,input,repl
   if(feedback){
    const [,org,noteId]=feedback;
    if(actor.role==='coach'&&method==='POST'){
-    const access=await q(`SELECT 1 FROM organization_learning_notes n
-      JOIN organization_participants p ON p.organization_id=n.organization_id AND p.participant_id=n.participant_id
-      JOIN organization_members m ON m.organization_id=p.organization_id AND m.user_id=p.professional_id
-      WHERE n.id=? AND n.organization_id=? AND n.shared_at IS NOT NULL
-        AND p.professional_id=? AND p.revoked_at IS NULL AND m.role='professional'`,noteId,org,actor.id);
-    if(!access)return reply(res,404,{error:'Shared learning note not found'});
     const body=await input(req),question=typeof body.question==='string'?body.question.trim():'';
-    if(!question||question.length>1000)return reply(res,400,{error:'Enter a question or observation (maximum 1000 characters)'});
     const id=hex();
-    await run('INSERT INTO organization_learning_feedback(id,note_id,professional_id,question) VALUES(?,?,?,?)',id,noteId,actor.id,question);
-    await audit(actor.id,'organization_learning_feedback_created','organization',org);
+    const result=await db.transaction(async()=>{
+     // Share withdrawal or enrollment revocation must serialize with feedback creation.
+     const access=await q(`SELECT 1 FROM organization_learning_notes n
+       JOIN organization_participants p ON p.organization_id=n.organization_id AND p.participant_id=n.participant_id
+       JOIN organization_members m ON m.organization_id=p.organization_id AND m.user_id=p.professional_id
+       WHERE n.id=? AND n.organization_id=? AND n.shared_at IS NOT NULL
+         AND p.professional_id=? AND p.revoked_at IS NULL AND m.role='professional'
+       FOR UPDATE OF n,p,m`,noteId,org,actor.id);
+     if(!access)return 404;
+     if(!question||question.length>1000)return 400;
+     await run('INSERT INTO organization_learning_feedback(id,note_id,professional_id,question) VALUES(?,?,?,?)',id,noteId,actor.id,question);
+     await audit(actor.id,'organization_learning_feedback_created','organization',org);
+     return 201;
+    });
+    if(result===404)return reply(res,404,{error:'Shared learning note not found'});
+    if(result===400)return reply(res,400,{error:'Enter a question or observation (maximum 1000 characters)'});
     return reply(res,201,{id,noteId,question,note:'Participant retains control of their goal and action.'});
    }
    if(actor.role==='client'&&method==='GET'){

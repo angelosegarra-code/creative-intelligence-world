@@ -1,7 +1,6 @@
 -- PostgreSQL 18 schema for isolated CI World Coach Studio pilot.
 -- Additive schema for the PostgreSQL server.
--- Run in a transaction on a new empty pilot database. No client data is transferred.
-BEGIN;
+-- The migration runner applies this schema in a transaction.
 CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,role TEXT NOT NULL CHECK(role IN ('coach','client')),password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,verified_at TIMESTAMPTZ,created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
 CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,expires_at BIGINT NOT NULL);
 CREATE TABLE IF NOT EXISTS invitations (token_hash TEXT PRIMARY KEY,coach_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,recipient_email TEXT NOT NULL,expires_at BIGINT NOT NULL,accepted_at TIMESTAMPTZ,created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
@@ -68,5 +67,3 @@ CREATE TABLE IF NOT EXISTS coach_demo_invites (
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   redeemed_at TIMESTAMPTZ, completed_at TIMESTAMPTZ, revoked_at TIMESTAMPTZ
 );
-
-COMMIT;

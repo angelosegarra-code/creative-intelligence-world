@@ -1,21 +1,68 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {setTimeout as delay} from 'node:timers/promises';
 
-test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANIZATION_TEST_DATABASE_URL,timeout:30000},async()=>{
- const port=32000+Math.floor(Math.random()*1000);
- const origin='http://127.0.0.1:'+port;
+import {once} from 'node:events';
+import {createInterface} from 'node:readline';
+import {fileURLToPath} from 'node:url';
+
+const databaseUrl=process.env.CI_ORGANIZATION_TEST_DATABASE_URL;
+
+// Consume child output but only report recognized stages and error codes.
+async function startSmokeServer(t,connectionString=databaseUrl){
  const child=spawn(process.execPath,['postgres-server.mjs'],{
-  cwd:new URL('.',import.meta.url).pathname,
-  env:{...process.env,PORT:String(port),DATABASE_URL:process.env.CI_ORGANIZATION_TEST_DATABASE_URL,NODE_ENV:'test',RENDER:''},
+  cwd:fileURLToPath(new URL('.',import.meta.url)),
+  env:{...process.env,PORT:'0',DATABASE_URL:connectionString,NODE_ENV:'test',RENDER:''},
   stdio:['ignore','pipe','pipe']
  });
- let output='';child.stderr.on('data',d=>output+=String(d).slice(0,300));
- async function ready(){for(let i=0;i<100;i++){if(child.exitCode!==null)throw Error('Server exited during smoke test');try{const r=await fetch(origin+'/');if(r.ok)return await r.text()}catch{}await delay(100)}throw Error('Server did not start: '+output)}
+ const closed=once(child,'close').catch(()=>[]);
+ t.after(async()=>{
+  if(child.exitCode===null&&child.signalCode===null)child.kill();
+  await closed;
+ });
+ let stage='before schema verification';
+ let diagnostic='';
+ let timer;
+ const port=await new Promise((resolve,reject)=>{
+  createInterface({input:child.stdout}).on('line',line=>{
+   if(line==='Coach Studio PostgreSQL schema verified.')stage='after schema verification';
+   const ready=/^PostgreSQL coach pilot listening on port (\d+)$/.exec(line);
+   if(ready)resolve(Number(ready[1]));
+  });
+  createInterface({input:child.stderr}).on('line',line=>{
+   const failure=/^Coach Studio PostgreSQL startup failed \((configuration|migration|listen)\): ([A-Z0-9_]{2,32})$/.exec(line);
+   if(failure)diagnostic=failure[1]+' '+failure[2];
+   if(/^SyntaxError:/.test(line))diagnostic='JavaScript syntax error during module loading';
+  });
+  const fail=reason=>reject(new Error('Smoke server '+reason+' ('+stage+(diagnostic?', '+diagnostic:'')+')'));
+  child.once('error',()=>fail('could not launch'));
+  closed.then(([code,signal])=>fail('closed with '+(signal??'exit code '+code)));
+  timer=setTimeout(()=>fail('timed out waiting for its listening port'),12000);
+ }).finally(()=>clearTimeout(timer));
+ return 'http://127.0.0.1:'+port;
+}
+
+test('HTTP startup diagnostics identify invalid configuration without logging input',async t=>{
+ const marker='fictional-secret-marker';
+ await assert.rejects(startSmokeServer(t,marker),error=>{
+  assert.match(error.message,/closed with exit code 1.*configuration ERR_INVALID_URL/);
+  assert.ok(!error.message.includes(marker));
+  return true;
+ });
+});
+
+test('private organization browser/API smoke flow', {skip:!databaseUrl,timeout:30000},async t=>{
+ const origin=await startSmokeServer(t);
+ const get=(path,cookie)=>fetch(origin+path,{headers:{Cookie:cookie}});
+ async function json(response,expected,label){
+  const result=await response;
+  assert.equal(result.status,expected,label);
+  return result.json();
+ }
  async function post(path,data,cookie){return fetch(origin+path,{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,...(cookie?{Cookie:cookie}:{})},body:JSON.stringify(data)})}
- try{
-  const html=await ready();
+  const page=await fetch(origin+'/',{signal:AbortSignal.timeout(3000)});
+  assert.equal(page.status,200);
+  const html=await page.text();
   assert.match(html,/id="organizationStudio"/);
   assert.match(html,/organizations\.js/);
   const tour=await fetch(origin+'/organization-tour');assert.equal(tour.status,200);
@@ -78,6 +125,7 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   assert.equal((await caseload.json()).participants[0].email,participantEmail);
   const adminCaseload=await fetch(origin+'/api/organizations/'+org.id+'/participants',{headers:{Cookie:cookie}});assert.equal(adminCaseload.status,200);
   assert.equal((await adminCaseload.json()).participants.length,0);
+  assert.equal((await post('/api/organizations/'+org.id+'/participants/invitations',{email:participantEmail},cookie)).status,403);
   const ownEnrollments=await fetch(origin+'/api/organization-participants/mine',{headers:{Cookie:participantCookie}});assert.equal(ownEnrollments.status,200);
   assert.equal((await ownEnrollments.json()).enrollments.length,1);
   const privateNote=await post('/api/organization-learning/'+org.id+'/notes',{perspective:'observer',goal:'Explore a new skill',nextAction:'Try one small learning experiment'},participantCookie);assert.equal(privateNote.status,201);
@@ -106,14 +154,94 @@ test('private organization browser/API smoke flow', {skip:!process.env.CI_ORGANI
   assert.equal((await ownNotes.json()).notes[0].goal,'Explore a new skill');
   const coachNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:professionalCookie}});assert.equal(coachNotes.status,403);
   const adminNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:cookie}});assert.equal(adminNotes.status,403);
+  const orgPath='/api/organizations/'+org.id;
+  const learningPath='/api/organization-learning/'+org.id;
+  async function register(name,role){
+   const email=name+'-'+nonce+'@example.test';
+   const password='fictional-test-'+nonce+'-password';
+   assert.equal((await post('/api/register',{email,password,role})).status,201);
+   const response=await post('/api/login',{email,password});
+   assert.equal(response.status,200);
+   const session=response.headers.get('set-cookie')?.split(';')[0];
+   assert.ok(session);
+   return {email,session};
+  }
+  const secondAdvisor=await register('second-advisor','coach');
+  const advisorInvite=await json(post(orgPath+'/invitations',{email:secondAdvisor.email},cookie),201,'second advisor invitation');
+  assert.equal((await post('/api/organizations/invitations/accept',{token:advisorInvite.invitationToken},secondAdvisor.session)).status,200);
+  const advisors=[{email:professionalEmail,session:professionalCookie},secondAdvisor];
+  const participants=[{email:participantEmail,session:participantCookie,advisor:advisors[0],noteId}];
+  for(let index=2;index<=6;index++){
+   const participant=await register('participant-'+index,'client');
+   const advisor=advisors[index<=3?0:1];
+   const invitation=await json(post(orgPath+'/participants/invitations',{email:participant.email},advisor.session),201,'participant invitation');
+   assert.equal((await post('/api/organization-participants/invitations/accept',{token:invitation.invitationToken},participant.session)).status,200);
+   const note=await json(post(learningPath+'/notes',{perspective:'observer',goal:'Goal '+index,nextAction:'Try a short practice session'},participant.session),201,'private goal note');
+   assert.equal((await post(learningPath+'/notes/'+note.id+'/share',{},participant.session)).status,200);
+   participants.push({...participant,advisor,noteId:note.id});
+  }
+  const perspectives=['observer','dreamer','alchemist','visionary'];
+  for(const [index,participant] of participants.entries()){
+   const {session,advisor}=participant;
+   const otherAdvisor=advisors.find(person=>person!==advisor);
+   const anotherParticipant=participants[(index+1)%participants.length];
+   const notePath=learningPath+'/notes/'+participant.noteId;
+   if(index>0)assert.equal((await post(notePath+'/feedback',{question:'What changed after trying it?'},advisor.session)).status,201);
+   assert.equal((await json(get(notePath+'/feedback',session),200,'participant feedback')).feedback.length,1);
+   assert.equal((await post(notePath+'/feedback',{question:'Outside caseload'},otherAdvisor.session)).status,404);
+   assert.equal((await get(notePath+'/feedback',anotherParticipant.session)).status,404);
+   assert.equal((await post(notePath+'/reflection',{reflection:'Private institutional reflection '+index},session)).status,200);
+
+   const primary=perspectives[index%perspectives.length];
+   const profile={primary,secondary:perspectives[(index+1)%perspectives.length],summary:'Fictional private profile '+index};
+   await json(post('/api/journey/profile',profile,session),201,'save profile');
+   const journey=await json(get('/api/journey',session),200,'participant journey');
+   assert.equal(journey.profile.summary,profile.summary);
+   assert.equal(journey.profile.primary,primary);
+   assert.deepEqual(journey.coaches,[]);
+   const identity=await json(get('/api/me',session),200,'participant identity');
+   for(const unauthorized of [advisor.session,otherAdvisor.session,cookie,anotherParticipant.session]){
+    assert.equal((await get('/api/journey/profiles/'+identity.id,unauthorized)).status,403);
+   }
+
+   const goal={title:'Build a learning habit '+index,motivation:'Practice regularly'};
+   const {id}=await json(post('/api/journey/goals',goal,session),201,'create journey goal');
+   const goalPath='/api/journey/goals/'+id;
+   await json(post(goalPath+'/explorations',{perspective:primary,note:'Consider different practice settings'},session),201,'explore goal');
+   const challenge=await json(post(goalPath+'/challenges',{text:'Choose one practice session'},session),201,'create challenge');
+   const experiment=await json(post(goalPath+'/experiments',{challengeId:challenge.id,possibility:'Try shorter practice',action:'Practice for 15 minutes',notice:'Record what helped'},session),201,'record experiment');
+   const reflection=await json(post(goalPath+'/reflections',{experimentId:experiment.id,text:'Private journey reflection '+index},session),201,'reflect on experiment');
+   await json(post(goalPath+'/learning',{reflectionId:reflection.id,changed:'Shorter practice helped',nextMove:'Repeat the session next week'},session),201,'record learning');
+   assert.equal((await post(goalPath+'/revision',{...goal,status:'complete'},session)).status,200);
+   const detail=await json(get(goalPath,session),200,'read journey progress');
+   assert.equal(detail.goal.status,'complete');
+   assert.equal(detail.revisions.length,2);
+   assert.equal(detail.learning[0].nextMove,'Repeat the session next week');
+   assert.equal((await get(goalPath,advisor.session)).status,403);
+   assert.equal((await get(goalPath,cookie)).status,403);
+  }
+  for(const advisor of advisors){
+   const expectedEmails=participants.filter(p=>p.advisor===advisor).map(p=>p.email).sort();
+   const caseload=await json(get(orgPath+'/participants',advisor.session),200,'advisor caseload');
+   assert.deepEqual(caseload.participants.map(p=>p.email).sort(),expectedEmails);
+   const shared=await json(get(learningPath+'/shared',advisor.session),200,'advisor shared notes');
+   assert.deepEqual(shared.notes.map(n=>n.participantEmail).sort(),expectedEmails);
+   assert.ok(shared.notes.every(n=>!('reflection' in n)));
+  }
+  const pilotOverview=await json(get(orgPath+'/overview',cookie),200,'pilot counts');
+  assert.deepEqual(pilotOverview.summary,{professionalAccounts:2,activeParticipantEnrollments:6,revokedEnrollments:0});
+  assert.ok(participants.every(p=>!JSON.stringify(pilotOverview).includes(p.email)));
+  const pilotAdminNotes=await json(get(learningPath+'/shared',cookie),200,'counts-only administrator');
+  assert.deepEqual(pilotAdminNotes.notes,[]);
   const revoke=await post('/api/organization-participants/'+org.id+'/revoke',{},participantCookie);assert.equal(revoke.status,200);
   const afterRevocationFeedback=await post('/api/organization-learning/'+org.id+'/notes/'+noteId+'/feedback',{question:'Not permitted'},professionalCookie);assert.equal(afterRevocationFeedback.status,404);
   assert.equal((await post(reflectionPath,{reflection:'After revocation'},participantCookie)).status,404);
-  const revokedShared=await fetch(origin+'/api/organization-learning/'+org.id+'/shared',{headers:{Cookie:professionalCookie}});assert.equal((await revokedShared.json()).notes.length,0);
+  const revokedShared=await fetch(origin+'/api/organization-learning/'+org.id+'/shared',{headers:{Cookie:professionalCookie}});const remainingShared=(await revokedShared.json()).notes;
+  assert.equal(remainingShared.length,2);
+  assert.ok(remainingShared.every(note=>note.id!==noteId));
   const revokedNotes=await fetch(origin+'/api/organization-learning/'+org.id+'/notes',{headers:{Cookie:participantCookie}});assert.equal(revokedNotes.status,404);
   const revokedOverview=await fetch(origin+'/api/organizations/'+org.id+'/overview',{headers:{Cookie:cookie}});assert.equal(revokedOverview.status,200);
-  assert.equal((await revokedOverview.json()).summary.activeParticipantEnrollments,0);
+  assert.equal((await revokedOverview.json()).summary.activeParticipantEnrollments,5);
   const logout=await post('/api/logout',{},cookie);assert.equal(logout.status,200);
   const after=await fetch(origin+'/api/organizations',{headers:{Cookie:cookie}});assert.equal(after.status,401);
- }finally{child.kill('SIGTERM');await delay(100)}
 });

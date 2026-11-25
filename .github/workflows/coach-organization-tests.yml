@@ -39,15 +39,11 @@ jobs:
           node --check postgres-server.mjs
           node --check organization-routes.mjs
           node --check organization-accept.mjs
+          node --check organization-learning.mjs
           node --check organization-participants.mjs
           node --check organizations.js
-      - name: Unit tests
-        run: node --test postgres-schema.test.mjs postgres-adapter.test.mjs organization-routes.test.mjs
-      - name: PostgreSQL integration tests
+      - name: Run all Coach Studio tests with PostgreSQL
         env:
           CI_ORGANIZATION_TEST_DATABASE_URL: postgresql://coach_test:coach_test_password@127.0.0.1:5432/coach_test
-        run: node --test organization-postgres.integration.test.mjs
-      - name: HTTP smoke test against running Coach Studio
-        env:
-          CI_ORGANIZATION_TEST_DATABASE_URL: postgresql://coach_test:coach_test_password@127.0.0.1:5432/coach_test
-        run: node --test organization-http.smoke.test.mjs
+          CI_COACH_TEST_POSTGRES_URL: postgresql://coach_test:coach_test_password@127.0.0.1:5432/coach_test
+        run: npm test

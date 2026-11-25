@@ -1,7 +1,6 @@
 // Consent-bound institutional participant enrollment. No profiles, goals or reflections returned.
 export function createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,input,reply,emailOk}){
  const idOk=s=>typeof s==='string'&&/^[a-f0-9]{48}$/.test(s);
- const isMember=async(org,user)=>!!await q("SELECT 1 FROM organization_members WHERE organization_id=? AND user_id=?",org,user);
  return async(req,res,path,method,actor)=>{
   if(path==='/api/organization-participants/invitations/accept'&&method==='POST'){
    if(actor.role!=='client')return reply(res,403,{error:'Participant account required'});
@@ -10,7 +9,7 @@ export function createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,
    const accepted=await db.transaction(async()=>{
     const invitation=await q(`UPDATE organization_participant_invitations i SET accepted_at=CURRENT_TIMESTAMP
       WHERE i.token_hash=? AND i.recipient_email=? AND i.accepted_at IS NULL AND i.expires_at>?
-      AND EXISTS (SELECT 1 FROM organization_members m WHERE m.organization_id=i.organization_id AND m.user_id=i.professional_id)
+      AND EXISTS (SELECT 1 FROM organization_members m WHERE m.organization_id=i.organization_id AND m.user_id=i.professional_id AND m.role='professional')
       RETURNING i.organization_id,i.professional_id`,sha(b.token),actor.email,Date.now());
     if(!invitation)return null;
     const existing=await q('SELECT professional_id,revoked_at FROM organization_participants WHERE organization_id=? AND participant_id=?',invitation.organization_id,actor.id);
@@ -41,8 +40,11 @@ export function createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,
   const match=/^\/api\/organizations\/([a-f0-9]{48})\/participants(?:\/invitations)?$/.exec(path);
   if(!match)return reply(res,404,{error:'Not found'});
   const org=match[1],invite=path.endsWith('/invitations');
-  if(actor.role!=='coach'||!await isMember(org,actor.id))return reply(res,404,{error:'Organization not found'});
+  if(actor.role!=='coach')return reply(res,404,{error:'Organization not found'});
+  const membership=await q('SELECT role FROM organization_members WHERE organization_id=? AND user_id=?',org,actor.id);
+  if(!membership)return reply(res,404,{error:'Organization not found'});
   if(invite&&method==='POST'){
+   if(membership.role!=='professional')return reply(res,403,{error:'Advisor access required'});
    const b=await input(req),email=typeof b.email==='string'?b.email.trim().toLowerCase():'';
    if(!emailOk(email))return reply(res,400,{error:'Valid participant demo email required'});
    const token=hex();
@@ -51,6 +53,7 @@ export function createOrganizationParticipantRoutes({db,q,all,run,hex,sha,audit,
    return reply(res,201,{invitationToken:token,expiresInHours:24,note:'Fictional participants only. The participant must sign in and consent.'});
   }
   if(!invite&&method==='GET'){
+   if(membership.role!=='professional')return reply(res,200,{participants:[]});
    const rows=await all(`SELECT u.email,p.consented_at AS "consentedAt"
       FROM organization_participants p JOIN users u ON u.id=p.participant_id
       WHERE p.organization_id=? AND p.professional_id=? AND p.revoked_at IS NULL ORDER BY p.consented_at DESC`,org,actor.id);

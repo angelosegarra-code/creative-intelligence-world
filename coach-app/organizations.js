@@ -7,7 +7,16 @@ async function request(path,method='GET',body){
  const data=await r.json();if(!r.ok)throw Error(data.error||'Request failed');return data;
 }
 function status(message){by('organizationStatus').textContent=message}
-function clear(){state.user=null;state.organizations=[];state.selected=null;by('organizationStudio').hidden=true;by('organizationList').replaceChildren();by('organizationMembers').replaceChildren();by('organizationToken').textContent='';by('organizationSelected').textContent='';by('organizationAdmin').hidden=true;by('organizationProfessional').hidden=true;by('organizationParticipants').replaceChildren();by('organizationSharedNotes').replaceChildren();by('organizationParticipantToken').textContent='';by('organizationParticipantStudio').hidden=true;by('organizationMyEnrollments').replaceChildren();by('organizationParticipantStatus').textContent='';by('organizationParticipantAcceptToken').value='';by('organizationName').value='';by('organizationInviteEmail').value='';by('organizationAcceptToken').value='';status('');}
+function clear(){
+ state.user=null;
+ state.organizations=[];
+ state.selected=null;
+ for(const id of ['organizationStudio','organizationAdmin','organizationProfessional','organizationParticipantStudio'])by(id).hidden=true;
+ for(const id of ['organizationList','organizationMembers','organizationOverview','organizationToken','organizationSelected','organizationParticipants','organizationSharedNotes','organizationParticipantToken','organizationMyEnrollments','organizationParticipantStatus','organizationLearningOrg','organizationLearningStatus','organizationLearningNotes'])by(id).replaceChildren();
+ for(const id of ['organizationParticipantAcceptToken','organizationParticipantEmail','organizationName','organizationInviteEmail','organizationAcceptToken','organizationLearningGoal','organizationLearningAction'])by(id).value='';
+ by('organizationLearningPerspective').selectedIndex=0;
+ status('');
+}
 function item(tag,text){const node=document.createElement(tag);node.textContent=text;return node;}
 function button(label,handler){const node=item('button',label);node.type='button';node.addEventListener('click',handler);return node;}
 async function refresh(){
@@ -23,7 +32,7 @@ async function open(id){
  const info=await request('organizations/'+id);state.selected=id;
  by('organizationSelected').textContent=info.organization.name+' · '+info.role;
  const isAdmin=info.role==='admin';by('organizationAdmin').hidden=!isAdmin;
- by('organizationToken').textContent='';by('organizationParticipantToken').textContent='';by('organizationMembers').replaceChildren();by('organizationOverview').replaceChildren();by('organizationProfessional').hidden=false;await refreshParticipants();
+ by('organizationToken').textContent='';by('organizationParticipantToken').textContent='';by('organizationMembers').replaceChildren();by('organizationOverview').replaceChildren();by('organizationProfessional').hidden=isAdmin;if(!isAdmin)await refreshParticipants();
  if(isAdmin){const overview=await request('organizations/'+id+'/overview');const summary=overview.summary;const box=by('organizationOverview');for(const [label,value] of [['Professional accounts (excluding administrator)',summary.professionalAccounts],['Active participant enrollments',summary.activeParticipantEnrollments],['Revoked enrollments',summary.revokedEnrollments]])box.append(item('p',label+': '+value));const members=await request('organizations/'+id+'/members');for(const m of members.members)by('organizationMembers').append(item('li',m.email+' · '+m.role));}
  status('Workspace opened. Shared goals require participant permission; administrators see only participation counts.');
  }catch(e){status(e.message)}
